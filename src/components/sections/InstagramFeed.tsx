@@ -1,26 +1,37 @@
 import { Instagram, Play, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
+import insta1 from "@/assets/instagram/insta-1.jpg";
+import insta2 from "@/assets/instagram/insta-2.jpg";
+import insta3 from "@/assets/instagram/insta-3.jpg";
+import insta4 from "@/assets/instagram/insta-4.jpg";
+import insta5 from "@/assets/instagram/insta-5.jpg";
+
 const instagramPosts = [
   {
     url: "https://www.instagram.com/reel/DRS9bIhkhdz/",
     type: "reel",
+    image: insta1,
   },
   {
     url: "https://www.instagram.com/p/DRvh1UrCSuI/",
     type: "post",
+    image: insta2,
   },
   {
     url: "https://www.instagram.com/reel/DSRl-xSgP1B/",
     type: "reel",
+    image: insta3,
   },
   {
     url: "https://www.instagram.com/reel/DSRmsYwgGlH/",
     type: "reel",
+    image: insta4,
   },
   {
     url: "https://www.instagram.com/reel/DSRo70YABC2/",
     type: "reel",
+    image: insta5,
   },
 ];
 
@@ -112,25 +123,26 @@ const InstagramFeed = () => {
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative flex-shrink-0 w-[200px] md:w-auto aspect-square bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] snap-center"
+                className="group relative flex-shrink-0 w-[200px] md:w-auto aspect-square rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] snap-center"
               >
-                {/* Overlay pattern */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                {/* Thumbnail Image */}
+                <img
+                  src={post.image}
+                  alt={`Melia King Solar Instagram ${post.type}`}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
                 
-                {/* Solar/energy themed background pattern */}
-                <div className="absolute inset-0 opacity-20">
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 border-4 border-white/30 rounded-full" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-white/20 rounded-full" />
-                </div>
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
 
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
                   {post.type === "reel" ? (
-                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all">
                       <Play className="w-6 h-6 fill-white" />
                     </div>
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all opacity-0 group-hover:opacity-100">
                       <Instagram className="w-6 h-6" />
                     </div>
                   )}
@@ -139,9 +151,11 @@ const InstagramFeed = () => {
                   </span>
                 </div>
 
-                {/* External link indicator */}
-                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ExternalLink className="w-4 h-4 text-white" />
+                {/* Instagram badge */}
+                <div className="absolute top-2 right-2">
+                  <div className="w-6 h-6 rounded-md bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 flex items-center justify-center shadow-md">
+                    <Instagram className="w-3.5 h-3.5 text-white" />
+                  </div>
                 </div>
               </a>
             ))}
