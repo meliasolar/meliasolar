@@ -124,11 +124,6 @@ const Services = () => {
                     </div>
                   ))}
                 </div>
-
-                <Button variant="solar" size="lg">
-                  Learn More
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
               </div>
             </div>
           ))}
