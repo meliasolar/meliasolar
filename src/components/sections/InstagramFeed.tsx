@@ -21,12 +21,12 @@ const InstagramFeed = () => {
     };
   }, []);
 
-  // Sample Instagram post URLs from Melia's account - these can be updated with actual post URLs
   const instagramPosts = [
-    "https://www.instagram.com/p/C_example1/",
-    "https://www.instagram.com/p/C_example2/",
-    "https://www.instagram.com/p/C_example3/",
-    "https://www.instagram.com/p/C_example4/",
+    "https://www.instagram.com/reel/DRS9bIhkhdz/",
+    "https://www.instagram.com/p/DRvh1UrCSuI/",
+    "https://www.instagram.com/reel/DSRl-xSgP1B/",
+    "https://www.instagram.com/reel/DSRmsYwgGlH/",
+    "https://www.instagram.com/reel/DSRo70YABC2/",
   ];
 
   return (

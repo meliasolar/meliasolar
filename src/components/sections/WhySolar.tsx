@@ -52,7 +52,7 @@ const WhySolar = () => {
             Discover the Benefits of Going Solar
           </h2>
           <p className="text-muted-foreground text-lg mt-6">
-            Join thousands of California homeowners who have already made the switch to clean, affordable solar energy.
+            Join thousands of homeowners across California, Arizona & Texas who have already made the switch to clean, affordable solar energy.
           </p>
         </div>
 
