@@ -21,9 +21,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
-              Your trusted partner for renewable energy solutions. We help
-              homeowners achieve energy independence with quality installations
-              and exceptional service.
+              We make solar possible for homeowners nationwide by keeping its cost equivalent to your existing energy bill. Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
             </p>
           </div>
 
@@ -88,7 +86,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-3 text-primary-foreground/80 text-sm">
                 <MapPin className="w-4 h-4 mt-0.5" />
-                <span>Southern California</span>
+                <span>California, Arizona &amp; Texas</span>
               </li>
             </ul>
           </div>

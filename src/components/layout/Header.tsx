@@ -1,20 +1,32 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Sun } from "lucide-react";
+import { Menu, X, Sun, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "/#about" },
   { name: "Why Solar", href: "/#why-solar" },
-  { name: "Services", href: "/#services" },
   { name: "Testimonials", href: "/#testimonials" },
+];
+
+const services = [
+  { name: "Solar", href: "/#services-solar" },
+  { name: "HVAC", href: "/#services-hvac" },
+  { name: "Title 24 Roofing", href: "/#services-roofing" },
+  { name: "QuietCool Whole House Fan", href: "/#services-quietcool" },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +38,7 @@ const Header = () => {
 
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
+    setIsMobileServicesOpen(false);
     if (href.startsWith("/#")) {
       const elementId = href.substring(2);
       const element = document.getElementById(elementId);
@@ -78,6 +91,26 @@ const Header = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
+
+            {/* Services Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 text-foreground/80 hover:text-foreground font-medium transition-colors relative group outline-none">
+                Services
+                <ChevronDown className="w-4 h-4" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-card border border-border shadow-medium z-50">
+                {services.map((service) => (
+                  <DropdownMenuItem
+                    key={service.name}
+                    className="cursor-pointer hover:bg-secondary focus:bg-secondary"
+                    onClick={() => handleNavClick(service.href)}
+                  >
+                    {service.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* CTA Button */}
@@ -116,6 +149,39 @@ const Header = () => {
                   {link.name}
                 </a>
               ))}
+
+              {/* Mobile Services Accordion */}
+              <div>
+                <button
+                  onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                  className="flex items-center justify-between w-full text-foreground/80 hover:text-foreground font-medium py-2 transition-colors"
+                >
+                  Services
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform ${
+                      isMobileServicesOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {isMobileServicesOpen && (
+                  <div className="pl-4 flex flex-col gap-2 mt-2">
+                    {services.map((service) => (
+                      <a
+                        key={service.name}
+                        href={service.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavClick(service.href);
+                        }}
+                        className="text-foreground/70 hover:text-foreground text-sm py-1 transition-colors"
+                      >
+                        {service.name}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <Button variant="solar" size="lg" className="mt-2">
                 Get Free Quote
               </Button>
