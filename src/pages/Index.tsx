@@ -13,7 +13,7 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Melia King Solar | Your Concierge Energy Advisor in California</title>
+        <title>Melia King Solar | Your Concierge Energy Advisor in 13 States</title>
         <meta
           name="description"
           content="Melia King Solar - Your Concierge Energy Advisor in 13 States. Expert solar panel installation, HVAC, Title 24 roofing, and QuietCool whole house fans. Get your free quote today!"
@@ -23,7 +23,7 @@ const Index = () => {
           content="solar panels, solar installation, solar energy, HVAC, Title 24 roofing, QuietCool, energy savings, renewable energy"
         />
         <link rel="canonical" href="https://meliasolar.com" />
-        <meta property="og:title" content="Melia King Solar | Your Concierge Energy Advisor" />
+        <meta property="og:title" content="Melia King Solar | Your Concierge Energy Advisor in 13 States" />
         <meta
           property="og:description"
           content="Your Concierge Energy Advisor in 13 States. Expert solar panel installation and whole-home energy solutions."
