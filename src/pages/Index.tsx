@@ -8,7 +8,6 @@ import SavingsCalculator from "@/components/sections/SavingsCalculator";
 import Services from "@/components/sections/Services";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
-import CTA from "@/components/sections/CTA";
 import InstagramFeed from "@/components/sections/InstagramFeed";
 
 const Index = () => {
@@ -44,7 +43,6 @@ const Index = () => {
         <Services />
         <Testimonials />
         <Contact />
-        <CTA />
         <InstagramFeed />
       </main>
       <Footer />
