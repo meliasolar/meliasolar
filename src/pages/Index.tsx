@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import WhySolar from "@/components/sections/WhySolar";
+import SavingsCalculator from "@/components/sections/SavingsCalculator";
 import Services from "@/components/sections/Services";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
@@ -38,6 +39,7 @@ const Index = () => {
         <Hero />
         <About />
         <WhySolar />
+        <SavingsCalculator />
         <Services />
         <Testimonials />
         <Contact />
