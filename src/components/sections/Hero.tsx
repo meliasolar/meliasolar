@@ -45,7 +45,7 @@ const Hero = () => {
             className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed animate-fade-up"
             style={{ animationDelay: "0.3s" }}
           >
-            We make solar possible for homeowners nationwide by keeping its cost equivalent to your existing energy bill. Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
+            We make solar possible for homeowners nationwide by keeping the cost equivalent to your existing energy bill. Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
           </p>
 
           {/* CTAs */}
@@ -53,7 +53,16 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 animate-fade-up"
             style={{ animationDelay: "0.4s" }}
           >
-            <Button variant="solar" size="xl">
+            <Button
+              variant="solar"
+              size="xl"
+              onClick={() => {
+                const element = document.getElementById("contact");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+            >
               Get Free Quote
               <ArrowRight className="w-5 h-5" />
             </Button>
