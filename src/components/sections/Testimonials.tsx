@@ -1,4 +1,4 @@
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -10,76 +10,50 @@ import {
 const Testimonials = () => {
   const testimonials = [
     {
-      name: "Patrick L.",
-      location: "Murrieta, CA",
+      name: "Loc Bui",
+      text: "Melia and the team at Voltaic were amazing! They showed up on time, kept everything super clean, and did an awesome job with our solar installation. The whole process was smooth and professional from start to finish. Really happy with the results — highly recommend them if you're thinking about going solar!",
       rating: 5,
-      text: "The team was AWESOME!! They promptly responded to our inquiry and set up an in-person meeting to explain solar and answer any questions we had. They really wanted us to understand all about solar, not just sell us a system.",
     },
     {
-      name: "Jay B.",
-      location: "Brea, CA",
+      name: "Josh Gonzales",
+      title: "Owner, Master Construction",
+      text: "I have been a general contractor in Ventura County for over 15 years and it is critical to partner with dependable, knowledgeable, and efficient trades especially when it comes to solar and Title 24 compliance on new builds. Working with Melia King and the team at Voltaic Construction has been a game-changer for us. They move faster than any other solar company I've worked with, and their communication, quality of work, and attention to detail are top-notch.",
       rating: 5,
-      text: "I had my Solar System installed a little over a year ago, and I am very satisfied with the pricing, quality of equipment and installation. I had an incredible experience — they worked with us to figure out how many panels we needed.",
     },
     {
-      name: "Barbara D.",
-      location: "Orange County, CA",
+      name: "Bijan Nejadeh",
+      text: "I had the best experience with Voltaic and their Rep. Remy. I had pricing for solar panels and Tesla Powerwall 3 from several companies including Tesla. Voltaic construction not only came close to Tesla (Tesla was the lowest price) but came in with the best design that Tesla couldn't do. They were ahead of the game in every aspect from start to finish. The entire process from permit to complete operation took about 45 days.",
       rating: 5,
-      text: "Let me start by saying I was the biggest skeptic on Solar there is. I had 3 consultations and was going to throw in the towel. They provided realistic and honest information, was patient with me, and answered every question.",
     },
     {
-      name: "Peggy B.",
-      location: "Riverside, CA",
+      name: "Trg EPS",
+      text: "Excellent Solar Storage Battery Installation by Voltaic. The Voltaic team was professional, knowledgeable, and courteous. They explained the entire installation process in detail, ensuring that I understood the benefits and limitations of the system. The installation itself was completed quickly and with minimal disruption to my daily routine.",
       rating: 5,
-      text: "We have had the BEST experience from the initial estimate and throughout the process. Their excellent customer service is very different from our experience with other companies. We highly recommend them!",
     },
     {
-      name: "Kathy N.",
-      location: "San Diego, CA",
+      name: "Alma Acosta",
+      text: "It has been a positive experience all around interfacing with Voltaic (extra thanks to Bryce, Remy & Dean for making this an easy process). The roof was replaced & solar panels installed… as an added bonus stored items were reorganized more logically, and the house surroundings were left beyond clean! The house is definitely in better shape than when this all began.",
       rating: 5,
-      text: "They worked to get us through the entire process from our panel purchase to installation and activation. We never felt abandoned as they were always in contact with us, helping us to the very end.",
     },
     {
-      name: "David P.",
-      location: "Temecula, CA",
+      name: "DJ Dark",
+      text: "A close friend of mine recommended Voltaic for my office HVAC system. And I must say I was highly impressed with the service that was done. Tyler is very professional and very thorough in explaining every detail. Also, the cleanup crew were very respectful and I've never been offered lunch by workers who were hired by me. Blew me away. I highly recommend their service.",
       rating: 5,
-      text: "I can't believe we dreaded this project for years, anticipating all the kinds of problems we had heard about from others. But our solar project could not have gone more smoothly!",
     },
     {
-      name: "Michael R.",
-      location: "Phoenix, AZ",
+      name: "David Shadrake",
+      text: "Solid team. Goes above and beyond for clients. Takes great pride in their mission to deliver overhead cost reduction.",
       rating: 5,
-      text: "From start to finish, the experience was seamless. The team was professional, knowledgeable, and made the entire process stress-free. Our energy bills have dropped significantly since installation.",
     },
     {
-      name: "Sarah M.",
-      location: "Austin, TX",
+      name: "CSXG Powerwashing",
+      text: "I had a great experience with Voltaic Construction for solar panel installation at my small business. Recommended by a family friend, their team was knowledgeable and patient, answering all my questions about solar energy. Their expertise in HVAC, solar, batteries, and QuietCool fans is outstanding. The process was smooth, and I'm thrilled with the results. Highly recommend them for anyone looking to make eco-friendly upgrades!",
       rating: 5,
-      text: "Excellent communication throughout the entire process. They explained everything clearly and were always available to answer questions. The installation was completed ahead of schedule.",
     },
     {
-      name: "Robert H.",
-      location: "Los Angeles, CA",
+      name: "Phil Seminara",
+      text: "Voltaic Construction removed our solar panels, for a new roof to be installed. Bryce is very knowledgeable and explained the process. The foreman took photographs and a video of the panels and wiring before removing the panels to ensure they would be placed back correctly. The crew worked in an organized manner and removed all the panels. After our new roof was installed, the same crew returned and placed the solar panels back on our new roof and reattached the wiring.",
       rating: 5,
-      text: "After researching multiple companies, we chose Melia King Solar and couldn't be happier. The quality of the panels and installation exceeded our expectations. Highly recommend!",
-    },
-    {
-      name: "Jennifer T.",
-      location: "Scottsdale, AZ",
-      rating: 5,
-      text: "The team made going solar incredibly easy. They handled all the permits and paperwork, and the installation crew was courteous and efficient. Our system has been performing great!",
-    },
-    {
-      name: "William C.",
-      location: "Dallas, TX",
-      rating: 5,
-      text: "Outstanding service from consultation to completion. They designed a system perfectly sized for our needs and the savings have been even better than projected. Five stars!",
-    },
-    {
-      name: "Lisa K.",
-      location: "Irvine, CA",
-      rating: 5,
-      text: "We were hesitant about solar but the team put all our concerns to rest. They were transparent about costs and savings, and delivered exactly what they promised. Couldn't ask for more.",
     },
   ];
 
@@ -113,7 +87,7 @@ const Testimonials = () => {
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-4 h-4 fill-foreground text-foreground"
+                        className="w-4 h-4 fill-accent text-accent"
                       />
                     ))}
                   </div>
@@ -128,9 +102,11 @@ const Testimonials = () => {
                     <div className="font-semibold text-foreground">
                       {testimonial.name}
                     </div>
-                    <div className="text-sm text-muted-foreground">
-                      {testimonial.location}
-                    </div>
+                    {testimonial.title && (
+                      <div className="text-sm text-muted-foreground">
+                        {testimonial.title}
+                      </div>
+                    )}
                   </div>
                 </div>
               </CarouselItem>
@@ -144,15 +120,23 @@ const Testimonials = () => {
 
         {/* Google Reviews Badge */}
         <div className="mt-12 text-center">
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-secondary rounded-full">
+          <a
+            href="https://maps.app.goo.gl/b8Z83MdUr8dECADZ9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-6 py-3 bg-secondary rounded-full hover:bg-border transition-colors"
+          >
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-foreground text-foreground" />
+                <Star key={i} className="w-4 h-4 fill-accent text-accent" />
               ))}
             </div>
             <span className="font-semibold text-foreground">4.9</span>
             <span className="text-muted-foreground">on Google Reviews</span>
-          </div>
+          </a>
+          <p className="mt-3 text-xs text-muted-foreground italic">
+            Melia King is part owner of Voltaic Inc
+          </p>
         </div>
       </div>
     </section>

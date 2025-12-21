@@ -103,7 +103,7 @@ const Header = () => {
                 {services.map((service) => (
                   <DropdownMenuItem
                     key={service.name}
-                    className="cursor-pointer hover:bg-secondary focus:bg-secondary"
+                    className="cursor-pointer hover:bg-accent focus:bg-accent text-foreground"
                     onClick={() => handleNavClick(service.href)}
                   >
                     {service.name}
