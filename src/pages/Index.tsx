@@ -9,6 +9,7 @@ import Services from "@/components/sections/Services";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import CTA from "@/components/sections/CTA";
+import InstagramFeed from "@/components/sections/InstagramFeed";
 
 const Index = () => {
   return (
@@ -44,6 +45,7 @@ const Index = () => {
         <Testimonials />
         <Contact />
         <CTA />
+        <InstagramFeed />
       </main>
       <Footer />
     </>
