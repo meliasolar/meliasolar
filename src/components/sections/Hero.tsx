@@ -25,7 +25,7 @@ const Hero = () => {
           >
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="text-sm font-medium text-foreground">
-              California&apos;s Trusted Energy Partner
+              Southern California&apos;s Solar Experts
             </span>
           </div>
 
@@ -34,9 +34,9 @@ const Hero = () => {
             className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight animate-fade-up"
             style={{ animationDelay: "0.2s" }}
           >
-            Your Concierge
+            Your Personal
             <span className="block">
-              <span className="text-gradient-solar">Energy</span> Advisor
+              <span className="text-gradient-solar">Solar</span> Guide
             </span>
           </h1>
 
@@ -45,8 +45,7 @@ const Hero = () => {
             className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed animate-fade-up"
             style={{ animationDelay: "0.3s" }}
           >
-            We take complexity out of the solar search. Personalized guidance
-            for homeowners ready to own their energy future.
+            Making solar simple for California homeowners. Expert guidance from consultation to installation — no pressure, just results.
           </p>
 
           {/* CTAs */}

@@ -21,22 +21,16 @@ const About = () => {
                 About Us
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-4">
-                We&apos;re here to rise above to form a new way.
+                Building a brighter future, one home at a time.
               </h2>
             </div>
 
             <p className="text-muted-foreground text-lg leading-relaxed">
-              We believe that we can provide decades of positive impact by
-              providing our customers a solid understanding of the valuable
-              nature of renewable energy and where applicable, aid them with
-              adopting it.
+              At Melia King Solar, we&apos;re passionate about helping families take control of their energy costs. Our mission is to make clean, renewable energy accessible to every homeowner in Southern California.
             </p>
 
             <p className="text-muted-foreground leading-relaxed">
-              As your concierge energy advisor, we guide you through every step
-              of the process — from initial consultation to final installation.
-              No pressure, no gimmicks, just honest advice tailored to your
-              home&apos;s unique needs.
+              We walk alongside you through every step — from your first questions about solar to the day your system goes live. No high-pressure sales tactics, just straightforward advice customized to your home and budget.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4">
