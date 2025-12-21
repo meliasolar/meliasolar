@@ -8,6 +8,7 @@ import quietcoolImage from "@/assets/quietcool-service.jpg";
 const Services = () => {
   const services = [
     {
+      id: "services-solar",
       title: "Solar Panel Installation",
       description:
         "Solar power is the cornerstone of our offerings — a renewable and green source of energy that allows homeowners to be less dependent on traditional electricity sources. Solar systems are becoming more efficient and cost-effective every day! Invest in a solar system to ensure your home is equipped to stay ahead of the changing energy landscape.",
@@ -20,6 +21,7 @@ const Services = () => {
       ],
     },
     {
+      id: "services-hvac",
       title: "HVAC System Installation",
       description:
         "Modern, energy-efficient heating and cooling solutions for your home. Our HVAC systems work seamlessly with your solar installation to maximize energy savings and maintain optimal comfort year-round.",
@@ -32,6 +34,7 @@ const Services = () => {
       ],
     },
     {
+      id: "services-roofing",
       title: "Title 24 Roofing",
       description:
         "California Title 24 compliant cool roof installations that meet state energy efficiency requirements while protecting your home. Our roofing solutions are designed to reduce heat absorption and lower cooling costs.",
@@ -44,6 +47,7 @@ const Services = () => {
       ],
     },
     {
+      id: "services-quietcool",
       title: "QuietCool Whole House Fan",
       description:
         "The QuietCool whole house fan system provides an affordable and energy-efficient way to cool your home. Drawing in cool outside air while exhausting hot air from your attic, it can reduce AC usage by up to 90%.",
@@ -79,7 +83,8 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className={`grid lg:grid-cols-2 gap-12 items-center ${
+              id={service.id}
+              className={`grid lg:grid-cols-2 gap-12 items-center scroll-mt-24 ${
                 index % 2 === 1 ? "lg:flex-row-reverse" : ""
               }`}
             >
