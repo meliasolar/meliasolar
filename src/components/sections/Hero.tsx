@@ -1,0 +1,100 @@
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Play } from "lucide-react";
+import heroImage from "@/assets/hero-solar.jpg";
+
+const Hero = () => {
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={heroImage}
+          alt="Solar panels on California home"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />
+      </div>
+
+      {/* Content */}
+      <div className="relative container mx-auto px-6 pt-32 pb-20">
+        <div className="max-w-2xl space-y-8">
+          {/* Badge */}
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border animate-fade-up"
+            style={{ animationDelay: "0.1s" }}
+          >
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            <span className="text-sm font-medium text-foreground">
+              California&apos;s Trusted Energy Partner
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1
+            className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight animate-fade-up"
+            style={{ animationDelay: "0.2s" }}
+          >
+            Your Concierge
+            <span className="block">
+              <span className="text-gradient-solar">Energy</span> Advisor
+            </span>
+          </h1>
+
+          {/* Subheadline */}
+          <p
+            className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed animate-fade-up"
+            style={{ animationDelay: "0.3s" }}
+          >
+            We take complexity out of the solar search. Personalized guidance
+            for homeowners ready to own their energy future.
+          </p>
+
+          {/* CTAs */}
+          <div
+            className="flex flex-col sm:flex-row gap-4 animate-fade-up"
+            style={{ animationDelay: "0.4s" }}
+          >
+            <Button variant="solar" size="xl">
+              Get Free Quote
+              <ArrowRight className="w-5 h-5" />
+            </Button>
+            <Button variant="heroOutline" size="xl">
+              <Play className="w-5 h-5" />
+              Learn More
+            </Button>
+          </div>
+
+          {/* Stats */}
+          <div
+            className="grid grid-cols-3 gap-8 pt-8 border-t border-border/50 animate-fade-up"
+            style={{ animationDelay: "0.5s" }}
+          >
+            {[
+              { value: "5K+", label: "Installations" },
+              { value: "99%", label: "Satisfaction" },
+              { value: "10+", label: "Years Experience" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center sm:text-left">
+                <div className="font-display text-3xl md:text-4xl font-bold text-foreground">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted-foreground mt-1">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
+        <div className="w-6 h-10 rounded-full border-2 border-foreground/30 flex items-start justify-center p-2">
+          <div className="w-1 h-2 rounded-full bg-foreground/50 animate-pulse" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;

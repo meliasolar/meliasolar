@@ -1,13 +1,47 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Helmet } from "react-helmet-async";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import WhySolar from "@/components/sections/WhySolar";
+import Services from "@/components/sections/Services";
+import Testimonials from "@/components/sections/Testimonials";
+import CTA from "@/components/sections/CTA";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Helmet>
+        <title>Melia King Solar | Your Concierge Energy Advisor in California</title>
+        <meta
+          name="description"
+          content="Melia King Solar - California's trusted solar energy partner. Expert solar panel installation, HVAC, Title 24 roofing, and QuietCool whole house fans. Get your free quote today!"
+        />
+        <meta
+          name="keywords"
+          content="solar panels, solar installation, California solar, HVAC, Title 24 roofing, QuietCool, energy savings, renewable energy"
+        />
+        <link rel="canonical" href="https://meliasolar.com" />
+        <meta property="og:title" content="Melia King Solar | Your Concierge Energy Advisor" />
+        <meta
+          property="og:description"
+          content="California's trusted solar energy partner. Expert solar panel installation and whole-home energy solutions."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://meliasolar.com" />
+      </Helmet>
+
+      <Header />
+      <main>
+        <Hero />
+        <About />
+        <WhySolar />
+        <Services />
+        <Testimonials />
+        <CTA />
+      </main>
+      <Footer />
+    </>
   );
 };
 
