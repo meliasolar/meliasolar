@@ -1,4 +1,5 @@
-import { Instagram, Play, ExternalLink } from "lucide-react";
+import { Instagram, Play, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 
 const instagramPosts = [
   {
@@ -24,6 +25,41 @@ const instagramPosts = [
 ];
 
 const InstagramFeed = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    const ref = scrollRef.current;
+    if (ref) {
+      ref.addEventListener("scroll", checkScroll);
+      window.addEventListener("resize", checkScroll);
+      return () => {
+        ref.removeEventListener("scroll", checkScroll);
+        window.removeEventListener("resize", checkScroll);
+      };
+    }
+  }, []);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const scrollAmount = 220;
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <section className="py-16 md:py-24 bg-muted/30">
       <div className="container mx-auto px-6">
@@ -43,46 +79,73 @@ const InstagramFeed = () => {
         </div>
 
         {/* Instagram Carousel (mobile) / Grid (desktop) */}
-        <div className="flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-4 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
-          {instagramPosts.map((post, index) => (
-            <a
-              key={index}
-              href={post.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative flex-shrink-0 w-[200px] md:w-auto aspect-square bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] snap-center"
-            >
-              {/* Overlay pattern */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              
-              {/* Solar/energy themed background pattern */}
-              <div className="absolute inset-0 opacity-20">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 border-4 border-white/30 rounded-full" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-white/20 rounded-full" />
-              </div>
+        <div className="relative">
+          {/* Left Arrow - mobile only */}
+          <button
+            onClick={() => scroll("left")}
+            className={`md:hidden absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-background/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-opacity ${
+              canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="w-5 h-5 text-foreground" />
+          </button>
 
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                {post.type === "reel" ? (
-                  <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                    <Play className="w-6 h-6 fill-white" />
-                  </div>
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                    <Instagram className="w-6 h-6" />
-                  </div>
-                )}
-                <span className="mt-2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  View {post.type === "reel" ? "Reel" : "Post"}
-                </span>
-              </div>
+          {/* Right Arrow - mobile only */}
+          <button
+            onClick={() => scroll("right")}
+            className={`md:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-background/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-opacity ${
+              canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="w-5 h-5 text-foreground" />
+          </button>
 
-              {/* External link indicator */}
-              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <ExternalLink className="w-4 h-4 text-white" />
-              </div>
-            </a>
-          ))}
+          <div
+            ref={scrollRef}
+            className="flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-4 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0"
+          >
+            {instagramPosts.map((post, index) => (
+              <a
+                key={index}
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative flex-shrink-0 w-[200px] md:w-auto aspect-square bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] snap-center"
+              >
+                {/* Overlay pattern */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                
+                {/* Solar/energy themed background pattern */}
+                <div className="absolute inset-0 opacity-20">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 border-4 border-white/30 rounded-full" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-white/20 rounded-full" />
+                </div>
+
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+                  {post.type === "reel" ? (
+                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                      <Play className="w-6 h-6 fill-white" />
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                      <Instagram className="w-6 h-6" />
+                    </div>
+                  )}
+                  <span className="mt-2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    View {post.type === "reel" ? "Reel" : "Post"}
+                  </span>
+                </div>
+
+                {/* External link indicator */}
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ExternalLink className="w-4 h-4 text-white" />
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* Follow Button */}
