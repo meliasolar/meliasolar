@@ -16,48 +16,48 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 20% 15%;
 
-    /* Primary - Deep purple for elegance and energy */
-    --primary: 270 50% 30%;
-    --primary-foreground: 270 20% 98%;
+    /* Primary - Lighter purple for elegance */
+    --primary: 270 45% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Soft lavender */
-    --secondary: 270 20% 95%;
-    --secondary-foreground: 270 30% 15%;
+    /* Secondary - Light warm orange */
+    --secondary: 30 80% 95%;
+    --secondary-foreground: 30 60% 25%;
 
     /* Muted tones */
     --muted: 270 15% 92%;
     --muted-foreground: 270 10% 45%;
 
-    /* Accent - Vibrant purple */
-    --accent: 280 80% 55%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Light orange as complementary */
+    --accent: 30 90% 60%;
+    --accent-foreground: 30 60% 15%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 88%;
-    --input: 40 20% 88%;
-    --ring: 270 50% 30%;
+    --border: 30 30% 88%;
+    --input: 30 30% 88%;
+    --ring: 270 45% 50%;
 
     --radius: 0.75rem;
 
     /* Custom colors for solar theme */
-    --solar-purple: 280 80% 55%;
-    --solar-violet: 270 70% 45%;
-    --deep-purple: 270 50% 30%;
-    --purple-light: 270 40% 45%;
-    --warm-white: 270 20% 98%;
-    --lavender: 270 20% 95%;
+    --solar-purple: 270 45% 50%;
+    --solar-violet: 270 50% 60%;
+    --light-orange: 30 90% 60%;
+    --peach: 30 80% 70%;
+    --warm-white: 30 30% 98%;
+    --cream: 30 40% 95%;
 
     /* Gradients */
-    --gradient-solar: linear-gradient(135deg, hsl(280 80% 55%) 0%, hsl(270 70% 45%) 100%);
-    --gradient-forest: linear-gradient(135deg, hsl(270 50% 30%) 0%, hsl(270 40% 45%) 100%);
-    --gradient-warm: linear-gradient(180deg, hsl(270 20% 98%) 0%, hsl(270 20% 95%) 100%);
+    --gradient-solar: linear-gradient(135deg, hsl(270 45% 50%) 0%, hsl(270 50% 60%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(30 90% 60%) 0%, hsl(30 80% 70%) 100%);
+    --gradient-warm: linear-gradient(180deg, hsl(30 30% 98%) 0%, hsl(30 40% 95%) 100%);
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(270 30% 15% / 0.08);
-    --shadow-medium: 0 8px 30px -8px hsl(270 30% 15% / 0.12);
-    --shadow-glow: 0 0 40px hsl(280 80% 55% / 0.3);
+    --shadow-soft: 0 4px 20px -4px hsl(270 30% 30% / 0.08);
+    --shadow-medium: 0 8px 30px -8px hsl(270 30% 30% / 0.12);
+    --shadow-glow: 0 0 40px hsl(270 45% 50% / 0.3);
 
     /* Sidebar */
     --sidebar-background: 0 0% 98%;
