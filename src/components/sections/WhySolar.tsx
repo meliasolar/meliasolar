@@ -49,11 +49,10 @@ const WhySolar = () => {
             Why Solar
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-4">
-            Welcome to the World of Solar Energy
+            Discover the Benefits of Going Solar
           </h2>
           <p className="text-muted-foreground text-lg mt-6">
-            We are a leading solar energy concierge embodying cutting-edge
-            technology for a sustainable world.
+            Join thousands of California homeowners who have already made the switch to clean, affordable solar energy.
           </p>
         </div>
 

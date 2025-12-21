@@ -11,11 +11,10 @@ const CTA = () => {
       <div className="container mx-auto px-6 relative">
         <div className="max-w-3xl mx-auto text-center space-y-8">
           <h2 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground">
-            Ready to Own Your Energy Future?
+            Let&apos;s Start Your Solar Journey
           </h2>
           <p className="text-primary-foreground/80 text-lg leading-relaxed">
-            Take the first step toward energy independence. Get a free, no-obligation
-            consultation and discover how much you could save with solar.
+            Schedule a free consultation today and see how much you could save. No obligations, no pressure — just honest answers to your solar questions.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
