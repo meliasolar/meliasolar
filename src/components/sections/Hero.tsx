@@ -66,10 +66,6 @@ const Hero = () => {
               Get Free Quote
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button variant="heroOutline" size="xl">
-              <Play className="w-5 h-5" />
-              Learn More
-            </Button>
           </div>
 
           {/* Stats */}
