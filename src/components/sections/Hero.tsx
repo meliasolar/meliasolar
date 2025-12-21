@@ -45,7 +45,7 @@ const Hero = () => {
             className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed animate-fade-up"
             style={{ animationDelay: "0.3s" }}
           >
-            Making solar simple for California homeowners. Expert guidance from consultation to installation — no pressure, just results.
+            We make solar possible for homeowners nationwide by keeping its cost equivalent to your existing energy bill. Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
           </p>
 
           {/* CTAs */}
