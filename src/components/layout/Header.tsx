@@ -115,7 +115,16 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button variant="solar" size="lg">
+            <Button
+              variant="solar"
+              size="lg"
+              onClick={() => {
+                const element = document.getElementById("contact");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+            >
               Get Free Quote
             </Button>
           </div>
@@ -182,7 +191,18 @@ const Header = () => {
                 )}
               </div>
 
-              <Button variant="solar" size="lg" className="mt-2">
+              <Button
+                variant="solar"
+                size="lg"
+                className="mt-2"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  const element = document.getElementById("contact");
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
                 Get Free Quote
               </Button>
             </div>
