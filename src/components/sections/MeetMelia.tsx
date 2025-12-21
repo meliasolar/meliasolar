@@ -1,17 +1,19 @@
 import { Award, Heart, Users } from "lucide-react";
+import meliaImage from "@/assets/melia-king.png";
 
 const MeetMelia = () => {
   return (
     <section id="meet-melia" className="py-24 bg-background">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
-          {/* Image Placeholder */}
+          {/* Image */}
           <div className="relative">
             <div className="aspect-[4/5] rounded-2xl bg-secondary overflow-hidden">
-              {/* Placeholder for Melia's photo */}
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                <span className="text-lg">Photo coming soon</span>
-              </div>
+              <img
+                src={meliaImage}
+                alt="Melia King - Solar Energy Advisor"
+                className="w-full h-full object-cover object-top"
+              />
             </div>
             {/* Decorative element */}
             <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-2xl bg-accent/20 -z-10" />
