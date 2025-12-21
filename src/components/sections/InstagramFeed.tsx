@@ -42,15 +42,15 @@ const InstagramFeed = () => {
           </p>
         </div>
 
-        {/* Instagram Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {/* Instagram Carousel (mobile) / Grid (desktop) */}
+        <div className="flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-4 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
           {instagramPosts.map((post, index) => (
             <a
               key={index}
               href={post.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative aspect-square bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+              className="group relative flex-shrink-0 w-[200px] md:w-auto aspect-square bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] snap-center"
             >
               {/* Overlay pattern */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
