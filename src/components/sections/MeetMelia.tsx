@@ -31,11 +31,7 @@ const MeetMelia = () => {
             </div>
 
             <p className="text-muted-foreground text-lg leading-relaxed">
-              With over a decade of experience in the solar industry, Melia King has helped thousands of homeowners make the switch to clean energy. Her passion for sustainability and commitment to exceptional service has made her one of California's most trusted solar advisors.
-            </p>
-
-            <p className="text-muted-foreground leading-relaxed">
-              As a part owner of Voltaic Inc, Melia brings insider knowledge and exclusive access to the best equipment and installation teams in the business. She believes everyone deserves honest, transparent guidance when making the switch to solar.
+              Melia King is passionate about helping families &amp; businesses take control of their energy costs. Her mission is to make clean, renewable energy accessible to every business &amp; homeowner in 13 states…&amp; counting.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-6 pt-4">
