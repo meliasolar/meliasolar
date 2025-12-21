@@ -68,46 +68,46 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-secondary">
+    <section id="contact" className="py-24 bg-primary text-primary-foreground">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
           {/* Left Column - Info */}
           <div>
-            <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground tracking-tight">
+            <h2 className="font-display text-4xl md:text-5xl font-semibold text-primary-foreground tracking-tight">
               Get Your Free Quote
             </h2>
-            <p className="text-muted-foreground text-lg mt-6 max-w-md">
+            <p className="text-primary-foreground/80 text-lg mt-6 max-w-md">
               Ready to start saving on your energy bills? Fill out the form and we'll get back to you within 24 hours.
             </p>
 
             <div className="mt-12 space-y-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
-                  <Phone className="w-5 h-5 text-accent" />
+                <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                  <Phone className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Call us</div>
-                  <div className="font-semibold text-foreground">(888) 555-SOLAR</div>
+                  <div className="text-sm text-primary-foreground/70">Call us</div>
+                  <div className="font-semibold text-primary-foreground">(888) 555-SOLAR</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
-                  <Mail className="w-5 h-5 text-accent" />
+                <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Email us</div>
-                  <div className="font-semibold text-foreground">hello@meliakingsolar.com</div>
+                  <div className="text-sm text-primary-foreground/70">Email us</div>
+                  <div className="font-semibold text-primary-foreground">hello@meliakingsolar.com</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-accent" />
+                <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Service areas</div>
-                  <div className="font-semibold text-foreground">California, Arizona & Texas</div>
+                  <div className="text-sm text-primary-foreground/70">Service areas</div>
+                  <div className="font-semibold text-primary-foreground">California, Arizona & Texas</div>
                 </div>
               </div>
             </div>
