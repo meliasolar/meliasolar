@@ -95,6 +95,9 @@ const TestimonialsPage = () => {
                 <span className="font-bold text-foreground text-lg">4.9</span>
                 <span className="text-muted-foreground">on Google Reviews</span>
               </a>
+              <p className="mt-3 text-xs text-muted-foreground italic">
+                Melia King is part owner of Voltaic Inc
+              </p>
             </div>
           </div>
         </section>
