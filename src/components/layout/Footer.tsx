@@ -1,13 +1,30 @@
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Sun, Phone, Mail, MapPin } from "lucide-react";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToSection = (sectionId: string) => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        element?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else {
+      const element = document.getElementById(sectionId);
+      element?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
                 <Sun className="w-6 h-6 text-foreground" />
               </div>
@@ -19,7 +36,7 @@ const Footer = () => {
                   Solar
                 </span>
               </div>
-            </div>
+            </Link>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               We make solar possible for homeowners &amp; businesses by keeping the cost equal to your existing energy bill. Your cost does not go up! Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
             </p>
@@ -31,23 +48,46 @@ const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-3">
-              {[
-                { name: "Home", href: "/" },
-                { name: "Meet Melia", href: "/#about" },
-                { name: "Services", href: "/services" },
-                { name: "Savings Calculator", href: "/#calculator" },
-                { name: "Testimonials", href: "/testimonials" },
-                { name: "FAQ", href: "/faq" },
-              ].map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <button
+                  onClick={() => scrollToSection("about")}
+                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                >
+                  Meet Melia
+                </button>
+              </li>
+              <li>
+                <Link
+                  to="/services"
+                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                >
+                  Services
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={() => scrollToSection("calculator")}
+                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                >
+                  Savings Calculator
+                </button>
+              </li>
+              <li>
+                <Link
+                  to="/testimonials"
+                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                >
+                  Testimonials
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/faq"
+                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                >
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
 
