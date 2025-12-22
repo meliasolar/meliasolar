@@ -23,6 +23,10 @@ const About = () => {
                 src={meliaImage}
                 alt="Melia King - Solar Energy Advisor"
                 className="w-full h-full object-cover object-top"
+                width={544}
+                height={680}
+                loading="lazy"
+                decoding="async"
               />
             </div>
             {/* Decorative element */}
