@@ -7,14 +7,18 @@ const Footer = () => {
 
   const scrollToSection = (sectionId: string) => {
     if (location.pathname !== "/") {
-      navigate("/");
+      navigate(`/#${sectionId}`);
       setTimeout(() => {
         const element = document.getElementById(sectionId);
-        element?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 300);
     } else {
       const element = document.getElementById(sectionId);
-      element?.scrollIntoView({ behavior: "smooth" });
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
