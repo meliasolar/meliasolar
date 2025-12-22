@@ -107,7 +107,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-sm text-primary-foreground/70">Service areas</div>
-                  <div className="font-semibold text-primary-foreground">California, Arizona & Texas</div>
+                  <div className="font-semibold text-primary-foreground">California, Arizona, Texas & 10 other states</div>
                 </div>
               </div>
             </div>
