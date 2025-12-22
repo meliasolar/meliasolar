@@ -11,6 +11,10 @@ const Hero = () => {
           src={heroImage}
           alt="Solar panels on California home"
           className="w-full h-full object-cover"
+          width={1920}
+          height={1080}
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />
       </div>
