@@ -64,7 +64,11 @@ const Footer = () => {
                 <Link
                   to="/services"
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                  className={`transition-colors text-sm ${
+                    location.pathname === "/services"
+                      ? "text-accent"
+                      : "text-primary-foreground/80 hover:text-primary-foreground"
+                  }`}
                 >
                   Services
                 </Link>
@@ -81,7 +85,11 @@ const Footer = () => {
                 <Link
                   to="/testimonials"
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                  className={`transition-colors text-sm ${
+                    location.pathname === "/testimonials"
+                      ? "text-accent"
+                      : "text-primary-foreground/80 hover:text-primary-foreground"
+                  }`}
                 >
                   Testimonials
                 </Link>
@@ -90,7 +98,11 @@ const Footer = () => {
                 <Link
                   to="/faq"
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                  className={`transition-colors text-sm ${
+                    location.pathname === "/faq"
+                      ? "text-accent"
+                      : "text-primary-foreground/80 hover:text-primary-foreground"
+                  }`}
                 >
                   FAQ
                 </Link>
