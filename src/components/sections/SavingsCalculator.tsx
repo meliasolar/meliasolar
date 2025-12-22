@@ -22,7 +22,7 @@ const SavingsCalculator = () => {
             Savings Calculator
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
-            See How Much You Can <span className="text-gradient-solar">Save</span>
+            Your Personal <span className="text-gradient-solar">Solar King</span>
           </h2>
           <p className="text-lg text-muted-foreground">
             Your solar payment equals your current bill—but protects you from rising energy costs for 25+ years.
