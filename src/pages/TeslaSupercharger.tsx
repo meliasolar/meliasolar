@@ -1,0 +1,252 @@
+import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import FloatingContactButtons from "@/components/FloatingContactButtons";
+import { Button } from "@/components/ui/button";
+import { CheckCircle2, DollarSign, Zap, Users, TrendingUp, Shield } from "lucide-react";
+import teslaImage from "@/assets/tesla-supercharger-service.jpg";
+
+const TeslaSupercharger = () => {
+  const benefits = [
+    {
+      icon: DollarSign,
+      title: "Lifetime Passive Income",
+      description: "Collect revenue from every single charge at your location, forever.",
+    },
+    {
+      icon: Users,
+      title: "Attract More Customers",
+      description: "EV drivers actively seek out businesses with charging stations.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Increase Property Value",
+      description: "EV infrastructure adds significant value to commercial properties.",
+    },
+    {
+      icon: Zap,
+      title: "Fast Charging Technology",
+      description: "Tesla Superchargers provide the fastest charging speeds available.",
+    },
+    {
+      icon: Shield,
+      title: "Certified Installation",
+      description: "Melia is a certified Tesla Supercharger installer with expert technicians.",
+    },
+    {
+      icon: CheckCircle2,
+      title: "Full Support",
+      description: "We handle everything from permits to installation to ongoing maintenance.",
+    },
+  ];
+
+  const features = [
+    "Revenue from every charge session",
+    "Professional certified installation",
+    "Attract EV-driving customers",
+    "Increase foot traffic to your business",
+    "Future-proof your property",
+    "Join the growing EV network",
+  ];
+
+  return (
+    <>
+      <Helmet>
+        <title>Tesla Supercharger Installation | Melia King Solar</title>
+        <meta
+          name="description"
+          content="Add Tesla Superchargers to your business parking lot and earn lifetime passive income from every charge. Melia is a certified Tesla Supercharger installer."
+        />
+        <meta
+          name="keywords"
+          content="Tesla Supercharger, EV charging, electric vehicle, commercial charging station, passive income, certified installer"
+        />
+        <link rel="canonical" href="https://meliasolar.com/tesla-supercharger" />
+      </Helmet>
+
+      <Header />
+      
+      <main>
+        {/* Hero Section */}
+        <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-gradient-to-b from-secondary to-background">
+          <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <div>
+                  <span className="inline-block bg-accent/20 text-accent px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                    Certified Tesla Installer
+                  </span>
+                  <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                    Tesla Superchargers <span className="text-accent">Pay You</span>
+                  </h1>
+                </div>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
+                  Add Tesla Superchargers to your business parking lot and collect income from every single charge, for lifetime. Turn your parking spaces into a revenue stream while supporting the EV revolution.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button
+                    variant="solar"
+                    size="lg"
+                    onClick={() => {
+                      const element = document.getElementById("contact-form");
+                      if (element) {
+                        element.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                  >
+                    Get Started Today
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    asChild
+                  >
+                    <a href="tel:+13103469466">Call +1 (310) 346-9466</a>
+                  </Button>
+                </div>
+              </div>
+
+              <div className="relative">
+                <img
+                  src={teslaImage}
+                  alt="Tesla Supercharger station"
+                  className="w-full rounded-2xl shadow-medium"
+                />
+                <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-2xl bg-accent/20 -z-10" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+                Why Add Tesla Superchargers to Your Business?
+              </h2>
+              <p className="text-muted-foreground text-lg mt-4">
+                Join the EV charging network and turn your parking lot into a profit center.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {benefits.map((benefit) => (
+                <div
+                  key={benefit.title}
+                  className="bg-card rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-4">
+                    <benefit.icon className="w-6 h-6 text-accent" />
+                  </div>
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">
+                    {benefit.title}
+                  </h3>
+                  <p className="text-muted-foreground">
+                    {benefit.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="py-16 md:py-24 bg-secondary">
+          <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+                  What You Get With Melia
+                </h2>
+                <p className="text-muted-foreground text-lg">
+                  As a certified Tesla Supercharger installer, we handle everything from start to finish so you can focus on running your business.
+                </p>
+                
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {features.map((feature) => (
+                    <div key={feature} className="flex items-center gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
+                      <span className="text-foreground">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Button
+                  variant="solar"
+                  size="lg"
+                  onClick={() => {
+                    const element = document.getElementById("contact-form");
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                >
+                  Request a Consultation
+                </Button>
+              </div>
+
+              <div className="bg-card rounded-2xl p-8 shadow-medium">
+                <h3 className="font-display text-2xl font-bold text-foreground mb-6">
+                  Perfect For
+                </h3>
+                <ul className="space-y-4">
+                  {[
+                    "Shopping centers & retail stores",
+                    "Hotels & hospitality venues",
+                    "Office buildings & business parks",
+                    "Restaurants & entertainment venues",
+                    "Apartment complexes & condos",
+                    "Gas stations & convenience stores",
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-accent" />
+                      <span className="text-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section id="contact-form" className="py-16 md:py-24 bg-primary text-primary-foreground">
+          <div className="container mx-auto px-6 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
+              Ready to Start Earning?
+            </h2>
+            <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
+              Contact us today for a free consultation and learn how Tesla Superchargers can generate passive income for your business.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="bg-accent text-foreground hover:bg-accent/90"
+                asChild
+              >
+                <a href="tel:+13103469466">Call +1 (310) 346-9466</a>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                asChild
+              >
+                <a href="mailto:melia@voltaicnow.com">Email Us</a>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+      <FloatingContactButtons />
+    </>
+  );
+};
+
+export default TeslaSupercharger;
