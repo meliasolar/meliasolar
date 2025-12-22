@@ -2,7 +2,6 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
-import PageTransition from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 
@@ -69,112 +68,110 @@ const TestimonialsPage = () => {
 
       <Header />
 
-      <PageTransition>
-        <main>
-          {/* Hero Section */}
-          <section className="pt-32 pb-8 md:pt-40 md:pb-10 bg-gradient-to-b from-secondary to-background">
-            <div className="container mx-auto px-6 text-center">
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-                What Our Customers Say
-              </h1>
-              <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
-                Real stories from homeowners and businesses who made the switch to solar with Melia.
-              </p>
-              
-              {/* Google Reviews Badge */}
-              <div className="mt-8">
-                <a
-                  href="https://maps.app.goo.gl/b8Z83MdUr8dECADZ9"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-6 py-3 bg-card rounded-full shadow-soft hover:shadow-medium transition-all"
-                >
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-accent text-accent" />
-                    ))}
-                  </div>
-                  <span className="font-bold text-foreground text-lg">4.9</span>
-                  <span className="text-muted-foreground">on Google Reviews</span>
-                </a>
-                <p className="mt-3 text-xs text-muted-foreground italic">
-                  Melia King is part owner of Voltaic Inc
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Testimonials Grid */}
-          <section className="py-10 md:py-16 bg-background">
-            <div className="container mx-auto px-6">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {testimonials.map((testimonial, index) => (
-                  <div
-                    key={index}
-                    className="bg-card rounded-2xl p-8 shadow-soft hover:shadow-medium transition-all"
-                  >
-                    {/* Stars */}
-                    <div className="flex gap-0.5 mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-4 h-4 fill-accent text-accent"
-                        />
-                      ))}
-                    </div>
-
-                    {/* Text */}
-                    <p className="text-foreground leading-relaxed text-[15px]">
-                      "{testimonial.text}"
-                    </p>
-
-                    {/* Author */}
-                    <div className="mt-6 pt-6 border-t border-border">
-                      <div className="font-semibold text-foreground">
-                        {testimonial.name}
-                      </div>
-                      {testimonial.title && (
-                        <div className="text-sm text-muted-foreground">
-                          {testimonial.title}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <p className="mt-12 text-center text-sm text-muted-foreground italic">
+      <main>
+        {/* Hero Section */}
+        <section className="pt-32 pb-8 md:pt-40 md:pb-10 bg-gradient-to-b from-secondary to-background">
+          <div className="container mx-auto px-6 text-center">
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+              What Our Customers Say
+            </h1>
+            <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
+              Real stories from homeowners and businesses who made the switch to solar with Melia.
+            </p>
+            
+            {/* Google Reviews Badge */}
+            <div className="mt-8">
+              <a
+                href="https://maps.app.goo.gl/b8Z83MdUr8dECADZ9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-6 py-3 bg-card rounded-full shadow-soft hover:shadow-medium transition-all"
+              >
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  ))}
+                </div>
+                <span className="font-bold text-foreground text-lg">4.9</span>
+                <span className="text-muted-foreground">on Google Reviews</span>
+              </a>
+              <p className="mt-3 text-xs text-muted-foreground italic">
                 Melia King is part owner of Voltaic Inc
               </p>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* CTA Section - Leave a Review */}
-          <section className="py-16 md:py-24 bg-primary text-primary-foreground">
-            <div className="container mx-auto px-6 text-center">
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-                Had a Great Experience?
-              </h2>
-              <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
-                We'd love to hear from you! Share your experience and help others discover the benefits of going solar with Melia.
-              </p>
-              <Button
-                size="lg"
-                className="bg-accent text-foreground hover:bg-accent/90"
-                asChild
-              >
-                <a
-                  href="https://maps.app.goo.gl/b8Z83MdUr8dECADZ9"
-                  target="_blank"
-                  rel="noopener noreferrer"
+        {/* Testimonials Grid */}
+        <section className="py-10 md:py-16 bg-background">
+          <div className="container mx-auto px-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="bg-card rounded-2xl p-8 shadow-soft hover:shadow-medium transition-all"
                 >
-                  Leave a Review on Google
-                </a>
-              </Button>
+                  {/* Stars */}
+                  <div className="flex gap-0.5 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-4 h-4 fill-accent text-accent"
+                      />
+                    ))}
+                  </div>
+
+                  {/* Text */}
+                  <p className="text-foreground leading-relaxed text-[15px]">
+                    "{testimonial.text}"
+                  </p>
+
+                  {/* Author */}
+                  <div className="mt-6 pt-6 border-t border-border">
+                    <div className="font-semibold text-foreground">
+                      {testimonial.name}
+                    </div>
+                    {testimonial.title && (
+                      <div className="text-sm text-muted-foreground">
+                        {testimonial.title}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-          </section>
-        </main>
-      </PageTransition>
+
+            <p className="mt-12 text-center text-sm text-muted-foreground italic">
+              Melia King is part owner of Voltaic Inc
+            </p>
+          </div>
+        </section>
+
+        {/* CTA Section - Leave a Review */}
+        <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+          <div className="container mx-auto px-6 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
+              Had a Great Experience?
+            </h2>
+            <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
+              We'd love to hear from you! Share your experience and help others discover the benefits of going solar with Melia.
+            </p>
+            <Button
+              size="lg"
+              className="bg-accent text-foreground hover:bg-accent/90"
+              asChild
+            >
+              <a
+                href="https://maps.app.goo.gl/b8Z83MdUr8dECADZ9"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Leave a Review on Google
+              </a>
+            </Button>
+          </div>
+        </section>
+      </main>
 
       <Footer />
       <FloatingContactButtons />

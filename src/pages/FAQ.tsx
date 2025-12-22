@@ -2,7 +2,6 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
-import PageTransition from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -109,158 +108,156 @@ const FAQ = () => {
 
       <Header />
 
-      <PageTransition>
-        <main>
-          {/* Hero Section */}
-          <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-secondary to-background">
-            <div className="container mx-auto px-6 text-center">
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-                Frequently Asked Questions
-              </h1>
-              <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
-                Everything you need to know about going solar and our energy services.
-              </p>
-            </div>
-          </section>
+      <main>
+        {/* Hero Section */}
+        <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-secondary to-background">
+          <div className="container mx-auto px-6 text-center">
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
+              Everything you need to know about going solar and our energy services.
+            </p>
+          </div>
+        </section>
 
-          {/* General FAQs */}
-          <section className="py-12 md:py-16 bg-background">
-            <div className="container mx-auto px-6">
-              <div className="max-w-3xl mx-auto">
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
-                  General Questions
-                </h2>
-                <Accordion type="single" collapsible className="space-y-4">
-                  {generalFaqs.map((faq, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={`general-${index}`}
-                      className="bg-card rounded-xl px-6 border-none shadow-soft"
-                    >
-                      <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            </div>
-          </section>
-
-          {/* Financial FAQs */}
-          <section className="py-12 md:py-16 bg-secondary">
-            <div className="container mx-auto px-6">
-              <div className="max-w-3xl mx-auto">
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
-                  Financing & Savings
-                </h2>
-                <Accordion type="single" collapsible className="space-y-4">
-                  {financialFaqs.map((faq, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={`financial-${index}`}
-                      className="bg-card rounded-xl px-6 border-none shadow-soft"
-                    >
-                      <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            </div>
-          </section>
-
-          {/* Installation FAQs */}
-          <section className="py-12 md:py-16 bg-background">
-            <div className="container mx-auto px-6">
-              <div className="max-w-3xl mx-auto">
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
-                  Installation & Equipment
-                </h2>
-                <Accordion type="single" collapsible className="space-y-4">
-                  {installationFaqs.map((faq, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={`installation-${index}`}
-                      className="bg-card rounded-xl px-6 border-none shadow-soft"
-                    >
-                      <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            </div>
-          </section>
-
-          {/* Service FAQs */}
-          <section className="py-12 md:py-16 bg-secondary">
-            <div className="container mx-auto px-6">
-              <div className="max-w-3xl mx-auto">
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
-                  Our Services
-                </h2>
-                <Accordion type="single" collapsible className="space-y-4">
-                  {serviceFaqs.map((faq, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={`service-${index}`}
-                      className="bg-card rounded-xl px-6 border-none shadow-soft"
-                    >
-                      <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            </div>
-          </section>
-
-          {/* CTA Section */}
-          <section className="py-16 md:py-24 bg-primary text-primary-foreground">
-            <div className="container mx-auto px-6 text-center">
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-                Still Have Questions?
+        {/* General FAQs */}
+        <section className="py-12 md:py-16 bg-background">
+          <div className="container mx-auto px-6">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
+                General Questions
               </h2>
-              <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
-                Our team is here to help. Contact us for a free consultation and get personalized answers for your situation.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  size="lg"
-                  className="bg-accent text-foreground hover:bg-accent/90"
-                  asChild
-                >
-                  <a href="tel:+13103469466">Call +1 (310) 346-9466</a>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-accent text-accent hover:bg-accent/10"
-                  asChild
-                >
-                  <a href="mailto:melia@voltaicnow.com">Email Us</a>
-                </Button>
-              </div>
+              <Accordion type="single" collapsible className="space-y-4">
+                {generalFaqs.map((faq, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`general-${index}`}
+                    className="bg-card rounded-xl px-6 border-none shadow-soft"
+                  >
+                    <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
-          </section>
-        </main>
-      </PageTransition>
+          </div>
+        </section>
+
+        {/* Financial FAQs */}
+        <section className="py-12 md:py-16 bg-secondary">
+          <div className="container mx-auto px-6">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
+                Financing & Savings
+              </h2>
+              <Accordion type="single" collapsible className="space-y-4">
+                {financialFaqs.map((faq, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`financial-${index}`}
+                    className="bg-card rounded-xl px-6 border-none shadow-soft"
+                  >
+                    <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
+        </section>
+
+        {/* Installation FAQs */}
+        <section className="py-12 md:py-16 bg-background">
+          <div className="container mx-auto px-6">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
+                Installation & Equipment
+              </h2>
+              <Accordion type="single" collapsible className="space-y-4">
+                {installationFaqs.map((faq, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`installation-${index}`}
+                    className="bg-card rounded-xl px-6 border-none shadow-soft"
+                  >
+                    <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
+        </section>
+
+        {/* Service FAQs */}
+        <section className="py-12 md:py-16 bg-secondary">
+          <div className="container mx-auto px-6">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
+                Our Services
+              </h2>
+              <Accordion type="single" collapsible className="space-y-4">
+                {serviceFaqs.map((faq, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`service-${index}`}
+                    className="bg-card rounded-xl px-6 border-none shadow-soft"
+                  >
+                    <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+          <div className="container mx-auto px-6 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
+              Still Have Questions?
+            </h2>
+            <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
+              Our team is here to help. Contact us for a free consultation and get personalized answers for your situation.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="bg-accent text-foreground hover:bg-accent/90"
+                asChild
+              >
+                <a href="tel:+13103469466">Call +1 (310) 346-9466</a>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-accent text-accent hover:bg-accent/10"
+                asChild
+              >
+                <a href="mailto:melia@voltaicnow.com">Email Us</a>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
       <FloatingContactButtons />
