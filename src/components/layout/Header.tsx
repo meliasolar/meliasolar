@@ -64,12 +64,15 @@ const Header = () => {
     >
       <div className="container mx-auto px-6">
         <nav className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-full bg-gradient-solar flex items-center justify-center">
+          {/* Logo - Scroll to Top */}
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="flex items-center gap-2 group cursor-pointer"
+          >
+            <div className="w-10 h-10 rounded-full bg-gradient-solar flex items-center justify-center transition-transform group-hover:scale-110">
               <Sun className="w-6 h-6 text-foreground" />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col text-left">
               <span className="font-display text-xl font-semibold text-foreground">
                 Melia King
               </span>
@@ -77,7 +80,7 @@ const Header = () => {
                 Solar
               </span>
             </div>
-          </Link>
+          </button>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
