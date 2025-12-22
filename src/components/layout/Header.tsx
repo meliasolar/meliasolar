@@ -77,7 +77,7 @@ const Header = () => {
             className="flex items-center gap-2 group cursor-pointer"
           >
             <div className="w-10 h-10 rounded-full bg-gradient-solar flex items-center justify-center transition-transform group-hover:scale-110">
-              <Sun className="w-6 h-6 text-foreground" />
+              <Sun className="w-6 h-6 text-foreground transition-all duration-300 group-hover:animate-pulse group-hover:drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" />
             </div>
             <div className="flex flex-col text-left">
               <span className="font-display text-xl font-semibold text-foreground">
