@@ -25,7 +25,7 @@ const Hero = () => {
           >
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="text-sm font-medium text-foreground">
-              California, Arizona &amp; Texas Trusted Solar Experts
+              Trusted Solar Experts in 13 States
             </span>
           </div>
 
