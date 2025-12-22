@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, ChevronDown } from "lucide-react";
 
-const navLinks = [
+const navLinksBefore = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
+];
+
+const navLinksAfter = [
   { name: "Testimonials", href: "/testimonials" },
   { name: "FAQ", href: "/faq" },
 ];
@@ -58,7 +61,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {navLinksBefore.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
@@ -92,6 +95,16 @@ const Header = () => {
                 </div>
               </div>
             </div>
+            {navLinksAfter.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="text-foreground/80 hover:text-foreground font-medium transition-colors relative group"
+              >
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ))}
           </div>
 
           {/* CTA Button */}
@@ -115,7 +128,7 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-20 left-0 right-0 bg-background border-b border-border animate-fade-in">
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
-              {navLinks.map((link) => (
+              {navLinksBefore.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
@@ -154,6 +167,17 @@ const Header = () => {
                   </div>
                 )}
               </div>
+
+              {navLinksAfter.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-foreground/80 hover:text-foreground font-medium py-2 transition-colors"
+                >
+                  {link.name}
+                </Link>
+              ))}
 
               <Button variant="solar" size="lg" className="mt-2" asChild>
                 <a href="tel:+13103469466">Call Now</a>
