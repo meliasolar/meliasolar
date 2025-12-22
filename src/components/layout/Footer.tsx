@@ -63,6 +63,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/services"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
                 >
                   Services
@@ -79,6 +80,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/testimonials"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
                 >
                   Testimonials
@@ -87,6 +89,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/faq"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
                 >
                   FAQ
