@@ -31,18 +31,23 @@ const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-3">
-              {["Home", "About", "Why Solar", "Services", "Testimonials"].map(
-                (link) => (
-                  <li key={link}>
-                    <a
-                      href={`/#${link.toLowerCase().replace(" ", "-")}`}
-                      className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                )
-              )}
+              {[
+                { name: "Home", href: "/" },
+                { name: "About", href: "/#about" },
+                { name: "Services", href: "/#services" },
+                { name: "Testimonials", href: "/#testimonials" },
+                { name: "FAQ", href: "/faq" },
+                { name: "Contact", href: "/#contact" },
+              ].map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
