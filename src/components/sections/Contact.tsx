@@ -87,7 +87,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-sm text-primary-foreground/70">Call us</div>
-                  <div className="font-semibold text-primary-foreground">+1 (310) 346-9466</div>
+                  <a href="tel:+13103469466" className="font-semibold text-primary-foreground hover:underline">+1 (310) 346-9466</a>
                 </div>
               </div>
 
