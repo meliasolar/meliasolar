@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
+import PageTransition from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import solarImage from "@/assets/solar-service.jpg";
 import hvacImage from "@/assets/hvac-service.jpg";
@@ -93,112 +94,114 @@ const ServicesPage = () => {
 
       <Header />
 
-      <main>
-        {/* Hero Section */}
-        <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-secondary to-background">
-          <div className="container mx-auto px-6 text-center">
-            <span className="text-accent font-semibold text-sm uppercase tracking-widest">
-              Our Services
-            </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mt-4">
-              Renewable Energy Solutions For Your Whole Home
-            </h1>
-            <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
-              Modern, whole home solutions for energy independence. Making the switch to renewable energy has never been simpler.
-            </p>
-          </div>
-        </section>
+      <PageTransition>
+        <main>
+          {/* Hero Section */}
+          <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-secondary to-background">
+            <div className="container mx-auto px-6 text-center">
+              <span className="text-accent font-semibold text-sm uppercase tracking-widest">
+                Our Services
+              </span>
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mt-4">
+                Renewable Energy Solutions For Your Whole Home
+              </h1>
+              <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
+                Modern, whole home solutions for energy independence. Making the switch to renewable energy has never been simpler.
+              </p>
+            </div>
+          </section>
 
-        {/* Services List */}
-        <section className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-6">
-            <div className="space-y-24">
-              {services.map((service, index) => (
-                <div
-                  key={service.id}
-                  id={service.id}
-                  className={`grid lg:grid-cols-2 gap-12 items-center scroll-mt-24 ${
-                    index % 2 === 1 ? "lg:flex-row-reverse" : ""
-                  }`}
-                >
-                  {/* Image */}
+          {/* Services List */}
+          <section className="py-16 md:py-24 bg-background">
+            <div className="container mx-auto px-6">
+              <div className="space-y-24">
+                {services.map((service, index) => (
                   <div
-                    className={`relative rounded-2xl overflow-hidden shadow-medium ${
-                      index % 2 === 1 ? "lg:order-2" : ""
+                    key={service.id}
+                    id={service.id}
+                    className={`grid lg:grid-cols-2 gap-12 items-center scroll-mt-24 ${
+                      index % 2 === 1 ? "lg:flex-row-reverse" : ""
                     }`}
                   >
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-80 lg:h-96 object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
-                  </div>
-
-                  {/* Content */}
-                  <div
-                    className={`space-y-6 ${index % 2 === 1 ? "lg:order-1" : ""}`}
-                  >
-                    <h2 className="font-display text-3xl font-bold text-foreground">
-                      {service.title}
-                    </h2>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {service.description}
-                    </p>
-
-                    <div className="grid sm:grid-cols-2 gap-3">
-                      {service.features.map((feature) => (
-                        <div
-                          key={feature}
-                          className="flex items-center gap-2 text-foreground"
-                        >
-                          <div className="w-2 h-2 rounded-full bg-accent" />
-                          <span className="text-sm">{feature}</span>
-                        </div>
-                      ))}
+                    {/* Image */}
+                    <div
+                      className={`relative rounded-2xl overflow-hidden shadow-medium ${
+                        index % 2 === 1 ? "lg:order-2" : ""
+                      }`}
+                    >
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-80 lg:h-96 object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
                     </div>
 
-                    {service.link && (
-                      <Button variant="solar" asChild>
-                        <Link to={service.link}>Learn More</Link>
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+                    {/* Content */}
+                    <div
+                      className={`space-y-6 ${index % 2 === 1 ? "lg:order-1" : ""}`}
+                    >
+                      <h2 className="font-display text-3xl font-bold text-foreground">
+                        {service.title}
+                      </h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {service.description}
+                      </p>
 
-        {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-primary text-primary-foreground">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-              Ready to Get Started?
-            </h2>
-            <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
-              Contact us today for a free consultation and discover the perfect energy solution for your home or business.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="bg-accent text-foreground hover:bg-accent/90"
-                asChild
-              >
-                <a href="tel:+13103469466">Call +1 (310) 346-9466</a>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-                asChild
-              >
-                <a href="mailto:melia@voltaicnow.com">Email Us</a>
-              </Button>
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {service.features.map((feature) => (
+                          <div
+                            key={feature}
+                            className="flex items-center gap-2 text-foreground"
+                          >
+                            <div className="w-2 h-2 rounded-full bg-accent" />
+                            <span className="text-sm">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {service.link && (
+                        <Button variant="solar" asChild>
+                          <Link to={service.link}>Learn More</Link>
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      </main>
+          </section>
+
+          {/* CTA Section */}
+          <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+            <div className="container mx-auto px-6 text-center">
+              <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
+                Ready to Get Started?
+              </h2>
+              <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
+                Contact us today for a free consultation and discover the perfect energy solution for your home or business.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  className="bg-accent text-foreground hover:bg-accent/90"
+                  asChild
+                >
+                  <a href="tel:+13103469466">Call +1 (310) 346-9466</a>
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                  asChild
+                >
+                  <a href="mailto:melia@voltaicnow.com">Email Us</a>
+                </Button>
+              </div>
+            </div>
+          </section>
+        </main>
+      </PageTransition>
 
       <Footer />
       <FloatingContactButtons />
