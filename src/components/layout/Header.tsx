@@ -1,34 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Sun, ChevronDown } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Menu, X, Sun } from "lucide-react";
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/#about" },
-  { name: "Why Solar", href: "/#why-solar" },
-  { name: "Testimonials", href: "/#testimonials" },
+  { name: "About", href: "/about" },
+  { name: "Services", href: "/services" },
+  { name: "Testimonials", href: "/testimonials" },
   { name: "FAQ", href: "/faq" },
-];
-
-const services = [
-  { name: "Solar", href: "/#services-solar" },
-  { name: "Tesla Superchargers", href: "/tesla-supercharger" },
-  { name: "HVAC", href: "/#services-hvac" },
-  { name: "Title 24 Roofing", href: "/#services-roofing" },
-  { name: "QuietCool Whole House Fan", href: "/#services-quietcool" },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,24 +22,6 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleNavClick = (href: string) => {
-    setIsMobileMenuOpen(false);
-    setIsMobileServicesOpen(false);
-    
-    // Handle regular page navigation
-    if (!href.startsWith("/#")) {
-      window.location.href = href;
-      return;
-    }
-    
-    // Handle hash navigation
-    const elementId = href.substring(2);
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <header
@@ -84,56 +51,21 @@ const Header = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  if (link.href.startsWith("/#")) {
-                    e.preventDefault();
-                    handleNavClick(link.href);
-                  }
-                }}
+                to={link.href}
                 className="text-foreground/80 hover:text-foreground font-medium transition-colors relative group"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
-              </a>
+              </Link>
             ))}
-
-            {/* Services Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-foreground/80 hover:text-foreground font-medium transition-colors relative group outline-none">
-                Services
-                <ChevronDown className="w-4 h-4" />
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-card border border-border shadow-medium z-50">
-                {services.map((service) => (
-                  <DropdownMenuItem
-                    key={service.name}
-                    className="cursor-pointer hover:bg-accent focus:bg-accent text-foreground"
-                    onClick={() => handleNavClick(service.href)}
-                  >
-                    {service.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button
-              variant="solar"
-              size="lg"
-              onClick={() => {
-                const element = document.getElementById("contact");
-                if (element) {
-                  element.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-            >
-              Get Free Quote
+            <Button variant="solar" size="lg" asChild>
+              <a href="tel:+13103469466">Call Now</a>
             </Button>
           </div>
 
@@ -152,66 +84,18 @@ const Header = () => {
           <div className="lg:hidden absolute top-20 left-0 right-0 bg-background border-b border-border animate-fade-in">
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
-                  onClick={(e) => {
-                    if (link.href.startsWith("/#")) {
-                      e.preventDefault();
-                      handleNavClick(link.href);
-                    }
-                  }}
+                  to={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="text-foreground/80 hover:text-foreground font-medium py-2 transition-colors"
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
 
-              {/* Mobile Services Accordion */}
-              <div>
-                <button
-                  onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
-                  className="flex items-center justify-between w-full text-foreground/80 hover:text-foreground font-medium py-2 transition-colors"
-                >
-                  Services
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform ${
-                      isMobileServicesOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {isMobileServicesOpen && (
-                  <div className="pl-4 flex flex-col gap-2 mt-2">
-                    {services.map((service) => (
-                      <a
-                        key={service.name}
-                        href={service.href}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleNavClick(service.href);
-                        }}
-                        className="text-foreground/70 hover:text-foreground text-sm py-1 transition-colors"
-                      >
-                        {service.name}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <Button
-                variant="solar"
-                size="lg"
-                className="mt-2"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  const element = document.getElementById("contact");
-                  if (element) {
-                    element.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-              >
-                Get Free Quote
+              <Button variant="solar" size="lg" className="mt-2" asChild>
+                <a href="tel:+13103469466">Call Now</a>
               </Button>
             </div>
           </div>
