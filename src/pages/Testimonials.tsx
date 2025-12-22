@@ -76,7 +76,7 @@ const TestimonialsPage = () => {
               What Our Customers Say
             </h1>
             <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
-              Real stories from homeowners and businesses who made the switch to solar.
+              Real stories from homeowners and businesses who made the switch to solar with Melia.
             </p>
             
             {/* Google Reviews Badge */}
@@ -147,32 +147,28 @@ const TestimonialsPage = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section - Leave a Review */}
         <section className="py-16 md:py-24 bg-primary text-primary-foreground">
           <div className="container mx-auto px-6 text-center">
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-              Ready to Join Our Happy Customers?
+              Had a Great Experience?
             </h2>
             <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
-              Contact us today for a free consultation and start your journey to energy independence.
+              We'd love to hear from you! Share your experience and help others discover the benefits of going solar with Melia.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="bg-accent text-foreground hover:bg-accent/90"
-                asChild
+            <Button
+              size="lg"
+              className="bg-accent text-foreground hover:bg-accent/90"
+              asChild
+            >
+              <a
+                href="https://maps.app.goo.gl/b8Z83MdUr8dECADZ9"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <a href="tel:+13103469466">Call +1 (310) 346-9466</a>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-                asChild
-              >
-                <a href="mailto:melia@voltaicnow.com">Email Us</a>
-              </Button>
-            </div>
+                Leave a Review on Google
+              </a>
+            </Button>
           </div>
         </section>
       </main>
