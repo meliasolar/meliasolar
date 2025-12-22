@@ -9,7 +9,7 @@ import Services from "@/components/sections/Services";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import InstagramFeed from "@/components/sections/InstagramFeed";
-import FloatingCallButton from "@/components/FloatingCallButton";
+import FloatingContactButtons from "@/components/FloatingContactButtons";
 
 const Index = () => {
   return (
@@ -47,7 +47,7 @@ const Index = () => {
         <InstagramFeed />
       </main>
       <Footer />
-      <FloatingCallButton />
+      <FloatingContactButtons />
     </>
   );
 };
