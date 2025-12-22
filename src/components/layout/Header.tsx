@@ -188,7 +188,7 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-20 left-0 right-0 bg-background border-b border-border animate-fade-in z-50">
+          <div className="lg:hidden absolute top-20 left-0 right-0 bg-background border-b border-border z-50">
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
               <button
                 onClick={() => scrollToSection("about")}
