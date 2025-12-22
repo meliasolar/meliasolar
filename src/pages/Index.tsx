@@ -8,6 +8,7 @@ import SavingsCalculator from "@/components/sections/SavingsCalculator";
 import Contact from "@/components/sections/Contact";
 import InstagramFeed from "@/components/sections/InstagramFeed";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
+import PageTransition from "@/components/PageTransition";
 
 const Index = () => {
   return (
@@ -34,14 +35,16 @@ const Index = () => {
       </Helmet>
 
       <Header />
-      <main>
-        <Hero />
-        <About />
-        <WhySolar />
-        <SavingsCalculator />
-        <Contact />
-        <InstagramFeed />
-      </main>
+      <PageTransition>
+        <main>
+          <Hero />
+          <About />
+          <WhySolar />
+          <SavingsCalculator />
+          <Contact />
+          <InstagramFeed />
+        </main>
+      </PageTransition>
       <Footer />
       <FloatingContactButtons />
     </>
