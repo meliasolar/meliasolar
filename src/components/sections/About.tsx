@@ -36,7 +36,7 @@ const About = () => {
                 Your Energy Advisor
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-4">
-                Meet Melia King
+                Meet <span className="text-accent">Melia</span> King
               </h2>
             </div>
 
