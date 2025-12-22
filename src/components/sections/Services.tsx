@@ -4,6 +4,7 @@ import solarImage from "@/assets/solar-service.jpg";
 import hvacImage from "@/assets/hvac-service.jpg";
 import roofingImage from "@/assets/roofing-service.jpg";
 import quietcoolImage from "@/assets/quietcool-service.jpg";
+import teslaImage from "@/assets/tesla-supercharger-service.jpg";
 
 const Services = () => {
   const services = [
@@ -18,6 +19,19 @@ const Services = () => {
         "Premium tier-1 panels",
         "25-year warranty",
         "Battery storage options",
+      ],
+    },
+    {
+      id: "services-tesla",
+      title: "Tesla Superchargers Pay You",
+      description:
+        "Melia is a certified Tesla Supercharger installer. Add Tesla Superchargers to your business parking lot and you get to collect income from every single charge, for lifetime. Turn your parking spaces into a revenue stream while supporting the EV revolution.",
+      image: teslaImage,
+      features: [
+        "Certified Tesla installer",
+        "Lifetime passive income",
+        "Attract EV customers",
+        "Professional installation",
       ],
     },
     {
