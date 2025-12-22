@@ -79,10 +79,10 @@ const About = () => {
         </div>
 
         {/* About Content */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-3xl mx-auto">
           {/* Content */}
           <div className="space-y-8">
-            <div>
+            <div className="text-center">
               <span className="text-accent font-semibold text-sm uppercase tracking-widest">
                 About Us
               </span>
@@ -91,11 +91,11 @@ const About = () => {
               </h2>
             </div>
 
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed text-center">
               We walk alongside you through every step — from your first questions about solar to the day your system goes live. No high-pressure sales tactics, just straightforward advice customized to your home and budget.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
               {benefits.map((benefit) => (
                 <div key={benefit} className="flex items-center gap-3">
                   <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
@@ -103,49 +103,6 @@ const About = () => {
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-2 gap-6">
-            {[
-              {
-                value: "5,000+",
-                label: "Installations Completed",
-                description: "Homes powered by clean energy",
-              },
-              {
-                value: "99%",
-                label: "Positive Feedback",
-                description: "From satisfied customers",
-              },
-              {
-                value: "10+",
-                label: "Years Experience",
-                description: "In renewable energy",
-              },
-              {
-                value: "$50K+",
-                label: "Average Savings",
-                description: "Over system lifetime",
-              },
-            ].map((stat, index) => (
-              <div
-                key={stat.label}
-                className={`bg-card rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 ${
-                  index % 2 === 1 ? "mt-8" : ""
-                }`}
-              >
-                <div className="font-display text-3xl font-bold text-foreground">
-                  {stat.value}
-                </div>
-                <div className="font-semibold text-foreground mt-2">
-                  {stat.label}
-                </div>
-                <div className="text-sm text-muted-foreground mt-1">
-                  {stat.description}
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>
