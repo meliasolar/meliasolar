@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#ea580c"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#faf8f5"/>
+  
+  <!-- Sun Logo Circle -->
+  <circle cx="600" cy="260" r="100" fill="url(#sunGradient)"/>
+  
+  <!-- Sun Icon -->
+  <g fill="none" stroke="#1a1a1a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" transform="translate(600, 260)">
+    <circle cx="0" cy="0" r="25"/>
+    <line x1="0" y1="-50" x2="0" y2="-62"/>
+    <line x1="0" y1="50" x2="0" y2="62"/>
+    <line x1="35" y1="-35" x2="44" y2="-44"/>
+    <line x1="-44" y1="44" x2="-35" y2="35"/>
+    <line x1="50" y1="0" x2="62" y2="0"/>
+    <line x1="-62" y1="0" x2="-50" y2="0"/>
+    <line x1="35" y1="35" x2="44" y2="44"/>
+    <line x1="-44" y1="-44" x2="-35" y2="-35"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="600" y="430" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="600" fill="#1a1a1a">Melia King</text>
+  <text x="600" y="490" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="500" letter-spacing="8" fill="#666">SOLAR</text>
+  <text x="600" y="560" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#888">Your Concierge Energy Advisor in 13 States</text>
+</svg>
