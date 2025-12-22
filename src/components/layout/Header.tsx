@@ -93,11 +93,19 @@ const Header = () => {
             <div className="relative group">
               <Link
                 to="/services"
-                className="text-foreground/80 hover:text-foreground font-medium transition-colors relative flex items-center gap-1"
+                className={`font-medium transition-colors relative flex items-center gap-1 ${
+                  location.pathname === "/services" || location.pathname === "/tesla-supercharger"
+                    ? "text-accent"
+                    : "text-foreground/80 hover:text-foreground"
+                }`}
               >
                 Services
                 <ChevronDown className="w-4 h-4" />
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ${
+                  location.pathname === "/services" || location.pathname === "/tesla-supercharger"
+                    ? "w-full"
+                    : "w-0 group-hover:w-full"
+                }`} />
               </Link>
               <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[220px]">
@@ -124,18 +132,30 @@ const Header = () => {
 
             <Link
               to="/testimonials"
-              className="text-foreground/80 hover:text-foreground font-medium transition-colors relative group"
+              className={`font-medium transition-colors relative group ${
+                location.pathname === "/testimonials"
+                  ? "text-accent"
+                  : "text-foreground/80 hover:text-foreground"
+              }`}
             >
               Testimonials
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ${
+                location.pathname === "/testimonials" ? "w-full" : "w-0 group-hover:w-full"
+              }`} />
             </Link>
 
             <Link
               to="/faq"
-              className="text-foreground/80 hover:text-foreground font-medium transition-colors relative group"
+              className={`font-medium transition-colors relative group ${
+                location.pathname === "/faq"
+                  ? "text-accent"
+                  : "text-foreground/80 hover:text-foreground"
+              }`}
             >
               FAQ
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ${
+                location.pathname === "/faq" ? "w-full" : "w-0 group-hover:w-full"
+              }`} />
             </Link>
           </div>
 
@@ -205,7 +225,11 @@ const Header = () => {
               <Link
                 to="/testimonials"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-foreground/80 hover:text-foreground font-medium py-2 transition-colors"
+                className={`font-medium py-2 transition-colors ${
+                  location.pathname === "/testimonials"
+                    ? "text-accent"
+                    : "text-foreground/80 hover:text-foreground"
+                }`}
               >
                 Testimonials
               </Link>
@@ -213,7 +237,11 @@ const Header = () => {
               <Link
                 to="/faq"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-foreground/80 hover:text-foreground font-medium py-2 transition-colors"
+                className={`font-medium py-2 transition-colors ${
+                  location.pathname === "/faq"
+                    ? "text-accent"
+                    : "text-foreground/80 hover:text-foreground"
+                }`}
               >
                 FAQ
               </Link>
