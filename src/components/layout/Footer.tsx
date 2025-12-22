@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
@@ -43,31 +43,6 @@ const Footer = () => {
                   </li>
                 )
               )}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-display text-lg font-semibold mb-4">
-              Our Services
-            </h4>
-            <ul className="space-y-3">
-              {[
-                "Solar Panel Installation",
-                "Tesla Superchargers",
-                "HVAC Systems",
-                "Title 24 Roofing",
-                "QuietCool Whole House Fan",
-              ].map((service) => (
-                <li key={service}>
-                  <a
-                    href="/#services"
-                    className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
-                  >
-                    {service}
-                  </a>
-                </li>
-              ))}
             </ul>
           </div>
 
