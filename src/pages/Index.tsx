@@ -1,13 +1,16 @@
+import { lazy, Suspense } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
-import WhySolar from "@/components/sections/WhySolar";
-import SavingsCalculator from "@/components/sections/SavingsCalculator";
-import Contact from "@/components/sections/Contact";
-import InstagramFeed from "@/components/sections/InstagramFeed";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
+
+// Lazy load below-the-fold sections to reduce initial JS bundle
+const WhySolar = lazy(() => import("@/components/sections/WhySolar"));
+const SavingsCalculator = lazy(() => import("@/components/sections/SavingsCalculator"));
+const Contact = lazy(() => import("@/components/sections/Contact"));
+const InstagramFeed = lazy(() => import("@/components/sections/InstagramFeed"));
 
 const Index = () => {
   return (
@@ -37,10 +40,12 @@ const Index = () => {
       <main>
         <Hero />
         <About />
-        <WhySolar />
-        <SavingsCalculator />
-        <Contact />
-        <InstagramFeed />
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <WhySolar />
+          <SavingsCalculator />
+          <Contact />
+          <InstagramFeed />
+        </Suspense>
       </main>
       <Footer />
       <FloatingContactButtons />
