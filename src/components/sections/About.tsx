@@ -1,5 +1,5 @@
 import { CheckCircle2, Award, Heart, Users } from "lucide-react";
-import meliaImage from "@/assets/melia-king.png";
+import meliaImage from "@/assets/melia-king.webp";
 
 const About = () => {
   const benefits = [
