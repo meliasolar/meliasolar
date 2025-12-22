@@ -5,10 +5,11 @@ import { Menu, X, Sun, ChevronDown } from "lucide-react";
 
 const navLinksBefore = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
+  { name: "Meet Melia", href: "/#about" },
 ];
 
 const navLinksAfter = [
+  { name: "Savings Calculator", href: "/#calculator" },
   { name: "Testimonials", href: "/testimonials" },
   { name: "FAQ", href: "/faq" },
 ];
