@@ -82,7 +82,7 @@ const Hero = () => {
                 <div className="font-display text-3xl md:text-4xl font-bold text-foreground">
                   {stat.value}
                 </div>
-                <div className="text-sm text-muted-foreground mt-1">
+                <div className="text-sm font-semibold text-foreground mt-1">
                   {stat.label}
                 </div>
               </div>
@@ -91,12 +91,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
-        <div className="w-6 h-10 rounded-full border-2 border-foreground/30 flex items-start justify-center p-2">
-          <div className="w-1 h-2 rounded-full bg-foreground/50 animate-pulse" />
-        </div>
-      </div>
     </section>
   );
 };
