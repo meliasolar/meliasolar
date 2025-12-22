@@ -2,11 +2,8 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
 import WhySolar from "@/components/sections/WhySolar";
 import SavingsCalculator from "@/components/sections/SavingsCalculator";
-import Services from "@/components/sections/Services";
-import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import InstagramFeed from "@/components/sections/InstagramFeed";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
@@ -38,11 +35,8 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
-        <About />
         <WhySolar />
         <SavingsCalculator />
-        <Services />
-        <Testimonials />
         <Contact />
         <InstagramFeed />
       </main>
