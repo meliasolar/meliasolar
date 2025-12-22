@@ -70,7 +70,7 @@ const TestimonialsPage = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-secondary to-background">
+        <section className="pt-32 pb-8 md:pt-40 md:pb-10 bg-gradient-to-b from-secondary to-background">
           <div className="container mx-auto px-6 text-center">
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
               What Our Customers Say
@@ -103,7 +103,7 @@ const TestimonialsPage = () => {
         </section>
 
         {/* Testimonials Grid */}
-        <section className="py-16 md:py-24 bg-background">
+        <section className="py-10 md:py-16 bg-background">
           <div className="container mx-auto px-6">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {testimonials.map((testimonial, index) => (
