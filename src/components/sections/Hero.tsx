@@ -36,7 +36,7 @@ const Hero = () => {
           >
             Your Personal
             <span className="block">
-              <span className="text-gradient-solar">Solar</span> Guide
+              <span className="text-gradient-solar">Solar</span> King
             </span>
           </h1>
 
