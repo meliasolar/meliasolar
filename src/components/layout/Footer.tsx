@@ -54,6 +54,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {[
                 "Solar Panel Installation",
+                "Tesla Superchargers",
                 "HVAC Systems",
                 "Title 24 Roofing",
                 "QuietCool Whole House Fan",
