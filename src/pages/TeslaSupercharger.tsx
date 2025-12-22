@@ -5,6 +5,12 @@ import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, DollarSign, Zap, Users, TrendingUp, Shield } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import teslaImage from "@/assets/tesla-supercharger-service.jpg";
 
 const TeslaSupercharger = () => {
@@ -209,6 +215,78 @@ const TeslaSupercharger = () => {
                   ))}
                 </ul>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-6">
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-muted-foreground text-lg mt-4">
+                  Everything you need to know about adding Tesla Superchargers to your business.
+                </p>
+              </div>
+
+              <Accordion type="single" collapsible className="space-y-4">
+                <AccordionItem value="item-1" className="bg-card rounded-xl px-6 border-none shadow-soft">
+                  <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                    How much does it cost to install Tesla Superchargers?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    The cost varies based on your location, electrical infrastructure, and the number of charging stations. We offer free consultations to assess your property and provide a detailed quote. Many businesses find that the installation pays for itself through charging revenue within a few years.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-2" className="bg-card rounded-xl px-6 border-none shadow-soft">
+                  <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                    How much can I earn from Tesla Superchargers?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    Your earnings depend on location, traffic, and pricing. High-traffic locations like shopping centers and hotels can generate significant passive income. You collect revenue from every charging session for the lifetime of the equipment.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-3" className="bg-card rounded-xl px-6 border-none shadow-soft">
+                  <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                    What are the electrical requirements?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    Tesla Superchargers require high-voltage electrical service. During our free consultation, we assess your current electrical capacity and determine if upgrades are needed. We handle all electrical work and permitting as part of our installation service.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-4" className="bg-card rounded-xl px-6 border-none shadow-soft">
+                  <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                    How long does installation take?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    Installation typically takes 2-4 weeks depending on the scope of the project and permitting requirements. We work efficiently to minimize disruption to your business operations.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-5" className="bg-card rounded-xl px-6 border-none shadow-soft">
+                  <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                    Who handles maintenance and repairs?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    As a certified Tesla installer, we provide ongoing support and maintenance services. Tesla Superchargers are built for reliability, but if any issues arise, our team is here to help keep your chargers running smoothly.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-6" className="bg-card rounded-xl px-6 border-none shadow-soft">
+                  <AccordionTrigger className="text-foreground font-semibold text-left hover:no-underline">
+                    Are there any incentives or tax credits available?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    Yes! Federal and state incentives are often available for EV charging infrastructure. We can help you navigate available tax credits, rebates, and incentive programs to maximize your return on investment.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
         </section>
