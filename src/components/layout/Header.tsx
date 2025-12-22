@@ -64,9 +64,16 @@ const Header = () => {
     >
       <div className="container mx-auto px-6">
         <nav className="flex items-center justify-between h-20">
-          {/* Logo - Scroll to Top */}
+          {/* Logo - Navigate to Home & Scroll to Top */}
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => {
+              if (location.pathname !== "/") {
+                navigate("/");
+                setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+              } else {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
             className="flex items-center gap-2 group cursor-pointer"
           >
             <div className="w-10 h-10 rounded-full bg-gradient-solar flex items-center justify-center transition-transform group-hover:scale-110">
