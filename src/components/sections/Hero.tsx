@@ -45,7 +45,7 @@ const Hero = () => {
             className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed animate-fade-up"
             style={{ animationDelay: "0.3s" }}
           >
-            We make solar possible for homeowners &amp; businesses by keeping the cost equal to your existing energy bill. Your cost does not go up! Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
+            We make solar possible for homeowners &amp; businesses by keeping the cost less than or equal to your existing energy bill. Your cost does not go up! Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
           </p>
 
           {/* CTAs */}

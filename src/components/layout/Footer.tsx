@@ -42,7 +42,7 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
-              We make solar possible for homeowners &amp; businesses by keeping the cost equal to your existing energy bill. Your cost does not go up! Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
+              We make solar possible for homeowners &amp; businesses by keeping the cost less than or equal to your existing energy bill. Your cost does not go up! Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
             </p>
           </div>
 
