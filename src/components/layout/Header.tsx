@@ -80,7 +80,7 @@ const Header = () => {
               <Sun className="w-6 h-6 text-foreground" />
             </div>
             <div className="flex flex-col text-left">
-              <span className="font-display text-xl font-semibold text-foreground">
+              <span className="font-display text-xl font-semibold text-accent">
                 Melia King
               </span>
               <span className="text-xs text-muted-foreground tracking-widest uppercase">
