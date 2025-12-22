@@ -19,6 +19,7 @@ const navLinks = [
 
 const services = [
   { name: "Solar", href: "/#services-solar" },
+  { name: "Tesla Superchargers", href: "/tesla-supercharger" },
   { name: "HVAC", href: "/#services-hvac" },
   { name: "Title 24 Roofing", href: "/#services-roofing" },
   { name: "QuietCool Whole House Fan", href: "/#services-quietcool" },
@@ -40,12 +41,18 @@ const Header = () => {
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
     setIsMobileServicesOpen(false);
-    if (href.startsWith("/#")) {
-      const elementId = href.substring(2);
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+    
+    // Handle regular page navigation
+    if (!href.startsWith("/#")) {
+      window.location.href = href;
+      return;
+    }
+    
+    // Handle hash navigation
+    const elementId = href.substring(2);
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
