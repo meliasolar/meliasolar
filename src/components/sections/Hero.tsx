@@ -22,25 +22,6 @@ const Hero = () => {
       {/* Content */}
       <div className="relative container mx-auto px-6 pt-32 pb-20">
         <div className="max-w-2xl space-y-8">
-          {/* Benefit Badges */}
-          <div
-            className="flex flex-wrap items-center gap-3 animate-fade-up"
-            style={{ animationDelay: "0.1s" }}
-          >
-            {[
-              "No upfront cost.",
-              "Locked in savings.",
-              "Backup power.",
-            ].map((benefit) => (
-              <div
-                key={benefit}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border"
-              >
-                <span className="w-2 h-2 rounded-full bg-accent" />
-                <span className="text-sm font-medium text-foreground">{benefit}</span>
-              </div>
-            ))}
-          </div>
 
           {/* Headline */}
           <h1
