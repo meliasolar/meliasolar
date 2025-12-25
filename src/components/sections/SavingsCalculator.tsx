@@ -25,7 +25,10 @@ const SavingsCalculator = () => {
             See How Much You Can <span className="text-gradient-solar">Save</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Your solar payment equals your current bill—but protects you from rising energy costs for 25+ years.
+            Your solar payment will be equal to or less than your current bill—but protects you from rising energy costs for 25+ years.
+          </p>
+          <p className="text-sm text-muted-foreground italic mt-3">
+            Savings may be higher than this calculator shows, depending on your unique specifications.
           </p>
         </div>
 
