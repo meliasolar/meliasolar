@@ -69,13 +69,13 @@ const TestimonialsCarousel = () => {
         <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        {/* Scrolling track */}
-        <div className="flex animate-scroll hover:pause-animation">
+        {/* Scrolling track - touch scrollable on mobile, auto-scroll on desktop */}
+        <div className="flex overflow-x-auto md:overflow-x-visible scrollbar-hide snap-x snap-mandatory md:snap-none md:animate-scroll md:hover:pause-animation touch-pan-x">
           {/* Duplicate testimonials for seamless loop */}
           {[...testimonials, ...testimonials].map((testimonial, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-[320px] md:w-[380px] mx-3"
+              className="flex-shrink-0 w-[320px] md:w-[380px] mx-3 snap-center"
             >
               <div className="bg-card border border-border/50 rounded-2xl p-6 h-full shadow-sm hover:shadow-md transition-shadow">
                 {/* Quote icon */}
