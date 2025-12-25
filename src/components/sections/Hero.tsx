@@ -91,6 +91,26 @@ const Hero = () => {
               </div>
             ))}
           </div>
+
+          {/* Key Benefits */}
+          <div
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 animate-fade-up"
+            style={{ animationDelay: "0.6s" }}
+          >
+            {[
+              "No upfront cost.",
+              "Locked in savings.",
+              "Backup power when you need it most.",
+            ].map((benefit) => (
+              <div
+                key={benefit}
+                className="flex items-center gap-2 text-foreground font-medium"
+              >
+                <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0" />
+                <span className="text-sm md:text-base">{benefit}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
