@@ -11,6 +11,9 @@ import project6 from "@/assets/portfolio/project-6.jpg";
 import project7 from "@/assets/portfolio/project-7.jpg";
 import project8 from "@/assets/portfolio/project-8.jpg";
 import project9 from "@/assets/portfolio/project-9.jpg";
+import tesla1 from "@/assets/portfolio/tesla-1.jpg";
+import tesla2 from "@/assets/portfolio/tesla-2.jpg";
+import tesla3 from "@/assets/portfolio/tesla-3.jpg";
 
 const projects = [
   { image: project1, alt: "Desert solar installation with mountain backdrop" },
@@ -22,6 +25,9 @@ const projects = [
   { image: project7, alt: "Luxury estate with solar panels" },
   { image: project8, alt: "Residential home solar installation" },
   { image: project9, alt: "Neighborhood aerial showing solar home" },
+  { image: tesla1, alt: "Tesla Powerwall battery storage installation" },
+  { image: tesla2, alt: "Tesla Powerwall side view" },
+  { image: tesla3, alt: "Large Tesla Powerwall array" },
 ];
 
 const PortfolioCarousel = () => {
