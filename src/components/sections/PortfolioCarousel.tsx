@@ -5,14 +5,12 @@ import useEmblaCarousel from "embla-carousel-react";
 import project1 from "@/assets/portfolio/project-1.jpg";
 import project2 from "@/assets/portfolio/project-2.jpg";
 import project3 from "@/assets/portfolio/project-3.jpg";
-import project4 from "@/assets/portfolio/project-4.jpg";
 import project5 from "@/assets/portfolio/project-5.jpg";
 import project6 from "@/assets/portfolio/project-6.jpg";
 import project7 from "@/assets/portfolio/project-7.jpg";
 import project8 from "@/assets/portfolio/project-8.jpg";
 import project9 from "@/assets/portfolio/project-9.jpg";
 import project10 from "@/assets/portfolio/project-10.jpg";
-import project12 from "@/assets/portfolio/project-12.jpg";
 import project13 from "@/assets/portfolio/project-13.jpg";
 import project14 from "@/assets/portfolio/project-14.jpg";
 import tesla1 from "@/assets/portfolio/tesla-1.jpg";
@@ -20,22 +18,20 @@ import tesla2 from "@/assets/portfolio/tesla-2.jpg";
 import tesla3 from "@/assets/portfolio/tesla-3.jpg";
 
 const projects = [
-  { image: project1, alt: "Desert solar installation with mountain backdrop" },
-  { image: project2, alt: "Aerial view of residential solar panels" },
-  { image: project3, alt: "Commercial rooftop solar array" },
-  { image: project4, alt: "Large-scale commercial solar installation" },
-  { image: project5, alt: "Multi-roof solar panel system" },
-  { image: project6, alt: "Coastal property solar installation" },
-  { image: project7, alt: "Luxury estate with solar panels" },
-  { image: project8, alt: "Residential home solar installation" },
-  { image: project9, alt: "Neighborhood aerial showing solar home" },
-  { image: project10, alt: "Solar panels on tile roof" },
-  { image: project12, alt: "Luxury estate aerial solar installation" },
-  { image: project13, alt: "Spanish tile roof solar installation" },
   { image: project14, alt: "Aerial neighborhood view with multiple solar homes" },
+  { image: project1, alt: "Desert solar installation with mountain backdrop" },
   { image: tesla1, alt: "Tesla Powerwall battery storage installation" },
+  { image: project6, alt: "Coastal property solar installation" },
+  { image: project3, alt: "Commercial rooftop solar array" },
+  { image: project10, alt: "Solar panels on tile roof" },
+  { image: project7, alt: "Luxury estate with solar panels" },
   { image: tesla2, alt: "Tesla Powerwall side view" },
+  { image: project2, alt: "Aerial view of residential solar panels" },
+  { image: project13, alt: "Spanish tile roof solar installation" },
+  { image: project5, alt: "Multi-roof solar panel system" },
+  { image: project8, alt: "Residential home solar installation" },
   { image: tesla3, alt: "Large Tesla Powerwall array" },
+  { image: project9, alt: "Neighborhood aerial showing solar home" },
 ];
 
 const PortfolioCarousel = () => {
