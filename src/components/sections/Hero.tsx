@@ -73,7 +73,7 @@ const Hero = () => {
 
           {/* Stats */}
           <div
-            className="grid grid-cols-3 gap-8 pt-8 border-t border-border/50 animate-fade-up"
+            className="grid grid-cols-3 gap-8 pt-8 pb-4 md:pb-0 border-t border-border/50 bg-white md:bg-transparent -mx-6 px-6 animate-fade-up"
             style={{ animationDelay: "0.5s" }}
           >
             {[
