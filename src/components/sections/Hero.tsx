@@ -50,13 +50,15 @@ const Hero = () => {
                   </span>
                   {" "}No up front cost.
                 </p>
-                <p className="font-extrabold flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-accent flex-shrink-0" />
-                  <span className="relative">
-                    <span className="font-black text-accent">Backup power</span>
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent animate-[scale-in_0.6s_ease-out_0.5s_both] origin-left" />
+                <p className="font-extrabold flex items-start gap-2">
+                  <Zap className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
+                  <span>
+                    <span className="relative inline-block whitespace-nowrap">
+                      <span className="font-black text-accent">Backup power</span>
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent animate-[scale-in_0.6s_ease-out_0.5s_both] origin-left" />
+                    </span>
+                    {" "}when you need it most!
                   </span>
-                  {" "}when you need it most!
                 </p>
               </div>
             </div>
