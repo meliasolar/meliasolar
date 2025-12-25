@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, PiggyBank, Zap } from "lucide-react";
 import heroImage from "@/assets/hero-coastal.jpg";
 
 const Hero = () => {
@@ -42,8 +42,22 @@ const Hero = () => {
                 className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
               >
                 <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for <span className="text-purple-600">businesses</span> &amp; for <span className="text-purple-600">homeowners</span>.</p>
-                <p className="font-bold italic">Locked in savings. No up front cost.</p>
-                <p className="font-extrabold"><span className="font-black">Backup power</span> when you need it most!</p>
+                <p className="font-bold italic flex items-center gap-2">
+                  <PiggyBank className="w-5 h-5 text-accent flex-shrink-0" />
+                  <span className="relative">
+                    <span className="text-accent">Locked in savings.</span>
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent animate-[scale-in_0.6s_ease-out_0.3s_both] origin-left" />
+                  </span>
+                  {" "}No up front cost.
+                </p>
+                <p className="font-extrabold flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-accent flex-shrink-0" />
+                  <span className="relative">
+                    <span className="font-black text-accent">Backup power</span>
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent animate-[scale-in_0.6s_ease-out_0.5s_both] origin-left" />
+                  </span>
+                  {" "}when you need it most!
+                </p>
               </div>
             </div>
 
