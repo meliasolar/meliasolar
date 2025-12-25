@@ -40,12 +40,14 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <TestimonialsCarousel />
+        </Suspense>
         <About />
         <Suspense fallback={<div className="min-h-[200px]" />}>
           <WhySolar />
           <SavingsCalculator />
           <PortfolioCarousel />
-          <TestimonialsCarousel />
           <Contact />
         </Suspense>
       </main>
