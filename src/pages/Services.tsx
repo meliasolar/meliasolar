@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
+import PortfolioCarousel from "@/components/sections/PortfolioCarousel";
 import { Button } from "@/components/ui/button";
 import solarImage from "@/assets/solar-installation-action.jpg";
 import hvacImage from "@/assets/hvac-service.jpg";
@@ -169,6 +170,9 @@ const ServicesPage = () => {
             </div>
           </div>
         </section>
+
+        {/* Portfolio Carousel */}
+        <PortfolioCarousel />
 
         {/* CTA Section */}
         <section className="py-16 md:py-24 bg-primary text-primary-foreground">
