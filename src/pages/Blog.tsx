@@ -52,7 +52,7 @@ const Blog = () => {
   return (
     <>
       <Helmet>
-        <title>Blog | Melia King Solar</title>
+        <title>News | Melia King Solar</title>
         <meta
           name="description"
           content="Read the latest news, tips, and insights about solar energy, home efficiency, and sustainable living from Melia King Solar."
@@ -66,10 +66,10 @@ const Blog = () => {
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-4 py-2 rounded-full bg-accent/20 text-accent text-sm font-medium mb-4">
-              Our Blog
+              News &amp; Updates
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Solar Insights & <span className="text-gradient-solar">Tips</span>
+              Solar Insights &amp; <span className="text-gradient-solar">Tips</span>
             </h1>
             <p className="text-lg text-muted-foreground">
               Stay informed with the latest news, tips, and insights about solar energy and sustainable living.
