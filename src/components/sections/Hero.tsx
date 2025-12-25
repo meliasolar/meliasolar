@@ -20,8 +20,8 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative container mx-auto px-6 pt-32 pb-20">
-        <div className="max-w-2xl space-y-8">
+      <div className="relative container mx-auto px-6 pt-20 pb-12">
+        <div className="max-w-2xl space-y-6">
 
           {/* Headline */}
           <h1
@@ -40,8 +40,8 @@ const Hero = () => {
               className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
             >
               <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for businesses &amp; for homeowners.</p>
-              <p>Your energy cost does not go up!</p>
-              <p className="italic">Highest quality equipment. Highest caliber team. You can count on Melia.</p>
+              <p>Locked in savings. No up front cost.</p>
+              <p className="font-bold">Backup power when you need it most!</p>
             </div>
           </div>
 
