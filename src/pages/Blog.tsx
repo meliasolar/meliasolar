@@ -95,7 +95,7 @@ const Blog = () => {
           ) : posts.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-muted-foreground text-lg">
-                No blog posts yet. Check back soon!
+                Coming soon!
               </p>
             </div>
           ) : (
