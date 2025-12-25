@@ -1,7 +1,20 @@
-import { CheckCircle2, Award, Heart, Users } from "lucide-react";
+import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX } from "lucide-react";
+import { useState, useRef } from "react";
 import meliaImage from "@/assets/melia-king.webp";
+import meliaVideo from "@/assets/melia-welcome.mp4";
 
 const About = () => {
+  const [isMuted, setIsMuted] = useState(true);
+  const [isVideoDismissed, setIsVideoDismissed] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   const benefits = [
     "Personalized energy consultation",
     "Transparent pricing with no hidden fees",
@@ -14,6 +27,53 @@ const About = () => {
   return (
     <section id="about" className="py-24 bg-secondary">
       <div className="container mx-auto px-6">
+        {/* Mobile Video Widget - appears above Meet Melia section */}
+        {!isVideoDismissed && (
+          <div className="md:hidden mb-8 flex justify-center">
+            <div className="relative rounded-2xl overflow-hidden bg-background/90 backdrop-blur-sm border border-primary/30 animate-pulse-glow">
+              {/* Close button */}
+              <button
+                onClick={() => setIsVideoDismissed(true)}
+                className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+                aria-label="Close video"
+              >
+                <X className="w-4 h-4 text-foreground" />
+              </button>
+
+              {/* Mute toggle */}
+              <button
+                onClick={toggleMute}
+                className="absolute bottom-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+                aria-label={isMuted ? "Unmute" : "Mute"}
+              >
+                {isMuted ? (
+                  <VolumeX className="w-4 h-4 text-foreground" />
+                ) : (
+                  <Volume2 className="w-4 h-4 text-foreground" />
+                )}
+              </button>
+
+              {/* Video */}
+              <video
+                ref={videoRef}
+                src={meliaVideo}
+                autoPlay
+                loop
+                muted={isMuted}
+                playsInline
+                className="w-64 h-44 object-cover"
+              />
+
+              {/* Label */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-2 pr-10">
+                <p className="text-xs font-medium text-foreground truncate">
+                  Welcome from Melia! 👋
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Meet Melia Section */}
         <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto mb-24">
           {/* Image */}
