@@ -71,7 +71,7 @@ const PortfolioCarousel = () => {
             <span className="text-primary">Real</span> Installations, <span className="text-primary">Real</span> Results
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Some of our completed solar installations across California and beyond. 
+            A few of our completed solar installations across California and beyond. 
             Each project represents our commitment to quality and clean energy.
           </p>
         </div>
