@@ -45,7 +45,7 @@ const Hero = () => {
           </h1>
 
           {/* Subheadline - LCP element, no animation for immediate render */}
-          <div className="lg:bg-white/85 lg:px-3 lg:py-2 lg:rounded-lg lg:backdrop-blur-sm lg:w-fit">
+          <div className="lg:bg-white/70 lg:px-3 lg:py-2 lg:rounded-lg lg:backdrop-blur-sm lg:w-fit">
             <div
               className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
             >
