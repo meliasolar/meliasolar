@@ -15,6 +15,13 @@ const About = () => {
     }
   };
 
+  const handleVideoEnd = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 2;
+      videoRef.current.pause();
+    }
+  };
+
   const benefits = [
     "Personalized energy consultation",
     "Transparent pricing with no hidden fees",
@@ -53,14 +60,13 @@ const About = () => {
                 )}
               </button>
 
-              {/* Video */}
               <video
                 ref={videoRef}
                 src={meliaVideo}
                 autoPlay
-                loop
                 muted={isMuted}
                 playsInline
+                onEnded={handleVideoEnd}
                 className="w-64 h-44 object-cover"
               />
 

@@ -22,6 +22,13 @@ const MeliaVideoWidget = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleVideoEnd = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 2;
+      videoRef.current.pause();
+    }
+  };
+
   const handleDismiss = () => {
     setIsVisible(false);
     setTimeout(() => setIsDismissed(true), 300);
@@ -67,15 +74,14 @@ const MeliaVideoWidget = () => {
           )}
         </button>
 
-        {/* Video */}
         <video
           ref={videoRef}
           src={meliaVideo}
           autoPlay
-          loop
           muted={isMuted}
           playsInline
-          className="w-48 h-32 md:w-64 md:h-44 object-cover"
+          onEnded={handleVideoEnd}
+          className="w-64 h-44 object-cover"
         />
 
         {/* Label */}
