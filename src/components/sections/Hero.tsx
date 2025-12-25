@@ -22,17 +22,11 @@ const Hero = () => {
       {/* Content */}
       <div className="relative container mx-auto px-6 pt-32 pb-20">
         <div className="max-w-2xl space-y-8">
-          {/* Badges Row */}
+          {/* Benefit Badges */}
           <div
             className="flex flex-wrap items-center gap-3 animate-fade-up"
             style={{ animationDelay: "0.1s" }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-sm font-medium text-foreground">
-                Trusted Expert in 12 States
-              </span>
-            </div>
             {[
               "No upfront cost.",
               "Locked in savings.",
@@ -70,9 +64,9 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* CTAs */}
+          {/* CTAs with Trusted Expert badge */}
           <div
-            className="flex flex-col sm:flex-row gap-4 animate-fade-up"
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-up"
             style={{ animationDelay: "0.4s" }}
           >
             <Button
@@ -88,6 +82,12 @@ const Hero = () => {
               Get Free Quote
               <ArrowRight className="w-5 h-5" />
             </Button>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-sm font-medium text-foreground">
+                Trusted Expert in 12 States
+              </span>
+            </div>
           </div>
 
           {/* Stats */}
