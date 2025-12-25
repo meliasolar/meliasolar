@@ -4,7 +4,7 @@ import heroImage from "@/assets/hero-coastal.jpg";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-[75vh] lg:min-h-[70vh] flex items-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -20,7 +20,7 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative container mx-auto px-6 pt-20 pb-12">
+      <div className="relative container mx-auto px-6 pt-20 lg:pt-24 pb-8 lg:pb-6">
         <div className="max-w-2xl space-y-6">
 
           {/* Headline */}
