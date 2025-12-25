@@ -10,7 +10,6 @@ import FloatingContactButtons from "@/components/FloatingContactButtons";
 const WhySolar = lazy(() => import("@/components/sections/WhySolar"));
 const SavingsCalculator = lazy(() => import("@/components/sections/SavingsCalculator"));
 const Contact = lazy(() => import("@/components/sections/Contact"));
-const InstagramFeed = lazy(() => import("@/components/sections/InstagramFeed"));
 
 const Index = () => {
   return (
@@ -44,7 +43,6 @@ const Index = () => {
           <WhySolar />
           <SavingsCalculator />
           <Contact />
-          <InstagramFeed />
         </Suspense>
       </main>
       <Footer />
