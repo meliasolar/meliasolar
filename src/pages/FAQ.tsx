@@ -22,7 +22,7 @@ const FAQ = () => {
     },
     {
       question: "What states do you serve?",
-      answer: "We proudly serve 13 states including California, Arizona, Texas, Nevada, Colorado, Florida, and more. Contact us to confirm service availability in your area.",
+      answer: "We proudly serve 12 states: California, Colorado, Connecticut, Florida, Hawaii, Illinois, Massachusetts, Maryland, New Jersey, Nevada, Texas, and Virginia.",
     },
     {
       question: "How long does solar panel installation take?",
@@ -101,7 +101,7 @@ const FAQ = () => {
         <title>Frequently Asked Questions | Melia King Solar</title>
         <meta
           name="description"
-          content="Find answers to common questions about solar panel installation, financing, savings, and our energy services. Melia King Solar serves 13 states."
+          content="Find answers to common questions about solar panel installation, financing, savings, and our energy services. Melia King Solar serves 12 states."
         />
         <link rel="canonical" href="https://meliasolar.com/faq" />
       </Helmet>
@@ -252,7 +252,7 @@ const FAQ = () => {
                 className="border-accent text-accent hover:bg-accent/10"
                 asChild
               >
-                <a href="mailto:melia@voltaicnow.com">Email Us</a>
+                <a href="mailto:Melia@solarkingsolutions.com">Email Us</a>
               </Button>
             </div>
           </div>

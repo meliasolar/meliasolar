@@ -22,7 +22,7 @@ const AboutPage = () => {
         <title>About Melia King | Your Concierge Energy Advisor</title>
         <meta
           name="description"
-          content="Meet Melia King, your personal solar energy advisor helping families and businesses across 13 states take control of their energy costs."
+          content="Meet Melia King, your personal solar energy advisor helping families and businesses across 12 states take control of their energy costs."
         />
         <link rel="canonical" href="https://meliasolar.com/about" />
       </Helmet>
@@ -58,7 +58,7 @@ const AboutPage = () => {
                 </div>
 
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Melia King is passionate about helping families & businesses take control of their energy costs. Her mission is to make clean, renewable energy accessible to every business & homeowner in 13 states…& counting.
+                  Melia King is passionate about helping families & businesses take control of their energy costs. Her mission is to make clean, renewable energy accessible to every business & homeowner in 12 states…& counting.
                 </p>
 
                 <div className="grid sm:grid-cols-3 gap-6 pt-4">
@@ -149,7 +149,7 @@ const AboutPage = () => {
                 className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
                 asChild
               >
-                <a href="mailto:melia@voltaicnow.com">Email Us</a>
+                <a href="mailto:Melia@solarkingsolutions.com">Email Us</a>
               </Button>
             </div>
           </div>

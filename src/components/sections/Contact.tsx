@@ -97,7 +97,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-sm text-primary-foreground/70">Email us</div>
-                  <a href="mailto:melia@voltaicnow.com" className="font-semibold text-primary-foreground hover:underline">melia@voltaicnow.com</a>
+                  <a href="mailto:Melia@solarkingsolutions.com" className="font-semibold text-primary-foreground hover:underline">Melia@solarkingsolutions.com</a>
                 </div>
               </div>
 
@@ -107,7 +107,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-sm text-primary-foreground/70">Service areas</div>
-                  <div className="font-semibold text-primary-foreground">California, Arizona, Texas & 10 other states</div>
+                  <div className="font-semibold text-primary-foreground">CA, CO, CT, FL, HI, IL, MA, MD, NJ, NV, TX, VA</div>
                 </div>
               </div>
             </div>

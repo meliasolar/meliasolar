@@ -5,7 +5,7 @@ const FloatingContactButtons = () => {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
       {/* Email Button */}
       <a
-        href="mailto:melia@voltaicnow.com"
+        href="mailto:Melia@solarkingsolutions.com"
         className="w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 animate-fade-in"
         aria-label="Email us"
       >
