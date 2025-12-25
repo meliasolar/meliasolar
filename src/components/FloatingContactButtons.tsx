@@ -2,7 +2,7 @@ import { Phone, Mail } from "lucide-react";
 
 const FloatingContactButtons = () => {
   return (
-    <div className="fixed bottom-44 md:bottom-6 right-6 z-50 flex flex-col gap-3">
+    <div className="fixed top-[420px] md:top-auto md:bottom-6 right-6 z-50 flex flex-col gap-3">
       {/* Email Button */}
       <a
         href="mailto:Melia@solarkingsolutions.com"
