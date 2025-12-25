@@ -4,7 +4,7 @@ import heroImage from "@/assets/hero-coastal.jpg";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[auto] md:min-h-[75vh] lg:min-h-[70vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[auto] md:min-h-[75vh] lg:min-h-[70vh] flex items-center overflow-hidden pb-0">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -73,7 +73,7 @@ const Hero = () => {
 
           {/* Stats */}
           <div
-            className="grid grid-cols-3 gap-8 pt-8 pb-4 md:pb-0 border-t border-border/50 bg-white md:bg-transparent -mx-6 px-6 animate-fade-up"
+            className="grid grid-cols-3 gap-8 pt-8 pb-4 md:pb-0 border-t border-border/50 bg-background md:bg-transparent -mx-6 px-6 animate-fade-up relative z-10"
             style={{ animationDelay: "0.5s" }}
           >
             {[
