@@ -81,12 +81,12 @@ const BlogPost = () => {
               Post Not Found
             </h1>
             <p className="text-muted-foreground mb-8">
-              The blog post you're looking for doesn't exist or has been removed.
+              The article you're looking for doesn't exist or has been removed.
             </p>
             <Button asChild>
               <Link to="/blog">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Blog
+                Back to News
               </Link>
             </Button>
           </div>
@@ -113,7 +113,7 @@ const BlogPost = () => {
             className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Blog
+            Back to News
           </Link>
 
           {/* Header */}

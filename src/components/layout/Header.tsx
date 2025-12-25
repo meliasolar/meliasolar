@@ -176,7 +176,7 @@ const Header = () => {
                   : "text-foreground/80 hover:text-foreground"
               }`}
             >
-              Blog
+              News
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ${
                 location.pathname.startsWith("/blog") ? "w-full" : "w-0 group-hover:w-full"
               }`} />
@@ -279,7 +279,7 @@ const Header = () => {
                     : "text-foreground/80 hover:text-foreground"
                 }`}
               >
-                Blog
+                News
               </Link>
 
               <Button variant="solar" size="lg" className="mt-2" asChild>
