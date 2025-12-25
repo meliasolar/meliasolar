@@ -50,7 +50,8 @@ const Hero = () => {
           >
             <p>Melia makes solar possible for businesses &amp; homeowners by keeping the cost less than or equal to their existing energy bill.</p>
             <p>Your cost does not go up!</p>
-            <p>Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.</p>
+            <p>Our equipment is the highest quality &amp; our team is the highest caliber.</p>
+            <p>You can count on Melia.</p>
           </div>
 
           {/* CTAs */}
