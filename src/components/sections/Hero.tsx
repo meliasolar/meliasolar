@@ -99,16 +99,17 @@ const Hero = () => {
           <div className="max-w-2xl">
             <div className="grid grid-cols-3 gap-8 py-6 border-t border-border/50">
               {[
-                { value: "12K+", label: "Installations" },
-                { value: "99%", label: "Satisfaction" },
-                { value: "10+", label: "Years Experience" },
+                { value: "12K+", label: "Installations", mobileLabel: "Installations" },
+                { value: "99%", label: "Satisfaction", mobileLabel: "Satisfaction" },
+                { value: "10+", label: "Years Experience", mobileLabel: "Years" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center sm:text-left">
                   <div className="font-display text-3xl md:text-4xl font-bold text-foreground">
                     {stat.value}
                   </div>
                   <div className="text-sm font-semibold text-foreground mt-1">
-                    {stat.label}
+                    <span className="hidden sm:inline">{stat.label}</span>
+                    <span className="sm:hidden">{stat.mobileLabel}</span>
                   </div>
                 </div>
               ))}
