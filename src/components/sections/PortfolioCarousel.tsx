@@ -53,7 +53,7 @@ const PortfolioCarousel = () => {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="py-10 md:py-16 bg-muted/30">
+    <section className="pt-4 pb-10 md:pt-6 md:pb-16 bg-muted/30">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-12">
