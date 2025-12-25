@@ -39,7 +39,7 @@ const Hero = () => {
             <div
               className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
             >
-              <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for businesses &amp; for homeowners.</p>
+              <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for <span className="text-primary">businesses</span> &amp; for <span className="text-primary">homeowners</span>.</p>
               <p className="font-bold">Locked in savings. No up front cost.</p>
               <p className="font-bold">Backup power when you need it most!</p>
             </div>
