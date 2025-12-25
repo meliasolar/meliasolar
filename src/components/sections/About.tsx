@@ -1,12 +1,43 @@
 import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import meliaImage from "@/assets/melia-king.webp";
 import meliaVideo from "@/assets/melia-welcome.mp4";
 
 const About = () => {
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [isVideoDismissed, setIsVideoDismissed] = useState(false);
+  const [hasPlayed, setHasPlayed] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Play video when section comes into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasPlayed && videoRef.current) {
+            videoRef.current.volume = 0.5;
+            videoRef.current.play().catch(() => {
+              // If autoplay with sound fails, try muted
+              if (videoRef.current) {
+                videoRef.current.muted = true;
+                setIsMuted(true);
+                videoRef.current.play();
+              }
+            });
+            setHasPlayed(true);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasPlayed]);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -32,7 +63,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-24 bg-secondary">
+    <section id="about" ref={sectionRef} className="py-24 bg-secondary">
       <div className="container mx-auto px-6">
         {/* Mobile Video Widget - appears above Meet Melia section */}
         {!isVideoDismissed && (
@@ -63,7 +94,6 @@ const About = () => {
               <video
                 ref={videoRef}
                 src={meliaVideo}
-                autoPlay
                 muted={isMuted}
                 playsInline
                 onEnded={handleVideoEnd}
