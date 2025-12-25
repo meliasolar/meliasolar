@@ -104,10 +104,10 @@ const Hero = () => {
             ].map((benefit) => (
               <div
                 key={benefit}
-                className="flex items-center gap-2 text-foreground font-medium"
+                className="flex items-center gap-3 text-foreground font-bold italic"
               >
-                <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0" />
-                <span className="text-sm md:text-base">{benefit}</span>
+                <span className="w-3 h-3 rounded-full bg-accent flex-shrink-0" />
+                <span className="text-base md:text-lg">{benefit}</span>
               </div>
             ))}
           </div>
