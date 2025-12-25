@@ -101,7 +101,7 @@ const ServicesPage = () => {
               Our Services
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mt-4">
-              Renewable Energy Solutions For Your Whole Home
+              Renewable Energy <span className="text-primary">Solutions</span> For Your Whole Home
             </h1>
             <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
               Modern, whole home solutions for energy independence. Making the switch to renewable energy has never been simpler.
