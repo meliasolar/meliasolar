@@ -68,10 +68,10 @@ const PortfolioCarousel = () => {
             Our Work
           </div>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Real Installations, Real Results
+            <span className="text-primary">Real</span> Installations, <span className="text-primary">Real</span> Results
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Browse through our portfolio of completed solar installations across California and beyond. 
+            Some of our completed solar installations across California and beyond. 
             Each project represents our commitment to quality and clean energy.
           </p>
         </div>
