@@ -55,7 +55,7 @@ const TestimonialsCarousel = () => {
             Customer Reviews
           </div>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Trusted by <span className="text-primary">Homeowners</span>
+            Trusted by <span className="text-primary">Businesses</span> & <span className="text-primary">Homeowners</span>
           </h2>
           <p className="text-muted-foreground">
             Real stories from customers who made the switch to solar with Melia King.
