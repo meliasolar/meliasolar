@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import { Button } from "@/components/ui/button";
-import solarImage from "@/assets/solar-service.jpg";
+import solarImage from "@/assets/solar-installation-action.jpg";
 import hvacImage from "@/assets/hvac-service.jpg";
 import roofingImage from "@/assets/roofing-service.jpg";
 import quietcoolImage from "@/assets/quietcool-service.jpg";
@@ -130,7 +130,7 @@ const ServicesPage = () => {
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-80 lg:h-96 object-cover"
+                      className="w-full h-80 lg:h-96 object-cover object-left"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
                   </div>
