@@ -39,7 +39,7 @@ const MeliaVideoWidget = () => {
           : "-translate-x-full opacity-0"
       }`}
     >
-      <div className="relative rounded-2xl overflow-hidden shadow-glow bg-background/90 backdrop-blur-sm border border-primary/20">
+      <div className="relative rounded-2xl overflow-hidden bg-background/90 backdrop-blur-sm border border-primary/30 animate-pulse-glow">
         {/* Close button */}
         <button
           onClick={handleDismiss}
