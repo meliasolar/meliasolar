@@ -45,7 +45,7 @@ const About = () => {
             </div>
 
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Melia King is passionate about helping families &amp; businesses take control of their energy costs. Her mission is to make clean, renewable energy accessible to every business &amp; homeowner in 13 states…&amp; counting.
+              Melia King is passionate about helping families &amp; businesses take control of their energy costs. Her mission is to make clean, renewable energy accessible to every business &amp; homeowner in 12 states…&amp; counting.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-6 pt-4">

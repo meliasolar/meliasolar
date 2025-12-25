@@ -29,7 +29,7 @@ const Hero = () => {
           >
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="text-sm font-medium text-foreground">
-              Trusted Solar Experts in 13 States
+              Trusted Expert in 12 States
             </span>
           </div>
 
@@ -77,7 +77,7 @@ const Hero = () => {
             style={{ animationDelay: "0.5s" }}
           >
             {[
-              { value: "5K+", label: "Installations" },
+              { value: "12K+", label: "Installations" },
               { value: "99%", label: "Satisfaction" },
               { value: "10+", label: "Years Experience" },
             ].map((stat) => (
