@@ -49,10 +49,10 @@ const WhySolar = () => {
             Why Solar
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-4">
-            Discover the Benefits of Going Solar
+            Discover the <span className="text-primary">Benefits</span> of Going Solar
           </h2>
           <p className="text-muted-foreground text-lg mt-6">
-            Join thousands of homeowners across California, Texas & 10 other states who have already made the switch to clean, affordable solar energy.
+            Join thousands of homeowners across California, Texas & 10 other states who have already made the switch to clean, <span className="text-primary font-medium">affordable</span> solar energy.
           </p>
         </div>
 
