@@ -22,15 +22,30 @@ const Hero = () => {
       {/* Content */}
       <div className="relative container mx-auto px-6 pt-32 pb-20">
         <div className="max-w-2xl space-y-8">
-          {/* Badge */}
+          {/* Badges Row */}
           <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border animate-fade-up"
+            className="flex flex-wrap items-center gap-3 animate-fade-up"
             style={{ animationDelay: "0.1s" }}
           >
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            <span className="text-sm font-medium text-foreground">
-              Trusted Expert in 12 States
-            </span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-sm font-medium text-foreground">
+                Trusted Expert in 12 States
+              </span>
+            </div>
+            {[
+              "No upfront cost.",
+              "Locked in savings.",
+              "Backup power.",
+            ].map((benefit) => (
+              <div
+                key={benefit}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border"
+              >
+                <span className="w-2 h-2 rounded-full bg-accent" />
+                <span className="text-sm font-medium text-foreground">{benefit}</span>
+              </div>
+            ))}
           </div>
 
           {/* Headline */}
@@ -96,25 +111,6 @@ const Hero = () => {
             ))}
           </div>
 
-          {/* Key Benefits */}
-          <div
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 animate-fade-up"
-            style={{ animationDelay: "0.6s" }}
-          >
-            {[
-              "No upfront cost.",
-              "Locked in savings.",
-              "Backup power when you need it most.",
-            ].map((benefit) => (
-              <div
-                key={benefit}
-                className="flex items-center gap-3 text-foreground font-bold italic px-4 py-2 rounded-lg border border-purple-300/60 bg-purple-100/30 backdrop-blur-sm"
-              >
-                <span className="w-3 h-3 rounded-full bg-accent flex-shrink-0" />
-                <span className="text-base md:text-lg">{benefit}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
