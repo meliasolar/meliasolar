@@ -91,7 +91,7 @@ const About = () => {
                 About Us
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-4">
-                Building a brighter future, one home at a time.
+                Building a <span className="text-primary">brighter future</span>, one home at a time.
               </h2>
             </div>
 
