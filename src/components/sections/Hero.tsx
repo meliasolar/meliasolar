@@ -45,12 +45,14 @@ const Hero = () => {
           </h1>
 
           {/* Subheadline - LCP element, no animation for immediate render */}
-          <div
-            className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
-          >
-            <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for businesses &amp; for homeowners.</p>
-            <p>Your energy cost does not go up!</p>
-            <p className="italic">Highest quality equipment. Highest caliber team. You can count on Melia.</p>
+          <div className="lg:bg-white lg:p-6 lg:rounded-xl lg:shadow-soft">
+            <div
+              className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
+            >
+              <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for businesses &amp; for homeowners.</p>
+              <p>Your energy cost does not go up!</p>
+              <p className="italic">Highest quality equipment. Highest caliber team. You can count on Melia.</p>
+            </div>
           </div>
 
           {/* CTAs */}
