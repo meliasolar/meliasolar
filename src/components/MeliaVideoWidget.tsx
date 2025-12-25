@@ -6,6 +6,7 @@ const MeliaVideoWidget = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [showSoundOverlay, setShowSoundOverlay] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -38,6 +39,14 @@ const MeliaVideoWidget = () => {
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
+    }
+  };
+
+  const handleEnableSound = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      setIsMuted(false);
+      setShowSoundOverlay(false);
     }
   };
 
@@ -83,6 +92,19 @@ const MeliaVideoWidget = () => {
           onEnded={handleVideoEnd}
           className="w-64 h-44 object-cover"
         />
+
+        {/* Tap for sound overlay */}
+        {showSoundOverlay && isMuted && (
+          <button
+            onClick={handleEnableSound}
+            className="absolute inset-0 flex items-center justify-center bg-background/40 backdrop-blur-[2px] transition-opacity hover:bg-background/30"
+          >
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg">
+              <Volume2 className="w-4 h-4" />
+              Tap for sound
+            </div>
+          </button>
+        )}
 
         {/* Label */}
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-2 pr-10">
