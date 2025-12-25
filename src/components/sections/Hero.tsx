@@ -45,11 +45,13 @@ const Hero = () => {
           </h1>
 
           {/* Subheadline - LCP element, no animation for immediate render */}
-          <p
-            className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed"
+          <div
+            className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
           >
-            We make solar possible for homeowners &amp; businesses by keeping the cost less than or equal to your existing energy bill. Your cost does not go up! Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.
-          </p>
+            <p>Melia makes solar possible for businesses &amp; homeowners by keeping the cost less than or equal to their existing energy bill.</p>
+            <p>Your cost does not go up!</p>
+            <p>Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.</p>
+          </div>
 
           {/* CTAs */}
           <div
