@@ -5,16 +5,18 @@ import meliaVideo from "@/assets/melia-welcome.mp4";
 const MeliaVideoWidget = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    // Set volume to 50% for when user unmutes
+    if (videoRef.current) {
+      videoRef.current.volume = 0.5;
+    }
+    
     // Fly in after 2 seconds
     const timer = setTimeout(() => {
       setIsVisible(true);
-      if (videoRef.current) {
-        videoRef.current.volume = 0.5;
-      }
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -71,7 +73,7 @@ const MeliaVideoWidget = () => {
           src={meliaVideo}
           autoPlay
           loop
-          muted={false}
+          muted={isMuted}
           playsInline
           className="w-48 h-32 md:w-64 md:h-44 object-cover"
         />
