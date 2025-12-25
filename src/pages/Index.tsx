@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
+import MeliaVideoWidget from "@/components/MeliaVideoWidget";
 
 // Lazy load below-the-fold sections to reduce initial JS bundle
 const WhySolar = lazy(() => import("@/components/sections/WhySolar"));
@@ -53,6 +54,7 @@ const Index = () => {
       </main>
       <Footer />
       <FloatingContactButtons />
+      <MeliaVideoWidget />
     </>
   );
 };
