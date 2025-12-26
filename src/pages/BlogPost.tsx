@@ -104,7 +104,7 @@ const BlogPost = () => {
       .trim();
   };
 
-  // Process content to add IDs to headings, insert featured image in middle, and make headings linkable
+  // Process content to add IDs to headings, insert featured image after ~2 paragraphs, and make headings linkable
   const { contentBeforeImage, contentAfterImage } = useMemo(() => {
     if (!post?.content) return { contentBeforeImage: "", contentAfterImage: "" };
     
@@ -136,19 +136,27 @@ const BlogPost = () => {
       heading.insertBefore(anchor, heading.firstChild);
     });
     
-    // Split content to insert featured image in the middle
+    // Split content to insert featured image after approximately 2 paragraphs (first third)
     const allElements = Array.from(doc.body.children);
     const totalElements = allElements.length;
-    const midPoint = Math.floor(totalElements / 2);
     
-    // Find the best break point (after a paragraph, not in the middle of a section)
-    let breakIndex = midPoint;
-    for (let i = midPoint; i < totalElements; i++) {
+    // Find break point after approximately 2 paragraphs
+    let breakIndex = 0;
+    let paragraphCount = 0;
+    for (let i = 0; i < totalElements; i++) {
       const el = allElements[i];
-      if (el.tagName === 'P' || el.tagName === 'H2' || el.tagName === 'H3') {
-        breakIndex = i;
-        break;
+      if (el.tagName === 'P') {
+        paragraphCount++;
+        if (paragraphCount >= 2) {
+          breakIndex = i + 1; // Insert after this paragraph
+          break;
+        }
       }
+    }
+    
+    // Fallback: if less than 2 paragraphs, put after first element or at 1/3 point
+    if (breakIndex === 0) {
+      breakIndex = Math.max(1, Math.floor(totalElements / 3));
     }
     
     const beforeElements = allElements.slice(0, breakIndex);
