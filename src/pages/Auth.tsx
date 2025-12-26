@@ -30,7 +30,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/admin/blog");
+      navigate("/admin/news");
     }
   }, [user, navigate]);
 
