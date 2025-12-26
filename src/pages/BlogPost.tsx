@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowLeft } from "lucide-react";
+import { Calendar, ArrowLeft, Facebook, Linkedin, Share2 } from "lucide-react";
 
 interface BlogPost {
   id: string;
@@ -56,6 +56,38 @@ const BlogPost = () => {
 
   const getCanonicalUrl = () => {
     return `${window.location.origin}/news/${id}`;
+  };
+
+  const shareOnFacebook = () => {
+    const url = encodeURIComponent(getCanonicalUrl());
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank", "width=600,height=400");
+  };
+
+  const shareOnTwitter = () => {
+    const url = encodeURIComponent(getCanonicalUrl());
+    const text = encodeURIComponent(post?.title || "");
+    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank", "width=600,height=400");
+  };
+
+  const shareOnLinkedIn = () => {
+    const url = encodeURIComponent(getCanonicalUrl());
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank", "width=600,height=400");
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(getCanonicalUrl());
+      alert("Link copied to clipboard!");
+    } catch {
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = getCanonicalUrl();
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      alert("Link copied to clipboard!");
+    }
   };
 
   if (loading) {
@@ -167,9 +199,54 @@ const BlogPost = () => {
 
           {/* Content */}
           <div 
-            className="prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground"
+            className="prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground mb-12"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
+
+          {/* Share Buttons */}
+          <div className="border-t border-border pt-8">
+            <p className="text-sm font-medium text-foreground mb-4">Share this article</p>
+            <div className="flex flex-wrap gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={shareOnFacebook}
+                className="gap-2"
+              >
+                <Facebook className="w-4 h-4" />
+                Facebook
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={shareOnTwitter}
+                className="gap-2"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                X (Twitter)
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={shareOnLinkedIn}
+                className="gap-2"
+              >
+                <Linkedin className="w-4 h-4" />
+                LinkedIn
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={copyToClipboard}
+                className="gap-2"
+              >
+                <Share2 className="w-4 h-4" />
+                Copy Link
+              </Button>
+            </div>
+          </div>
         </article>
       </main>
 
