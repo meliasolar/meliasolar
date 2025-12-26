@@ -246,7 +246,9 @@ const BlogPost = () => {
   }
 
   const description = getExcerpt(post.content);
-  const ogImage = post.image_url || "https://meliasolar.com/melia-og-image.png";
+  // Use featured image for sharing, fallback to Melia default image
+  const defaultOgImage = `${window.location.origin}/melia-og-image.png`;
+  const ogImage = post.image_url || defaultOgImage;
 
   return (
     <>
