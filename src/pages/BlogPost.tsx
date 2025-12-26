@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowLeft, Facebook, Linkedin, Share2 } from "lucide-react";
+import { Calendar, ArrowLeft, Facebook, Linkedin, Share2, Link as LinkIcon } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface BlogPost {
   id: string;
@@ -19,6 +20,7 @@ const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -74,21 +76,81 @@ const BlogPost = () => {
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank", "width=600,height=400");
   };
 
-  const copyToClipboard = async () => {
+  const copyToClipboard = async (url?: string) => {
+    const textToCopy = url || getCanonicalUrl();
     try {
-      await navigator.clipboard.writeText(getCanonicalUrl());
-      alert("Link copied to clipboard!");
+      await navigator.clipboard.writeText(textToCopy);
+      toast({ title: "Link copied to clipboard!" });
     } catch {
       // Fallback for older browsers
       const textArea = document.createElement("textarea");
-      textArea.value = getCanonicalUrl();
+      textArea.value = textToCopy;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand("copy");
       document.body.removeChild(textArea);
-      alert("Link copied to clipboard!");
+      toast({ title: "Link copied to clipboard!" });
     }
   };
+
+  // Generate slug from heading text
+  const generateSlug = (text: string) => {
+    return text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .trim();
+  };
+
+  // Process content to add IDs to headings and make them linkable
+  const processedContent = useMemo(() => {
+    if (!post?.content) return "";
+    
+    // Parse the HTML and add IDs to headings
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(post.content, "text/html");
+    
+    const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    headings.forEach((heading) => {
+      const text = heading.textContent || "";
+      const slug = generateSlug(text);
+      heading.setAttribute("id", slug);
+      heading.classList.add("group", "relative", "scroll-mt-24");
+      
+      // Create anchor link button
+      const anchor = doc.createElement("a");
+      anchor.href = `#${slug}`;
+      anchor.className = "anchor-link";
+      anchor.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
+      anchor.setAttribute("aria-label", `Link to ${text}`);
+      
+      heading.insertBefore(anchor, heading.firstChild);
+    });
+    
+    return doc.body.innerHTML;
+  }, [post?.content]);
+
+  // Handle anchor link clicks to copy full URL
+  useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest(".anchor-link");
+      if (anchor) {
+        e.preventDefault();
+        const href = anchor.getAttribute("href");
+        if (href) {
+          const fullUrl = `${getCanonicalUrl()}${href}`;
+          copyToClipboard(fullUrl);
+          // Update URL without reload
+          window.history.pushState(null, "", href);
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+    return () => document.removeEventListener("click", handleAnchorClick);
+  }, [id]);
 
   if (loading) {
     return (
@@ -199,8 +261,8 @@ const BlogPost = () => {
 
           {/* Content */}
           <div 
-            className="prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground mb-12"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            className="blog-content prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground mb-12"
+            dangerouslySetInnerHTML={{ __html: processedContent }}
           />
 
           {/* Share Buttons */}
@@ -239,7 +301,7 @@ const BlogPost = () => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={copyToClipboard}
+                onClick={() => copyToClipboard()}
                 className="gap-2"
               >
                 <Share2 className="w-4 h-4" />
