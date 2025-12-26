@@ -205,64 +205,85 @@
   animation: pulseGlow 2s ease-in-out infinite;
 }
 
-/* Rich text editor styles */
-.ProseMirror {
+/* Rich text editor styles - Quill */
+.rich-text-editor .ql-container {
+  min-height: 350px;
+  font-size: 1rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  background: hsl(var(--background));
+}
+
+.rich-text-editor .ql-toolbar {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  background: hsl(var(--muted) / 0.3);
+  border-color: hsl(var(--border));
+}
+
+.rich-text-editor .ql-container {
+  border-color: hsl(var(--border));
+}
+
+.rich-text-editor .ql-editor {
   min-height: 300px;
-  outline: none;
+  padding: 1rem;
 }
 
-.ProseMirror p.is-editor-empty:first-child::before {
-  content: attr(data-placeholder);
-  float: left;
+.rich-text-editor .ql-editor.ql-blank::before {
   color: hsl(var(--muted-foreground));
-  pointer-events: none;
-  height: 0;
+  font-style: normal;
 }
 
-.ProseMirror h1 {
+.rich-text-editor .ql-editor h1 {
   font-size: 2em;
   font-weight: 700;
-  margin: 1em 0 0.5em;
-}
-
-.ProseMirror h2 {
-  font-size: 1.5em;
-  font-weight: 600;
-  margin: 1em 0 0.5em;
-}
-
-.ProseMirror h3 {
-  font-size: 1.25em;
-  font-weight: 600;
-  margin: 1em 0 0.5em;
-}
-
-.ProseMirror ul,
-.ProseMirror ol {
-  padding-left: 1.5em;
   margin: 0.5em 0;
 }
 
-.ProseMirror li {
-  margin: 0.25em 0;
+.rich-text-editor .ql-editor h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 0.5em 0;
 }
 
-.ProseMirror blockquote {
-  border-left: 3px solid hsl(var(--primary));
-  padding-left: 1em;
-  margin: 1em 0;
+.rich-text-editor .ql-editor h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin: 0.5em 0;
+}
+
+.rich-text-editor .ql-editor blockquote {
+  border-left: 4px solid hsl(var(--primary));
+  padding-left: 1rem;
+  margin: 1rem 0;
   color: hsl(var(--muted-foreground));
-  font-style: italic;
 }
 
-.ProseMirror img {
+.rich-text-editor .ql-editor img {
   max-width: 100%;
   height: auto;
   border-radius: 0.5rem;
-  margin: 1em 0;
+  margin: 1rem 0;
 }
 
-.ProseMirror a {
+.rich-text-editor .ql-editor a {
   color: hsl(var(--primary));
-  text-decoration: underline;
+}
+
+.rich-text-editor .ql-snow .ql-stroke {
+  stroke: hsl(var(--foreground));
+}
+
+.rich-text-editor .ql-snow .ql-fill {
+  fill: hsl(var(--foreground));
+}
+
+.rich-text-editor .ql-snow .ql-picker {
+  color: hsl(var(--foreground));
+}
+
+.rich-text-editor .ql-snow .ql-picker-options {
+  background: hsl(var(--background));
+  border-color: hsl(var(--border));
 }
