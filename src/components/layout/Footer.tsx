@@ -1,26 +1,8 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Sun, Phone, Mail, MapPin } from "lucide-react";
 
 const Footer = () => {
-  const navigate = useNavigate();
   const location = useLocation();
-
-  const scrollToSection = (sectionId: string) => {
-    if (location.pathname !== "/") {
-      navigate(`/#${sectionId}`);
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 300);
-    } else {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
 
   return (
     <footer className="bg-primary text-primary-foreground">
@@ -55,12 +37,17 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               <li>
-                <button
-                  onClick={() => scrollToSection("about")}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                <Link
+                  to="/meetmelia"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className={`transition-colors text-sm ${
+                    location.pathname === "/meetmelia" || location.pathname === "/about"
+                      ? "text-accent"
+                      : "text-primary-foreground/80 hover:text-primary-foreground"
+                  }`}
                 >
                   Meet Melia
-                </button>
+                </Link>
               </li>
               <li>
                 <Link
@@ -76,12 +63,17 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection("calculator")}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm"
+                <Link
+                  to="/savingscalculator"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className={`transition-colors text-sm ${
+                    location.pathname === "/savingscalculator"
+                      ? "text-accent"
+                      : "text-primary-foreground/80 hover:text-primary-foreground"
+                  }`}
                 >
                   Savings Calculator
-                </button>
+                </Link>
               </li>
               <li>
                 <Link

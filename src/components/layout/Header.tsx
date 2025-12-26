@@ -101,7 +101,7 @@ const Header = () => {
               <Link
                 to="/services"
                 className={`font-medium transition-colors relative flex items-center gap-1 ${
-                  location.pathname === "/services" || location.pathname === "/tesla-supercharger"
+                  location.pathname === "/services" || location.pathname.match(/^\/(solar|supercharger|hvac|title24|fans)$/)
                     ? "text-accent"
                     : "text-foreground/80 hover:text-foreground"
                 }`}
@@ -109,7 +109,7 @@ const Header = () => {
                 Services
                 <ChevronDown className="w-4 h-4" />
                 <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ${
-                  location.pathname === "/services" || location.pathname === "/tesla-supercharger"
+                  location.pathname === "/services" || location.pathname.match(/^\/(solar|supercharger|hvac|title24|fans)$/)
                     ? "w-full"
                     : "w-0 group-hover:w-full"
                 }`} />

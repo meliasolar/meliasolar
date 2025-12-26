@@ -68,7 +68,7 @@ const TeslaSupercharger = () => {
           name="keywords"
           content="Tesla Supercharger, EV charging, electric vehicle, commercial charging station, passive income, certified installer"
         />
-        <link rel="canonical" href="https://meliasolar.com/tesla-supercharger" />
+        <link rel="canonical" href="https://meliasolar.com/supercharger" />
       </Helmet>
 
       <Header />
