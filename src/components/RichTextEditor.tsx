@@ -126,21 +126,37 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
 
   const modules = useMemo(() => ({
     toolbar: {
-      container: [
-        [{ header: [1, 2, 3, false] }],
-        ["bold", "italic", "underline", "strike"],
-        [{ color: [] }, { background: [] }],
-        [{ list: "ordered" }, { list: "bullet" }],
-        [{ align: [] }],
-        ["blockquote", "code-block"],
-        ["link", "image"],
-        ["clean"],
-      ],
+      container: "#toolbar-top",
       handlers: {
         image: imageHandler,
       },
     },
   }), [imageHandler]);
+
+  const toolbarButtons = (
+    <>
+      <select className="ql-header" defaultValue="">
+        <option value="1">Heading 1</option>
+        <option value="2">Heading 2</option>
+        <option value="3">Heading 3</option>
+        <option value="">Normal</option>
+      </select>
+      <button className="ql-bold" />
+      <button className="ql-italic" />
+      <button className="ql-underline" />
+      <button className="ql-strike" />
+      <select className="ql-color" />
+      <select className="ql-background" />
+      <button className="ql-list" value="ordered" />
+      <button className="ql-list" value="bullet" />
+      <select className="ql-align" />
+      <button className="ql-blockquote" />
+      <button className="ql-code-block" />
+      <button className="ql-link" />
+      <button className="ql-image" />
+      <button className="ql-clean" />
+    </>
+  );
 
   const formats = [
     "header",
@@ -174,6 +190,12 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
           </div>
         </div>
       )}
+      
+      {/* Top Toolbar */}
+      <div id="toolbar-top" className="ql-toolbar ql-snow editor-toolbar-top">
+        {toolbarButtons}
+      </div>
+      
       <ReactQuill
         ref={quillRef}
         theme="snow"
@@ -183,6 +205,24 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
         formats={formats}
         placeholder={placeholder}
       />
+      
+      {/* Bottom Toolbar */}
+      <div 
+        className="ql-toolbar ql-snow editor-toolbar-bottom"
+        onClick={(e) => {
+          const target = e.target as HTMLElement;
+          const button = target.closest('button, select');
+          if (button) {
+            const topToolbar = document.getElementById('toolbar-top');
+            const correspondingBtn = topToolbar?.querySelector(`.${button.className.split(' ')[0]}`);
+            if (correspondingBtn) {
+              (correspondingBtn as HTMLElement).click();
+            }
+          }
+        }}
+      >
+        {toolbarButtons}
+      </div>
     </div>
   );
 };

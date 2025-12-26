@@ -104,9 +104,9 @@ const BlogPost = () => {
       .trim();
   };
 
-  // Process content to add IDs to headings and make them linkable
-  const processedContent = useMemo(() => {
-    if (!post?.content) return "";
+  // Process content to add IDs to headings, insert featured image in middle, and make headings linkable
+  const { contentBeforeImage, contentAfterImage } = useMemo(() => {
+    if (!post?.content) return { contentBeforeImage: "", contentAfterImage: "" };
     
     // Sanitize HTML content to prevent XSS attacks
     const sanitizedContent = DOMPurify.sanitize(post.content, {
@@ -136,7 +136,28 @@ const BlogPost = () => {
       heading.insertBefore(anchor, heading.firstChild);
     });
     
-    return doc.body.innerHTML;
+    // Split content to insert featured image in the middle
+    const allElements = Array.from(doc.body.children);
+    const totalElements = allElements.length;
+    const midPoint = Math.floor(totalElements / 2);
+    
+    // Find the best break point (after a paragraph, not in the middle of a section)
+    let breakIndex = midPoint;
+    for (let i = midPoint; i < totalElements; i++) {
+      const el = allElements[i];
+      if (el.tagName === 'P' || el.tagName === 'H2' || el.tagName === 'H3') {
+        breakIndex = i;
+        break;
+      }
+    }
+    
+    const beforeElements = allElements.slice(0, breakIndex);
+    const afterElements = allElements.slice(breakIndex);
+    
+    const beforeHtml = beforeElements.map(el => el.outerHTML).join('');
+    const afterHtml = afterElements.map(el => el.outerHTML).join('');
+    
+    return { contentBeforeImage: beforeHtml, contentAfterImage: afterHtml };
   }, [post?.content]);
 
   // Handle anchor link clicks to copy full URL
@@ -257,21 +278,29 @@ const BlogPost = () => {
             </div>
           </header>
 
-          {/* Featured Image */}
+          {/* Content - First Half */}
+          <div 
+            className="blog-content prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-6 prose-h2:border-b prose-h2:border-border prose-h2:pb-3"
+            dangerouslySetInnerHTML={{ __html: contentBeforeImage }}
+          />
+
+          {/* Featured Image - Smaller and in middle */}
           {post.image_url && (
-            <div className="mb-8 rounded-xl overflow-hidden">
-              <img
-                src={post.image_url}
-                alt={post.title}
-                className="w-full h-auto"
-              />
+            <div className="my-10 flex justify-center">
+              <div className="max-w-md rounded-xl overflow-hidden shadow-medium">
+                <img
+                  src={post.image_url}
+                  alt={post.title}
+                  className="w-full h-auto"
+                />
+              </div>
             </div>
           )}
 
-          {/* Content */}
+          {/* Content - Second Half */}
           <div 
-            className="blog-content prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground mb-12"
-            dangerouslySetInnerHTML={{ __html: processedContent }}
+            className="blog-content prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-6 prose-h2:border-b prose-h2:border-border prose-h2:pb-3 mb-12"
+            dangerouslySetInnerHTML={{ __html: contentAfterImage }}
           />
 
           {/* Share Buttons */}
