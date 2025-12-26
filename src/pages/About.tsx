@@ -106,7 +106,7 @@ const AboutPage = () => {
                   About Us
                 </span>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-4">
-                  Building A <span className="text-primary">Brighter Future</span>, One Home At A Time.
+                  Building A <span className="text-primary">Brighter Future</span>, One Home At A Time
                 </h2>
               </div>
 
