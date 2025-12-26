@@ -73,7 +73,7 @@ serve(async (req) => {
     console.log('OG Image:', ogImage);
 
     const html = generateHtml({
-      title: `${post.title} | Melia King Solar`,
+      title: post.title,
       description: excerpt,
       image: ogImage,
       url: canonicalUrl,
