@@ -35,9 +35,10 @@ const App = () => (
           <BrowserRouter>
             <ScrollToTop />
             <Suspense fallback={<div className="min-h-screen" />}>
-              <Routes>
+            <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/meet-melia" element={<About />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/testimonials" element={<Testimonials />} />
                 <Route path="/tesla-supercharger" element={<TeslaSupercharger />} />
