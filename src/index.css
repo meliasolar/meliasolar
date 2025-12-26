@@ -347,3 +347,42 @@
 .rich-text-editor .ql-tooltip a.ql-remove {
   color: hsl(var(--primary));
 }
+
+/* Blog content anchor links */
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.blog-content .anchor-link {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  color: hsl(var(--muted-foreground));
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.blog-content .anchor-link:hover {
+  color: hsl(var(--primary));
+  background: hsl(var(--muted));
+}
+
+.blog-content h1:hover .anchor-link,
+.blog-content h2:hover .anchor-link,
+.blog-content h3:hover .anchor-link,
+.blog-content h4:hover .anchor-link,
+.blog-content h5:hover .anchor-link,
+.blog-content h6:hover .anchor-link {
+  opacity: 1;
+}
