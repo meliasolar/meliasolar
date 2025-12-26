@@ -201,6 +201,7 @@ const BlogPost = () => {
   }
 
   const description = getExcerpt(post.content);
+  const ogImage = post.image_url || "https://meliasolar.com/melia-og-image.png";
 
   return (
     <>
@@ -214,14 +215,14 @@ const BlogPost = () => {
         <meta property="og:url" content={getCanonicalUrl()} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={description} />
-        {post.image_url && <meta property="og:image" content={post.image_url} />}
+        <meta property="og:image" content={ogImage} />
         
         {/* Twitter */}
-        <meta name="twitter:card" content={post.image_url ? "summary_large_image" : "summary"} />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={getCanonicalUrl()} />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={description} />
-        {post.image_url && <meta name="twitter:image" content={post.image_url} />}
+        <meta name="twitter:image" content={ogImage} />
       </Helmet>
 
       <Header />
