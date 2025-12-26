@@ -169,16 +169,16 @@ const Header = () => {
             </Link>
 
             <Link
-              to="/blog"
+              to="/news"
               className={`font-medium transition-colors relative group ${
-                location.pathname.startsWith("/blog")
+                location.pathname.startsWith("/news")
                   ? "text-accent"
                   : "text-foreground/80 hover:text-foreground"
               }`}
             >
               News
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ${
-                location.pathname.startsWith("/blog") ? "w-full" : "w-0 group-hover:w-full"
+                location.pathname.startsWith("/news") ? "w-full" : "w-0 group-hover:w-full"
               }`} />
             </Link>
           </div>
@@ -271,10 +271,10 @@ const Header = () => {
               </Link>
 
               <Link
-                to="/blog"
+                to="/news"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`font-medium py-2 transition-colors ${
-                  location.pathname.startsWith("/blog")
+                  location.pathname.startsWith("/news")
                     ? "text-accent"
                     : "text-foreground/80 hover:text-foreground"
                 }`}
