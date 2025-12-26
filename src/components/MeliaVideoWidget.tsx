@@ -93,11 +93,10 @@ const MeliaVideoWidget = () => {
           className="w-64 h-44 object-cover"
         />
 
-        {/* Tap for sound overlay */}
         {showSoundOverlay && isMuted && (
           <button
             onClick={handleEnableSound}
-            className="absolute inset-0 flex items-center justify-center bg-background/40 backdrop-blur-[2px] transition-opacity hover:bg-background/30"
+            className="absolute inset-0 flex items-center justify-center bg-background/20 transition-opacity hover:bg-background/10"
           >
             <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg">
               <Volume2 className="w-4 h-4" />
