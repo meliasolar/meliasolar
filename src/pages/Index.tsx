@@ -33,7 +33,7 @@ const Index = () => {
           property="og:description"
           content="Your Concierge Energy Advisor in 13 States. Expert solar panel installation and whole-home energy solutions."
         />
-        <meta property="og:image" content="https://meliasolar.com/og-image.png" />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://meliasolar.com" />
       </Helmet>

@@ -59,6 +59,12 @@ const Blog = () => {
           name="description"
           content="Read the latest news, tips, and insights about solar energy, home efficiency, and sustainable living from Melia King Solar."
         />
+        <meta property="og:title" content="News | Melia King Solar" />
+        <meta property="og:description" content="Read the latest news, tips, and insights about solar energy from Melia King Solar." />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
 
       <Header />
