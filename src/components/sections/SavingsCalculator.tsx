@@ -52,17 +52,17 @@ const SavingsCalculator = () => {
                 </div>
                 
                 <div className="px-4">
-                  <Slider
+                <Slider
                     value={monthlyBill}
                     onValueChange={setMonthlyBill}
                     min={100}
-                    max={800}
+                    max={20000}
                     step={10}
                     className="w-full"
                   />
                   <div className="flex justify-between text-sm text-muted-foreground mt-2">
                     <span>$100</span>
-                    <span>$800</span>
+                    <span>$20,000</span>
                   </div>
                 </div>
               </div>

@@ -18,7 +18,7 @@ const FAQ = () => {
     },
     {
       question: "How much can I save with solar panels?",
-      answer: "Most homeowners save 50-90% on their electricity bills. Your exact savings depend on your energy usage, roof size, local sun exposure, and utility rates. We provide a free consultation to give you a personalized savings estimate.",
+      answer: "Most homeowners save 10-40% on their electricity bills. Your exact savings depend on your energy usage, roof size, local sun exposure, and utility rates. We provide a free consultation to give you a personalized savings estimate.",
     },
     {
       question: "What states do you serve?",
