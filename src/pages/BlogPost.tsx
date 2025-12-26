@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowLeft, Facebook, Linkedin, Share2, Link as LinkIcon } from "lucide-react";
+import { Calendar, ArrowLeft, Facebook, Linkedin, Share2, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface BlogPost {
@@ -56,6 +56,13 @@ const BlogPost = () => {
     const text = htmlContent.replace(/<[^>]*>/g, "");
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength).trim() + "...";
+  };
+
+  const getReadingTime = (htmlContent: string) => {
+    const text = htmlContent.replace(/<[^>]*>/g, "");
+    const wordCount = text.trim().split(/\s+/).length;
+    const minutes = Math.ceil(wordCount / 200);
+    return `${minutes} min read`;
   };
 
   const getCanonicalUrl = () => {
@@ -281,9 +288,15 @@ const BlogPost = () => {
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
               {post.title}
             </h1>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Calendar className="w-4 h-4" />
-              {formatDate(post.created_at)}
+            <div className="flex items-center gap-4 text-muted-foreground">
+              <span className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                {formatDate(post.created_at)}
+              </span>
+              <span className="flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                {getReadingTime(post.content)}
+              </span>
             </div>
           </header>
 
