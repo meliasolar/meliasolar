@@ -13,6 +13,7 @@ interface BlogPost {
   content: string;
   image_url: string | null;
   created_at: string;
+  slug: string;
 }
 
 const Blog = () => {
@@ -109,7 +110,7 @@ const Blog = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
-                <Link key={post.id} to={`/news/${post.id}`}>
+                <Link key={post.id} to={`/news/${post.slug}`}>
                   <Card className="h-full hover:shadow-elegant transition-shadow group overflow-hidden">
                     {post.image_url ? (
                       <div className="h-48 overflow-hidden">
