@@ -96,7 +96,7 @@ const TestimonialsPage = () => {
                 <span className="text-muted-foreground">on Google Reviews</span>
               </a>
               <p className="mt-3 text-xs text-muted-foreground italic">
-                Melia King is part owner of Voltaic Inc
+                Melia King is part owner of Voltaic Construction
               </p>
             </div>
           </div>
@@ -142,7 +142,7 @@ const TestimonialsPage = () => {
             </div>
 
             <p className="mt-12 text-center text-sm text-muted-foreground italic">
-              Melia King is part owner of Voltaic Inc
+              Melia King is part owner of Voltaic Construction
             </p>
           </div>
         </section>

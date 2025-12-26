@@ -130,7 +130,7 @@ const TestimonialsCarousel = () => {
           <span className="text-muted-foreground">on Google Reviews</span>
         </a>
         <p className="mt-2 text-xs text-muted-foreground italic">
-          Melia King is part owner of Voltaic Inc
+          Melia King is part owner of Voltaic Construction
         </p>
       </div>
     </section>
