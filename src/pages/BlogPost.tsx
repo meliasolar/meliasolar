@@ -69,24 +69,32 @@ const BlogPost = () => {
     return `${window.location.origin}/news/${slug}`;
   };
 
+  // Get the shareable URL that includes OG meta tags via edge function
+  const getShareableUrl = () => {
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const origin = encodeURIComponent(window.location.origin);
+    return `${supabaseUrl}/functions/v1/og-meta?slug=${slug}&origin=${origin}`;
+  };
+
   const shareOnFacebook = () => {
-    const url = encodeURIComponent(getCanonicalUrl());
+    const url = encodeURIComponent(getShareableUrl());
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank", "width=600,height=400");
   };
 
   const shareOnTwitter = () => {
-    const url = encodeURIComponent(getCanonicalUrl());
+    const url = encodeURIComponent(getShareableUrl());
     const text = encodeURIComponent(post?.title || "");
     window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank", "width=600,height=400");
   };
 
   const shareOnLinkedIn = () => {
-    const url = encodeURIComponent(getCanonicalUrl());
+    const url = encodeURIComponent(getShareableUrl());
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank", "width=600,height=400");
   };
 
   const copyToClipboard = async (url?: string) => {
-    const textToCopy = url || getCanonicalUrl();
+    // Use shareable URL for clipboard to ensure OG tags work
+    const textToCopy = url || getShareableUrl();
     try {
       await navigator.clipboard.writeText(textToCopy);
       toast({ title: "Link copied to clipboard!" });
