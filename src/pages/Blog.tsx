@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar, ArrowRight, Clock } from "lucide-react";
 
 interface BlogPost {
   id: string;
@@ -46,10 +46,16 @@ const Blog = () => {
   };
 
   const getExcerpt = (htmlContent: string, maxLength = 150) => {
-    // Strip HTML tags
     const text = htmlContent.replace(/<[^>]*>/g, "");
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength).trim() + "...";
+  };
+
+  const getReadingTime = (htmlContent: string) => {
+    const text = htmlContent.replace(/<[^>]*>/g, "");
+    const wordCount = text.trim().split(/\s+/).length;
+    const minutes = Math.ceil(wordCount / 200);
+    return `${minutes} min read`;
   };
 
   return (
@@ -126,9 +132,15 @@ const Blog = () => {
                       </div>
                     )}
                     <CardHeader>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                        <Calendar className="w-4 h-4" />
-                        {formatDate(post.created_at)}
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          {formatDate(post.created_at)}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          {getReadingTime(post.content)}
+                        </span>
                       </div>
                       <CardTitle className="font-display text-xl group-hover:text-primary transition-colors line-clamp-2">
                         {post.title}
