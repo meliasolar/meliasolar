@@ -69,31 +69,36 @@ const BlogPost = () => {
     return `${window.location.origin}/news/${slug}`;
   };
 
-  // Get the shareable URL that includes OG meta tags via edge function
+  // Get the shareable URL - use canonical URL for direct sharing (iMessage, SMS, email)
   const getShareableUrl = () => {
+    return getCanonicalUrl();
+  };
+
+  // Get the edge function URL for social platforms that properly parse OG meta
+  const getOgMetaUrl = () => {
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     const origin = encodeURIComponent(window.location.origin);
     return `${supabaseUrl}/functions/v1/og-meta?slug=${slug}&origin=${origin}`;
   };
 
   const shareOnFacebook = () => {
-    const url = encodeURIComponent(getShareableUrl());
+    const url = encodeURIComponent(getOgMetaUrl());
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank", "width=600,height=400");
   };
 
   const shareOnTwitter = () => {
-    const url = encodeURIComponent(getShareableUrl());
+    const url = encodeURIComponent(getOgMetaUrl());
     const text = encodeURIComponent(post?.title || "");
     window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank", "width=600,height=400");
   };
 
   const shareOnLinkedIn = () => {
-    const url = encodeURIComponent(getShareableUrl());
+    const url = encodeURIComponent(getOgMetaUrl());
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank", "width=600,height=400");
   };
 
   const copyToClipboard = async (url?: string) => {
-    // Use shareable URL for clipboard to ensure OG tags work
+    // Use canonical URL for clipboard (iMessage, SMS, email work better with direct URLs)
     const textToCopy = url || getShareableUrl();
     try {
       await navigator.clipboard.writeText(textToCopy);
