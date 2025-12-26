@@ -38,7 +38,7 @@ const ServicesPage = () => {
         "Attract EV customers",
         "Professional installation",
       ],
-      link: "/tesla-supercharger",
+      link: "/supercharger",
     },
     {
       id: "hvac",
