@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Save } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Save, Upload, X, Image as ImageIcon } from "lucide-react";
 
 interface BlogPost {
   id: string;
@@ -27,6 +27,7 @@ const AdminBlog = () => {
   const { user, isAdmin, loading, signOut } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -38,6 +39,7 @@ const AdminBlog = () => {
     published: false,
   });
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -59,6 +61,46 @@ const AdminBlog = () => {
 
     if (!error && data) {
       setPosts(data);
+    }
+  };
+
+  const handleImageUpload = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      toast({ variant: "destructive", title: "Please select an image file" });
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ variant: "destructive", title: "Image must be less than 5MB" });
+      return;
+    }
+
+    setIsUploadingImage(true);
+
+    try {
+      const fileExt = file.name.split(".").pop();
+      const fileName = `featured-${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+      const { data, error } = await supabase.storage
+        .from("blog-images")
+        .upload(fileName, file);
+
+      if (error) throw error;
+
+      const { data: urlData } = supabase.storage
+        .from("blog-images")
+        .getPublicUrl(data.path);
+
+      setFormData({ ...formData, image_url: urlData.publicUrl });
+      toast({ title: "Featured image uploaded!" });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Failed to upload image",
+        description: error.message,
+      });
+    } finally {
+      setIsUploadingImage(false);
     }
   };
 
@@ -187,7 +229,7 @@ const AdminBlog = () => {
   return (
     <>
       <Helmet>
-        <title>Blog Admin | Melia King Solar</title>
+        <title>News Admin | Melia King Solar</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
@@ -199,10 +241,10 @@ const AdminBlog = () => {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="font-display text-3xl font-bold text-foreground">
-                Blog Admin
+                News Admin
               </h1>
               <p className="text-muted-foreground">
-                Manage your blog posts
+                Manage your news posts
               </p>
             </div>
             <div className="flex gap-3">
@@ -247,17 +289,61 @@ const AdminBlog = () => {
                     />
                   </div>
 
+                  {/* Featured Image Upload */}
                   <div className="space-y-2">
-                    <Label htmlFor="image_url">Featured Image URL (optional)</Label>
-                    <Input
-                      id="image_url"
-                      value={formData.image_url}
-                      onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                      placeholder="https://example.com/image.jpg"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      This image appears as the thumbnail on the blog list
+                    <Label>Featured Image</Label>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      This image appears as the thumbnail and when shared on social media
                     </p>
+                    
+                    {formData.image_url ? (
+                      <div className="relative rounded-lg overflow-hidden border border-border">
+                        <img
+                          src={formData.image_url}
+                          alt="Featured"
+                          className="w-full h-48 object-cover"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="sm"
+                          className="absolute top-2 right-2"
+                          onClick={() => setFormData({ ...formData, image_url: "" })}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => fileInputRef.current?.click()}
+                        className="border-2 border-dashed border-border rounded-lg p-8 text-center cursor-pointer hover:border-primary transition-colors"
+                      >
+                        {isUploadingImage ? (
+                          <p className="text-muted-foreground">Uploading...</p>
+                        ) : (
+                          <>
+                            <ImageIcon className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
+                            <p className="text-muted-foreground mb-1">
+                              Click to upload or drag and drop
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              PNG, JPG up to 5MB
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    )}
+                    
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleImageUpload(file);
+                      }}
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -268,7 +354,7 @@ const AdminBlog = () => {
                       placeholder="Start writing your article..."
                     />
                     <p className="text-xs text-muted-foreground">
-                      Use the toolbar to add headings, format text, and insert images
+                      Use the toolbar to format text. Drag & drop or paste images directly into the editor.
                     </p>
                   </div>
 
@@ -316,18 +402,25 @@ const AdminBlog = () => {
               posts.map((post) => (
                 <Card key={post.id}>
                   <CardContent className="py-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
+                    <div className="flex items-center gap-4">
+                      {post.image_url && (
+                        <img
+                          src={post.image_url}
+                          alt={post.title}
+                          className="w-16 h-16 rounded-md object-cover flex-shrink-0"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-foreground">
+                          <h3 className="font-semibold text-foreground truncate">
                             {post.title}
                           </h3>
                           {post.published ? (
-                            <span className="inline-flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                            <span className="inline-flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full flex-shrink-0">
                               <Eye className="w-3 h-3" /> Published
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full">
+                            <span className="inline-flex items-center gap-1 text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full flex-shrink-0">
                               <EyeOff className="w-3 h-3" /> Draft
                             </span>
                           )}
@@ -336,7 +429,7 @@ const AdminBlog = () => {
                           {new Date(post.created_at).toLocaleDateString()}
                         </p>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 flex-shrink-0">
                         <Button
                           size="sm"
                           variant="outline"

@@ -44,9 +44,11 @@ const Blog = () => {
     });
   };
 
-  const getExcerpt = (content: string, maxLength = 150) => {
-    if (content.length <= maxLength) return content;
-    return content.substring(0, maxLength).trim() + "...";
+  const getExcerpt = (htmlContent: string, maxLength = 150) => {
+    // Strip HTML tags
+    const text = htmlContent.replace(/<[^>]*>/g, "");
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + "...";
   };
 
   return (
@@ -101,9 +103,9 @@ const Blog = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
-                <Link key={post.id} to={`/blog/${post.id}`}>
+                <Link key={post.id} to={`/news/${post.id}`}>
                   <Card className="h-full hover:shadow-elegant transition-shadow group overflow-hidden">
-                    {post.image_url && (
+                    {post.image_url ? (
                       <div className="h-48 overflow-hidden">
                         <img
                           src={post.image_url}
@@ -111,18 +113,22 @@ const Blog = () => {
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
+                    ) : (
+                      <div className="h-48 bg-gradient-solar flex items-center justify-center">
+                        <span className="text-6xl opacity-30">📰</span>
+                      </div>
                     )}
                     <CardHeader>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                         <Calendar className="w-4 h-4" />
                         {formatDate(post.created_at)}
                       </div>
-                      <CardTitle className="font-display text-xl group-hover:text-primary transition-colors">
+                      <CardTitle className="font-display text-xl group-hover:text-primary transition-colors line-clamp-2">
                         {post.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground mb-4">
+                      <p className="text-muted-foreground mb-4 line-clamp-3">
                         {getExcerpt(post.content)}
                       </p>
                       <span className="inline-flex items-center text-primary font-medium group-hover:gap-2 transition-all">
