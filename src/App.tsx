@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from "@/components/ScrollToTop";
 import { AuthProvider } from "@/hooks/useAuth";
@@ -44,13 +44,13 @@ const App = () => (
                 <Route path="/meet-melia" element={<About />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/solar" element={<ServiceSection />} />
-                <Route path="/supercharger" element={<ServiceSection />} />
+                <Route path="/supercharger" element={<TeslaSupercharger />} />
                 <Route path="/hvac" element={<ServiceSection />} />
                 <Route path="/title24" element={<ServiceSection />} />
                 <Route path="/fans" element={<ServiceSection />} />
                 <Route path="/savingscalculator" element={<SavingsCalculatorPage />} />
                 <Route path="/testimonials" element={<Testimonials />} />
-                <Route path="/tesla-supercharger" element={<TeslaSupercharger />} />
+                <Route path="/tesla-supercharger" element={<Navigate to="/supercharger" replace />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/news" element={<Blog />} />
                 <Route path="/news/:slug" element={<BlogPost />} />
