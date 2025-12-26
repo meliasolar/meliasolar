@@ -6,20 +6,23 @@ import meliaVideo from "@/assets/melia-welcome.mp4";
 const About = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [isVideoDismissed, setIsVideoDismissed] = useState(false);
-  const [hasPlayed, setHasPlayed] = useState(false);
   const [showSoundOverlay, setShowSoundOverlay] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Play video when section comes into view
+  // Reset and play video when section comes into view
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasPlayed && videoRef.current) {
+          if (entry.isIntersecting && videoRef.current) {
+            // Reset video to beginning and play
+            videoRef.current.currentTime = 0;
             videoRef.current.volume = 0.5;
-            videoRef.current.play();
-            setHasPlayed(true);
+            videoRef.current.play().catch(() => {
+              // Autoplay failed, user will need to interact
+            });
+            setShowSoundOverlay(true);
           }
         });
       },
@@ -31,7 +34,7 @@ const About = () => {
     }
 
     return () => observer.disconnect();
-  }, [hasPlayed]);
+  }, []);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -98,8 +101,10 @@ const About = () => {
                 src={meliaVideo}
                 muted={isMuted}
                 playsInline
+                autoPlay
+                preload="auto"
                 onEnded={handleVideoEnd}
-                className="w-64 h-44 object-cover"
+                className="w-64 h-44 object-cover bg-background"
               />
 
               {showSoundOverlay && isMuted && (
