@@ -22,6 +22,7 @@ export type Database = {
           id: string
           image_url: string | null
           published: boolean
+          slug: string | null
           title: string
           updated_at: string
         }
@@ -32,6 +33,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           published?: boolean
+          slug?: string | null
           title: string
           updated_at?: string
         }
@@ -42,6 +44,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           published?: boolean
+          slug?: string | null
           title?: string
           updated_at?: string
         }
@@ -73,6 +76,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_slug: { Args: { title: string }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

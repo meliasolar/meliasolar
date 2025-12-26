@@ -15,22 +15,23 @@ interface BlogPost {
   content: string;
   image_url: string | null;
   created_at: string;
+  slug: string;
 }
 
 const BlogPost = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
     const fetchPost = async () => {
-      if (!id) return;
+      if (!slug) return;
       
       const { data, error } = await supabase
         .from("blog_posts")
         .select("*")
-        .eq("id", id)
+        .eq("slug", slug)
         .eq("published", true)
         .maybeSingle();
 
@@ -41,7 +42,7 @@ const BlogPost = () => {
     };
 
     fetchPost();
-  }, [id]);
+  }, [slug]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -58,7 +59,7 @@ const BlogPost = () => {
   };
 
   const getCanonicalUrl = () => {
-    return `${window.location.origin}/news/${id}`;
+    return `${window.location.origin}/news/${slug}`;
   };
 
   const shareOnFacebook = () => {
@@ -187,7 +188,7 @@ const BlogPost = () => {
 
     document.addEventListener("click", handleAnchorClick);
     return () => document.removeEventListener("click", handleAnchorClick);
-  }, [id]);
+  }, [slug]);
 
   if (loading) {
     return (

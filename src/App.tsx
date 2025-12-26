@@ -44,7 +44,7 @@ const App = () => (
                 <Route path="/tesla-supercharger" element={<TeslaSupercharger />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/news" element={<Blog />} />
-                <Route path="/news/:id" element={<BlogPost />} />
+                <Route path="/news/:slug" element={<BlogPost />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin/news" element={<AdminBlog />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
