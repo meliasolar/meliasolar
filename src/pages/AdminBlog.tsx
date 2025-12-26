@@ -5,9 +5,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import RichTextEditor from "@/components/RichTextEditor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -235,7 +235,7 @@ const AdminBlog = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-2">
                     <Label htmlFor="title">Title *</Label>
                     <Input
@@ -243,28 +243,33 @@ const AdminBlog = () => {
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                       placeholder="Enter post title"
+                      className="text-lg"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="content">Content *</Label>
-                    <Textarea
-                      id="content"
-                      value={formData.content}
-                      onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                      placeholder="Write your post content..."
-                      rows={10}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="image_url">Image URL (optional)</Label>
+                    <Label htmlFor="image_url">Featured Image URL (optional)</Label>
                     <Input
                       id="image_url"
                       value={formData.image_url}
                       onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
                       placeholder="https://example.com/image.jpg"
                     />
+                    <p className="text-xs text-muted-foreground">
+                      This image appears as the thumbnail on the blog list
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Content *</Label>
+                    <RichTextEditor
+                      content={formData.content}
+                      onChange={(content) => setFormData({ ...formData, content })}
+                      placeholder="Start writing your article..."
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Use the toolbar to add headings, format text, and insert images
+                    </p>
                   </div>
 
                   <div className="flex items-center gap-3">

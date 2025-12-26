@@ -139,13 +139,10 @@ const BlogPost = () => {
           )}
 
           {/* Content */}
-          <div className="prose prose-lg max-w-none text-foreground">
-            {post.content.split("\n").map((paragraph, index) => (
-              <p key={index} className="mb-4 text-muted-foreground leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          <div 
+            className="prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
         </article>
       </main>
 
