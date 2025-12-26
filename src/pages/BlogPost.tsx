@@ -48,6 +48,16 @@ const BlogPost = () => {
     });
   };
 
+  const getExcerpt = (htmlContent: string, maxLength = 160) => {
+    const text = htmlContent.replace(/<[^>]*>/g, "");
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + "...";
+  };
+
+  const getCanonicalUrl = () => {
+    return `${window.location.origin}/news/${id}`;
+  };
+
   if (loading) {
     return (
       <>
@@ -84,7 +94,7 @@ const BlogPost = () => {
               The article you're looking for doesn't exist or has been removed.
             </p>
             <Button asChild>
-              <Link to="/blog">
+              <Link to="/news">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to News
               </Link>
@@ -96,11 +106,28 @@ const BlogPost = () => {
     );
   }
 
+  const description = getExcerpt(post.content);
+
   return (
     <>
       <Helmet>
-        <title>{post.title} | Melia King Solar Blog</title>
-        <meta name="description" content={post.content.substring(0, 160)} />
+        <title>{post.title} | Melia King Solar</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={getCanonicalUrl()} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={getCanonicalUrl()} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={description} />
+        {post.image_url && <meta property="og:image" content={post.image_url} />}
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content={post.image_url ? "summary_large_image" : "summary"} />
+        <meta name="twitter:url" content={getCanonicalUrl()} />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={description} />
+        {post.image_url && <meta name="twitter:image" content={post.image_url} />}
       </Helmet>
 
       <Header />
@@ -109,7 +136,7 @@ const BlogPost = () => {
         <article className="container mx-auto px-6 max-w-3xl">
           {/* Back Link */}
           <Link
-            to="/blog"
+            to="/news"
             className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
