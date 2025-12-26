@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, ChevronDown } from "lucide-react";
 
 const serviceLinks = [
-  { name: "Solar Panel Installation", href: "/services", hash: "#solar" },
-  { name: "Tesla Superchargers", href: "/services", hash: "#tesla" },
-  { name: "HVAC Systems", href: "/services", hash: "#hvac" },
-  { name: "Title 24 Roofing", href: "/services", hash: "#roofing" },
-  { name: "QuietCool Fans", href: "/services", hash: "#quietcool" },
+  { name: "Solar Panel Installation", href: "/solar" },
+  { name: "Tesla Superchargers", href: "/supercharger" },
+  { name: "HVAC Systems", href: "/hvac" },
+  { name: "Title 24 Roofing", href: "/title24" },
+  { name: "QuietCool Fans", href: "/fans" },
 ];
 
 const Header = () => {
@@ -40,18 +40,9 @@ const Header = () => {
     }
   };
 
-  const handleServiceClick = (href: string, hash: string) => {
+  const handleServiceClick = (href: string) => {
     setIsMobileMenuOpen(false);
-    if (location.pathname !== href) {
-      navigate(href);
-      setTimeout(() => {
-        const element = document.getElementById(hash.replace("#", ""));
-        element?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
-    } else {
-      const element = document.getElementById(hash.replace("#", ""));
-      element?.scrollIntoView({ behavior: "smooth" });
-    }
+    navigate(href);
   };
 
   return (
@@ -91,13 +82,19 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
-            <button
-              onClick={() => scrollToSection("about")}
-              className="text-foreground/80 hover:text-foreground font-medium transition-colors relative group"
+            <Link
+              to="/meetmelia"
+              className={`font-medium transition-colors relative group ${
+                location.pathname === "/meetmelia" || location.pathname === "/about"
+                  ? "text-accent"
+                  : "text-foreground/80 hover:text-foreground"
+              }`}
             >
               Meet Melia
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
-            </button>
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ${
+                location.pathname === "/meetmelia" || location.pathname === "/about" ? "w-full" : "w-0 group-hover:w-full"
+              }`} />
+            </Link>
 
             {/* Services Dropdown */}
             <div className="relative group">
@@ -120,25 +117,31 @@ const Header = () => {
               <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[220px]">
                   {serviceLinks.map((service) => (
-                    <button
+                    <Link
                       key={service.name}
-                      onClick={() => handleServiceClick(service.href, service.hash)}
+                      to={service.href}
                       className="block w-full text-left px-4 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-muted transition-colors"
                     >
                       {service.name}
-                    </button>
+                    </Link>
                   ))}
                 </div>
               </div>
             </div>
 
-            <button
-              onClick={() => scrollToSection("calculator")}
-              className="text-foreground/80 hover:text-foreground font-medium transition-colors relative group"
+            <Link
+              to="/savingscalculator"
+              className={`font-medium transition-colors relative group ${
+                location.pathname === "/savingscalculator"
+                  ? "text-accent"
+                  : "text-foreground/80 hover:text-foreground"
+              }`}
             >
               Savings Calculator
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
-            </button>
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ${
+                location.pathname === "/savingscalculator" ? "w-full" : "w-0 group-hover:w-full"
+              }`} />
+            </Link>
 
             <Link
               to="/testimonials"
@@ -204,12 +207,17 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-20 left-0 right-0 bg-background border-b border-border z-50">
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
-              <button
-                onClick={() => scrollToSection("about")}
-                className="text-left text-foreground/80 hover:text-foreground font-medium py-2 transition-colors"
+              <Link
+                to="/meetmelia"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`font-medium py-2 transition-colors ${
+                  location.pathname === "/meetmelia" || location.pathname === "/about"
+                    ? "text-accent"
+                    : "text-foreground/80 hover:text-foreground"
+                }`}
               >
                 Meet Melia
-              </button>
+              </Link>
 
               {/* Services Accordion in Mobile */}
               <div>
@@ -227,24 +235,30 @@ const Header = () => {
                 {isServicesOpen && (
                   <div className="pl-4 flex flex-col gap-2 mt-2">
                     {serviceLinks.map((service) => (
-                      <button
+                      <Link
                         key={service.name}
-                        onClick={() => handleServiceClick(service.href, service.hash)}
+                        to={service.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
                         className="text-left text-foreground/60 hover:text-foreground text-sm py-1.5 transition-colors"
                       >
                         {service.name}
-                      </button>
+                      </Link>
                     ))}
                   </div>
                 )}
               </div>
 
-              <button
-                onClick={() => scrollToSection("calculator")}
-                className="text-left text-foreground/80 hover:text-foreground font-medium py-2 transition-colors"
+              <Link
+                to="/savingscalculator"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`font-medium py-2 transition-colors ${
+                  location.pathname === "/savingscalculator"
+                    ? "text-accent"
+                    : "text-foreground/80 hover:text-foreground"
+                }`}
               >
                 Savings Calculator
-              </button>
+              </Link>
 
               <Link
                 to="/testimonials"
