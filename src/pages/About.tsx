@@ -19,7 +19,7 @@ const AboutPage = () => {
   return (
     <>
       <Helmet>
-        <title>About Melia King | Your Concierge Energy Advisor</title>
+        <title>About Melia King | Your Solar King</title>
         <meta
           name="description"
           content="Meet Melia King, your personal solar energy advisor helping families and businesses across 12 states take control of their energy costs."
