@@ -14,6 +14,8 @@ import Index from "./pages/Index";
 // Lazy load secondary pages to reduce initial bundle size
 const About = lazy(() => import("./pages/About"));
 const Services = lazy(() => import("./pages/Services"));
+const ServiceSection = lazy(() => import("./pages/ServiceSection"));
+const SavingsCalculatorPage = lazy(() => import("./pages/SavingsCalculatorPage"));
 const Testimonials = lazy(() => import("./pages/Testimonials"));
 const TeslaSupercharger = lazy(() => import("./pages/TeslaSupercharger"));
 const FAQ = lazy(() => import("./pages/FAQ"));
@@ -38,8 +40,15 @@ const App = () => (
             <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/meetmelia" element={<About />} />
                 <Route path="/meet-melia" element={<About />} />
                 <Route path="/services" element={<Services />} />
+                <Route path="/solar" element={<ServiceSection />} />
+                <Route path="/supercharger" element={<ServiceSection />} />
+                <Route path="/hvac" element={<ServiceSection />} />
+                <Route path="/title24" element={<ServiceSection />} />
+                <Route path="/fans" element={<ServiceSection />} />
+                <Route path="/savingscalculator" element={<SavingsCalculatorPage />} />
                 <Route path="/testimonials" element={<Testimonials />} />
                 <Route path="/tesla-supercharger" element={<TeslaSupercharger />} />
                 <Route path="/faq" element={<FAQ />} />
