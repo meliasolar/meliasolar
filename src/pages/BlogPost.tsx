@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import DOMPurify from "dompurify";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -107,9 +108,16 @@ const BlogPost = () => {
   const processedContent = useMemo(() => {
     if (!post?.content) return "";
     
-    // Parse the HTML and add IDs to headings
+    // Sanitize HTML content to prevent XSS attacks
+    const sanitizedContent = DOMPurify.sanitize(post.content, {
+      ADD_TAGS: ['iframe'],
+      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'target'],
+      ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+    });
+    
+    // Parse the sanitized HTML and add IDs to headings
     const parser = new DOMParser();
-    const doc = parser.parseFromString(post.content, "text/html");
+    const doc = parser.parseFromString(sanitizedContent, "text/html");
     
     const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
     headings.forEach((heading) => {
