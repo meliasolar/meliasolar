@@ -4,13 +4,14 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX } from "lucide-react";
+import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX, Play, Pause } from "lucide-react";
 import meliaImage from "@/assets/melia-king.png";
 import meliaVideo from "@/assets/melia-welcome.mp4";
 
 const AboutPage = () => {
   // Mobile video state
   const [isMutedMobile, setIsMutedMobile] = useState(true);
+  const [isPlayingMobile, setIsPlayingMobile] = useState(true);
   const [isDismissedMobile, setIsDismissedMobile] = useState(false);
   const [showSoundOverlayMobile, setShowSoundOverlayMobile] = useState(true);
   const videoRefMobile = useRef<HTMLVideoElement>(null);
@@ -18,6 +19,7 @@ const AboutPage = () => {
   // Desktop inline video state
   const [isDismissedDesktop, setIsDismissedDesktop] = useState(false);
   const [isMutedDesktop, setIsMutedDesktop] = useState(true);
+  const [isPlayingDesktop, setIsPlayingDesktop] = useState(true);
   const [showSoundOverlayDesktop, setShowSoundOverlayDesktop] = useState(true);
   const videoRefDesktop = useRef<HTMLVideoElement>(null);
 
@@ -30,10 +32,14 @@ const AboutPage = () => {
     }
   }, []);
 
-  const handleVideoEndMobile = () => {
+  const togglePlayMobile = () => {
     if (videoRefMobile.current) {
-      videoRefMobile.current.currentTime = 2;
-      videoRefMobile.current.pause();
+      if (isPlayingMobile) {
+        videoRefMobile.current.pause();
+      } else {
+        videoRefMobile.current.play();
+      }
+      setIsPlayingMobile(!isPlayingMobile);
     }
   };
 
@@ -52,10 +58,14 @@ const AboutPage = () => {
     }
   };
 
-  const handleVideoEndDesktop = () => {
+  const togglePlayDesktop = () => {
     if (videoRefDesktop.current) {
-      videoRefDesktop.current.currentTime = 2;
-      videoRefDesktop.current.pause();
+      if (isPlayingDesktop) {
+        videoRefDesktop.current.pause();
+      } else {
+        videoRefDesktop.current.play();
+      }
+      setIsPlayingDesktop(!isPlayingDesktop);
     }
   };
 
@@ -140,6 +150,20 @@ const AboutPage = () => {
                       <X className="w-4 h-4 text-foreground" />
                     </button>
 
+                    {/* Play/Pause button */}
+                    <button
+                      onClick={togglePlayMobile}
+                      className="absolute bottom-2 left-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+                      aria-label={isPlayingMobile ? "Pause" : "Play"}
+                    >
+                      {isPlayingMobile ? (
+                        <Pause className="w-4 h-4 text-foreground" />
+                      ) : (
+                        <Play className="w-4 h-4 text-foreground" />
+                      )}
+                    </button>
+
+                    {/* Mute button */}
                     <button
                       onClick={toggleMuteMobile}
                       className="absolute bottom-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
@@ -156,9 +180,9 @@ const AboutPage = () => {
                       ref={videoRefMobile}
                       src={meliaVideo}
                       autoPlay
+                      loop
                       muted={isMutedMobile}
                       playsInline
-                      onEnded={handleVideoEndMobile}
                       className="w-full aspect-video object-cover"
                     />
 
@@ -192,7 +216,20 @@ const AboutPage = () => {
                     >
                       <X className="w-5 h-5 text-foreground" />
                     </button>
+                    {/* Play/Pause button */}
+                    <button
+                      onClick={togglePlayDesktop}
+                      className="absolute bottom-3 left-3 z-10 p-2 rounded-full bg-background/80 hover:bg-background transition-colors"
+                      aria-label={isPlayingDesktop ? "Pause" : "Play"}
+                    >
+                      {isPlayingDesktop ? (
+                        <Pause className="w-5 h-5 text-foreground" />
+                      ) : (
+                        <Play className="w-5 h-5 text-foreground" />
+                      )}
+                    </button>
 
+                    {/* Mute button */}
                     <button
                       onClick={toggleMuteDesktop}
                       className="absolute bottom-3 right-3 z-10 p-2 rounded-full bg-background/80 hover:bg-background transition-colors"
@@ -209,9 +246,9 @@ const AboutPage = () => {
                       ref={videoRefDesktop}
                       src={meliaVideo}
                       autoPlay
+                      loop
                       muted={isMutedDesktop}
                       playsInline
-                      onEnded={handleVideoEndDesktop}
                       className="w-full aspect-video object-cover"
                     />
 
