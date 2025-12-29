@@ -11,6 +11,7 @@ import meliaVideo from "@/assets/melia-welcome.mp4";
 const AboutPage = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [showSoundOverlay, setShowSoundOverlay] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -30,6 +31,14 @@ const AboutPage = () => {
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
+    }
+  };
+
+  const handleEnableSound = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      setIsMuted(false);
+      setShowSoundOverlay(false);
     }
   };
 
@@ -119,6 +128,18 @@ const AboutPage = () => {
                       onEnded={handleVideoEnd}
                       className="w-full aspect-video object-cover"
                     />
+
+                    {showSoundOverlay && isMuted && (
+                      <button
+                        onClick={handleEnableSound}
+                        className="absolute inset-0 flex items-center justify-center bg-background/20 transition-opacity hover:bg-background/10"
+                      >
+                        <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg">
+                          <Volume2 className="w-4 h-4" />
+                          Tap for sound
+                        </div>
+                      </button>
+                    )}
 
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-2 pr-10">
                       <p className="text-xs font-medium text-foreground truncate">
