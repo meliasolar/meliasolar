@@ -153,7 +153,7 @@ const AboutPage = () => {
                     {/* Play/Pause button */}
                     <button
                       onClick={togglePlayMobile}
-                      className="absolute bottom-2 left-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+                      className="absolute top-2 left-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
                       aria-label={isPlayingMobile ? "Pause" : "Play"}
                     >
                       {isPlayingMobile ? (
@@ -219,7 +219,7 @@ const AboutPage = () => {
                     {/* Play/Pause button */}
                     <button
                       onClick={togglePlayDesktop}
-                      className="absolute bottom-3 left-3 z-10 p-2 rounded-full bg-background/80 hover:bg-background transition-colors"
+                      className="absolute top-3 left-3 z-10 p-2 rounded-full bg-background/80 hover:bg-background transition-colors"
                       aria-label={isPlayingDesktop ? "Pause" : "Play"}
                     >
                       {isPlayingDesktop ? (
