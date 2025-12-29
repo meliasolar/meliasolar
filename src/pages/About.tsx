@@ -1,12 +1,38 @@
+import { useState, useRef, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Award, Heart, Users } from "lucide-react";
+import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX } from "lucide-react";
 import meliaImage from "@/assets/melia-king.png";
+import meliaVideo from "@/assets/melia-welcome.mp4";
 
 const AboutPage = () => {
+  const [isMuted, setIsMuted] = useState(true);
+  const [isDismissed, setIsDismissed] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = 0.5;
+    }
+  }, []);
+
+  const handleVideoEnd = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 2;
+      videoRef.current.pause();
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   const benefits = [
     "Personalized energy consultation",
     "Transparent pricing with no hidden fees",
@@ -60,6 +86,47 @@ const AboutPage = () => {
                 <p className="text-muted-foreground text-lg leading-relaxed">
                   Melia King is passionate about helping families & businesses take control of their energy costs. Her mission is to make clean, renewable energy accessible to every business & homeowner in 12 states…& counting.
                 </p>
+
+                {/* Mobile Video Widget */}
+                {!isDismissed && (
+                  <div className="md:hidden relative rounded-2xl overflow-hidden bg-background/90 backdrop-blur-sm border border-primary/30">
+                    <button
+                      onClick={() => setIsDismissed(true)}
+                      className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+                      aria-label="Close video"
+                    >
+                      <X className="w-4 h-4 text-foreground" />
+                    </button>
+
+                    <button
+                      onClick={toggleMute}
+                      className="absolute bottom-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+                      aria-label={isMuted ? "Unmute" : "Mute"}
+                    >
+                      {isMuted ? (
+                        <VolumeX className="w-4 h-4 text-foreground" />
+                      ) : (
+                        <Volume2 className="w-4 h-4 text-foreground" />
+                      )}
+                    </button>
+
+                    <video
+                      ref={videoRef}
+                      src={meliaVideo}
+                      autoPlay
+                      muted={isMuted}
+                      playsInline
+                      onEnded={handleVideoEnd}
+                      className="w-full aspect-video object-cover"
+                    />
+
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-2 pr-10">
+                      <p className="text-xs font-medium text-foreground truncate">
+                        Welcome from Melia! 👋
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 <div className="grid sm:grid-cols-3 gap-6 pt-4">
                   <div className="flex flex-col items-center sm:items-start gap-3 p-4 rounded-xl bg-card shadow-soft">
