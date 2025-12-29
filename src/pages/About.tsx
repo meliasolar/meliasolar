@@ -9,36 +9,81 @@ import meliaImage from "@/assets/melia-king.png";
 import meliaVideo from "@/assets/melia-welcome.mp4";
 
 const AboutPage = () => {
-  const [isMuted, setIsMuted] = useState(true);
-  const [isDismissed, setIsDismissed] = useState(false);
-  const [showSoundOverlay, setShowSoundOverlay] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // Mobile video state
+  const [isMutedMobile, setIsMutedMobile] = useState(true);
+  const [isDismissedMobile, setIsDismissedMobile] = useState(false);
+  const [showSoundOverlayMobile, setShowSoundOverlayMobile] = useState(true);
+  const videoRefMobile = useRef<HTMLVideoElement>(null);
+
+  // Desktop floating video state
+  const [isVisibleDesktop, setIsVisibleDesktop] = useState(false);
+  const [isDismissedDesktop, setIsDismissedDesktop] = useState(false);
+  const [isMutedDesktop, setIsMutedDesktop] = useState(true);
+  const [showSoundOverlayDesktop, setShowSoundOverlayDesktop] = useState(true);
+  const videoRefDesktop = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.volume = 0.5;
+    if (videoRefMobile.current) {
+      videoRefMobile.current.volume = 0.5;
     }
+    if (videoRefDesktop.current) {
+      videoRefDesktop.current.volume = 0.5;
+    }
+    
+    // Desktop widget flies in after 1 second
+    const timer = setTimeout(() => {
+      setIsVisibleDesktop(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  const handleVideoEnd = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 2;
-      videoRef.current.pause();
+  const handleVideoEndMobile = () => {
+    if (videoRefMobile.current) {
+      videoRefMobile.current.currentTime = 2;
+      videoRefMobile.current.pause();
     }
   };
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+  const toggleMuteMobile = () => {
+    if (videoRefMobile.current) {
+      videoRefMobile.current.muted = !isMutedMobile;
+      setIsMutedMobile(!isMutedMobile);
     }
   };
 
-  const handleEnableSound = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      setIsMuted(false);
-      setShowSoundOverlay(false);
+  const handleEnableSoundMobile = () => {
+    if (videoRefMobile.current) {
+      videoRefMobile.current.muted = false;
+      setIsMutedMobile(false);
+      setShowSoundOverlayMobile(false);
+    }
+  };
+
+  const handleVideoEndDesktop = () => {
+    if (videoRefDesktop.current) {
+      videoRefDesktop.current.currentTime = 2;
+      videoRefDesktop.current.pause();
+    }
+  };
+
+  const handleDismissDesktop = () => {
+    setIsVisibleDesktop(false);
+    setTimeout(() => setIsDismissedDesktop(true), 300);
+  };
+
+  const toggleMuteDesktop = () => {
+    if (videoRefDesktop.current) {
+      videoRefDesktop.current.muted = !isMutedDesktop;
+      setIsMutedDesktop(!isMutedDesktop);
+    }
+  };
+
+  const handleEnableSoundDesktop = () => {
+    if (videoRefDesktop.current) {
+      videoRefDesktop.current.muted = false;
+      setIsMutedDesktop(false);
+      setShowSoundOverlayDesktop(false);
     }
   };
 
@@ -97,10 +142,10 @@ const AboutPage = () => {
                 </p>
 
                 {/* Mobile Video Widget */}
-                {!isDismissed && (
+                {!isDismissedMobile && (
                   <div className="md:hidden relative rounded-2xl overflow-hidden bg-background/90 backdrop-blur-sm border border-primary/30">
                     <button
-                      onClick={() => setIsDismissed(true)}
+                      onClick={() => setIsDismissedMobile(true)}
                       className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
                       aria-label="Close video"
                     >
@@ -108,11 +153,11 @@ const AboutPage = () => {
                     </button>
 
                     <button
-                      onClick={toggleMute}
+                      onClick={toggleMuteMobile}
                       className="absolute bottom-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
-                      aria-label={isMuted ? "Unmute" : "Mute"}
+                      aria-label={isMutedMobile ? "Unmute" : "Mute"}
                     >
-                      {isMuted ? (
+                      {isMutedMobile ? (
                         <VolumeX className="w-4 h-4 text-foreground" />
                       ) : (
                         <Volume2 className="w-4 h-4 text-foreground" />
@@ -120,18 +165,18 @@ const AboutPage = () => {
                     </button>
 
                     <video
-                      ref={videoRef}
+                      ref={videoRefMobile}
                       src={meliaVideo}
                       autoPlay
-                      muted={isMuted}
+                      muted={isMutedMobile}
                       playsInline
-                      onEnded={handleVideoEnd}
+                      onEnded={handleVideoEndMobile}
                       className="w-full aspect-video object-cover"
                     />
 
-                    {showSoundOverlay && isMuted && (
+                    {showSoundOverlayMobile && isMutedMobile && (
                       <button
-                        onClick={handleEnableSound}
+                        onClick={handleEnableSoundMobile}
                         className="absolute inset-0 flex items-center justify-center bg-background/20 transition-opacity hover:bg-background/10"
                       >
                         <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg">
@@ -246,6 +291,67 @@ const AboutPage = () => {
 
       <Footer />
       <FloatingContactButtons />
+
+      {/* Desktop Floating Video Widget */}
+      {!isDismissedDesktop && (
+        <div
+          className={`fixed bottom-6 left-6 z-50 transition-all duration-500 ease-out hidden md:block ${
+            isVisibleDesktop
+              ? "translate-x-0 opacity-100"
+              : "-translate-x-full opacity-0"
+          }`}
+        >
+          <div className="relative rounded-2xl overflow-hidden bg-background/90 backdrop-blur-sm border border-primary/30 animate-pulse-glow">
+            <button
+              onClick={handleDismissDesktop}
+              className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+              aria-label="Close video"
+            >
+              <X className="w-4 h-4 text-foreground" />
+            </button>
+
+            <button
+              onClick={toggleMuteDesktop}
+              className="absolute bottom-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+              aria-label={isMutedDesktop ? "Unmute" : "Mute"}
+            >
+              {isMutedDesktop ? (
+                <VolumeX className="w-4 h-4 text-foreground" />
+              ) : (
+                <Volume2 className="w-4 h-4 text-foreground" />
+              )}
+            </button>
+
+            <video
+              ref={videoRefDesktop}
+              src={meliaVideo}
+              autoPlay
+              muted={isMutedDesktop}
+              playsInline
+              onEnded={handleVideoEndDesktop}
+              className="w-64 h-44 object-cover"
+            />
+
+            {showSoundOverlayDesktop && isMutedDesktop && (
+              <button
+                onClick={handleEnableSoundDesktop}
+                className="absolute inset-0 flex items-center justify-center bg-background/20 transition-opacity hover:bg-background/10"
+              >
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg">
+                  <Volume2 className="w-4 h-4" />
+                  Tap for sound
+                </div>
+              </button>
+            )}
+
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-2 pr-10">
+              <p className="text-xs font-medium text-foreground truncate">
+                Welcome from Melia! 👋
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
