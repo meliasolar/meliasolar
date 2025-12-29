@@ -104,14 +104,14 @@ const ServicesPage = () => {
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mt-4">
               Renewable Energy <span className="text-primary">Solutions</span> For Your Whole Home
             </h1>
-            <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto lg:mb-0 mb-4">
               Modern, whole home solutions for energy independence. Making the switch to renewable energy has never been simpler.
             </p>
           </div>
         </section>
 
         {/* Services List */}
-        <section className="py-16 md:py-24 bg-background">
+        <section className="py-12 md:py-12 bg-background">
           <div className="container mx-auto px-6">
             <div className="space-y-24">
               {services.map((service, index) => (
