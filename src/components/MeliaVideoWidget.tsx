@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { X, Volume2, VolumeX } from "lucide-react";
 import meliaVideo from "@/assets/melia-welcome.mp4";
 
@@ -8,6 +9,10 @@ const MeliaVideoWidget = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [showSoundOverlay, setShowSoundOverlay] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const location = useLocation();
+
+  // Hide on /meetmelia route to avoid duplicate videos
+  const isOnMeetMelia = location.pathname === "/meetmelia";
 
   useEffect(() => {
     // Set volume to 50% for when user unmutes
@@ -50,7 +55,7 @@ const MeliaVideoWidget = () => {
     }
   };
 
-  if (isDismissed) return null;
+  if (isDismissed || isOnMeetMelia) return null;
 
   return (
     <div
