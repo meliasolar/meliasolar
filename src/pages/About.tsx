@@ -309,7 +309,7 @@ const AboutPage = () => {
         </section>
 
         {/* About Content */}
-        <section className="py-12 md:py-12 bg-background">
+        <section className="py-6 md:py-8 bg-background">
           <div className="container mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center space-y-8">
               <div>

@@ -111,7 +111,7 @@ const ServicesPage = () => {
         </section>
 
         {/* Services List */}
-        <section className="py-12 md:py-12 bg-background">
+        <section className="py-6 md:py-8 bg-background">
           <div className="container mx-auto px-6">
             <div className="space-y-24">
               {services.map((service, index) => (
