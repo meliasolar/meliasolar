@@ -72,7 +72,7 @@ const About = () => {
       <div className="container mx-auto px-6">
         {/* Mobile Video Widget - appears above Meet Melia section */}
         {!isVideoDismissed && (
-          <div className="md:hidden mb-8 flex justify-center">
+          <div className="md:hidden mb-8">
             <div className="relative rounded-2xl overflow-hidden bg-background/90 backdrop-blur-sm border border-primary/30 animate-pulse-glow">
               {/* Close button */}
               <button
@@ -104,7 +104,7 @@ const About = () => {
                 autoPlay
                 preload="auto"
                 onEnded={handleVideoEnd}
-                className="w-64 h-44 object-cover bg-background"
+                className="w-full aspect-video object-cover bg-background"
               />
 
               {showSoundOverlay && isMuted && (
