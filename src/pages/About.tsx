@@ -149,7 +149,7 @@ const AboutPage = () => {
                 className="border-primary-foreground/30 text-primary-foreground bg-transparent hover:bg-primary-foreground/10"
                 asChild
               >
-                <a href="mailto:Melia@solarkingsolutions.com">Email Us</a>
+                <a href="mailto:meliaking@voltaicnow.com">Email Us</a>
               </Button>
             </div>
           </div>
