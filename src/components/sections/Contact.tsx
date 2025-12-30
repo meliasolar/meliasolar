@@ -114,17 +114,17 @@ const Contact = () => {
           </div>
 
           {/* Right Column - Form */}
-          <div className="bg-card rounded-2xl p-8 shadow-soft">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="bg-card rounded-2xl p-6 md:p-8 shadow-soft border border-border">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name" className="text-card-foreground font-medium">Full Name</Label>
                 <Input
                   id="name"
                   name="name"
                   placeholder="John Smith"
                   value={formData.name}
                   onChange={handleChange}
-                  className={errors.name ? "border-destructive" : ""}
+                  className={`bg-muted border-border text-foreground ${errors.name ? "border-destructive" : ""}`}
                 />
                 {errors.name && (
                   <p className="text-sm text-destructive">{errors.name}</p>
@@ -132,7 +132,7 @@ const Contact = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-card-foreground font-medium">Email</Label>
                 <Input
                   id="email"
                   name="email"
@@ -140,7 +140,7 @@ const Contact = () => {
                   placeholder="john@example.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className={errors.email ? "border-destructive" : ""}
+                  className={`bg-muted border-border text-foreground ${errors.email ? "border-destructive" : ""}`}
                 />
                 {errors.email && (
                   <p className="text-sm text-destructive">{errors.email}</p>
@@ -148,7 +148,7 @@ const Contact = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone</Label>
+                <Label htmlFor="phone" className="text-card-foreground font-medium">Phone</Label>
                 <Input
                   id="phone"
                   name="phone"
@@ -156,7 +156,7 @@ const Contact = () => {
                   placeholder="(555) 123-4567"
                   value={formData.phone}
                   onChange={handleChange}
-                  className={errors.phone ? "border-destructive" : ""}
+                  className={`bg-muted border-border text-foreground ${errors.phone ? "border-destructive" : ""}`}
                 />
                 {errors.phone && (
                   <p className="text-sm text-destructive">{errors.phone}</p>
@@ -164,7 +164,7 @@ const Contact = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
+                <Label htmlFor="message" className="text-card-foreground font-medium">Message</Label>
                 <Textarea
                   id="message"
                   name="message"
@@ -172,7 +172,7 @@ const Contact = () => {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className={errors.message ? "border-destructive" : ""}
+                  className={`bg-muted border-border text-foreground ${errors.message ? "border-destructive" : ""}`}
                 />
                 {errors.message && (
                   <p className="text-sm text-destructive">{errors.message}</p>
