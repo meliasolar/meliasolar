@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
-import { Sun, Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
   const location = useLocation();
@@ -11,9 +12,11 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
-                <Sun className="w-6 h-6 text-foreground" />
-              </div>
+              <img 
+                src={logo} 
+                alt="Melia King Solar" 
+                className="w-10 h-10 rounded-lg"
+              />
               <div className="flex flex-col">
                 <span className="font-display text-xl font-semibold">
                   Melia King
