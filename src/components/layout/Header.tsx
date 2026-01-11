@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Sun, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const serviceLinks = [
   { name: "Solar Panel Installation", href: "/solar" },
@@ -67,9 +68,11 @@ const Header = () => {
             }}
             className="flex items-center gap-2 group cursor-pointer"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-solar flex items-center justify-center transition-transform group-hover:scale-110">
-              <Sun className="w-6 h-6 text-foreground transition-all duration-300 group-hover:animate-pulse group-hover:drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" />
-            </div>
+            <img 
+              src={logo} 
+              alt="Melia King Solar" 
+              className="w-10 h-10 rounded-lg transition-transform group-hover:scale-110"
+            />
             <div className="flex flex-col text-left">
               <span className="font-display text-xl font-semibold text-foreground">
                 Melia King
