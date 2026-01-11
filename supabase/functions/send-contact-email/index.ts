@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const WEB3FORMS_ACCESS_KEY = Deno.env.get("WEB3FORMS_ACCESS_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -38,72 +38,37 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Send notification email to business
-    const businessEmailRes = await fetch("https://api.resend.com/emails", {
+    // Send to Web3Forms
+    const web3formsRes = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${RESEND_API_KEY}`,
+        Accept: "application/json",
       },
       body: JSON.stringify({
-        from: "Voltaic Now <onboarding@resend.dev>",
-        to: ["meliaking@voltaicnow.com"],
+        access_key: WEB3FORMS_ACCESS_KEY,
         subject: `New Quote Request from ${name}`,
-        html: `
-          <h1>New Quote Request</h1>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, '<br>')}</p>
-        `,
+        from_name: "Voltaic Now Website",
+        name: name,
+        email: email,
+        phone: phone,
+        message: message,
       }),
     });
 
-    if (!businessEmailRes.ok) {
-      const errorData = await businessEmailRes.json();
-      console.error("Business email failed:", errorData);
-      throw new Error(errorData.message || "Failed to send business notification");
+    const result = await web3formsRes.json();
+
+    if (!web3formsRes.ok || !result.success) {
+      console.error("Web3Forms submission failed:", result);
+      throw new Error(result.message || "Failed to submit form");
     }
 
-    console.log("Business notification email sent successfully");
-
-    // Send confirmation email to customer
-    const customerEmailRes = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-      },
-      body: JSON.stringify({
-        from: "Voltaic Now <onboarding@resend.dev>",
-        to: [email],
-        subject: "We received your quote request! 🫶",
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #1a365d;">Thank you for contacting Voltaic Now, ${name}!</h1>
-            <p style="font-size: 16px; color: #333;">We have received your quote request and our team will get back to you within 24 hours.</p>
-            <p style="font-size: 16px; color: #333;">Here's a summary of your message:</p>
-            <div style="background-color: #f7fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <p style="margin: 0; color: #555;">${message.replace(/\n/g, '<br>')}</p>
-            </div>
-            <p style="font-size: 16px; color: #333;">In the meantime, feel free to call us at <a href="tel:+13103469466" style="color: #2b6cb0;">+1 (310) 346-9466</a> if you have any urgent questions.</p>
-            <p style="font-size: 16px; color: #333; margin-top: 30px;">Best regards,<br><strong>The Voltaic Now Team</strong></p>
-          </div>
-        `,
-      }),
-    });
-
-    if (!customerEmailRes.ok) {
-      console.error("Customer email failed but business email succeeded");
-    } else {
-      console.log("Customer confirmation email sent successfully");
-    }
+    console.log("Form submitted successfully via Web3Forms:", result);
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Emails sent successfully" 
+        message: "Form submitted successfully" 
       }),
       {
         status: 200,
