@@ -201,8 +201,8 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button variant="solar" size="lg" asChild>
-              <a href="tel:+13103469466">Call Now</a>
+            <Button variant="solar" size="lg" onClick={() => scrollToSection("contact")}>
+              Get A Quote
             </Button>
           </div>
 
@@ -319,8 +319,8 @@ const Header = () => {
                 Instagram
               </a>
 
-              <Button variant="solar" size="lg" className="mt-2" asChild>
-                <a href="tel:+13103469466">Call Now</a>
+              <Button variant="solar" size="lg" className="mt-2" onClick={() => scrollToSection("contact")}>
+                Get A Quote
               </Button>
             </div>
           </div>
