@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Instagram } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const serviceLinks = [
@@ -187,6 +187,16 @@ const Header = () => {
                 location.pathname.startsWith("/news") ? "w-full" : "w-0 group-hover:w-full"
               }`} />
             </Link>
+
+            <a
+              href="https://www.instagram.com/solarwithmelia/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground/80 hover:text-accent transition-colors"
+              aria-label="Follow us on Instagram"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
           </div>
 
           {/* CTA Button */}
@@ -298,6 +308,16 @@ const Header = () => {
               >
                 News
               </Link>
+
+              <a
+                href="https://www.instagram.com/solarwithmelia/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 font-medium py-2 text-foreground/80 hover:text-foreground transition-colors"
+              >
+                <Instagram className="w-5 h-5" />
+                Instagram
+              </a>
 
               <Button variant="solar" size="lg" className="mt-2" asChild>
                 <a href="tel:+13103469466">Call Now</a>
