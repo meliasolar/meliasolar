@@ -164,7 +164,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-sm text-primary-foreground/70">Service areas</div>
-                  <div className="font-semibold text-primary-foreground">CA, CO, CT, FL, HI, IL, MA, MD, NJ, NV, TX, VA</div>
+                  <div className="font-semibold text-primary-foreground">CA, TX, CO, NV, FL, HI, IL, MA, MD, NJ, VA, CT</div>
                 </div>
               </div>
             </div>
