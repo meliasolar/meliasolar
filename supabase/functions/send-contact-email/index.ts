@@ -12,7 +12,12 @@ interface ContactEmailRequest {
   name: string;
   email: string;
   phone: string;
-  message: string;
+  propertyAddress: string;
+  purchasePreference: string;
+  energyConsumption: string;
+  energyUnit: string;
+  interestedInStorage: boolean;
+  message?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -22,21 +27,34 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, phone, message }: ContactEmailRequest = await req.json();
+    const {
+      name,
+      email,
+      phone,
+      propertyAddress,
+      purchasePreference,
+      energyConsumption,
+      energyUnit,
+      interestedInStorage,
+      message,
+    }: ContactEmailRequest = await req.json();
 
-    console.log("Received contact form submission:", { name, email, phone });
+    console.log("Received contact form submission:", { name, email, phone, propertyAddress });
 
-    // Validate inputs
-    if (!name || !email || !phone || !message) {
+    // Validate required inputs
+    if (!name || !email || !phone || !propertyAddress || !purchasePreference || !energyConsumption || !energyUnit) {
       console.error("Missing required fields");
       return new Response(
-        JSON.stringify({ error: "All fields are required" }),
+        JSON.stringify({ error: "All required fields must be filled" }),
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
         }
       );
     }
+
+    // Format energy consumption with unit
+    const energyDisplay = `${energyConsumption} ${energyUnit}`;
 
     // Send to Web3Forms
     const web3formsRes = await fetch("https://api.web3forms.com/submit", {
@@ -47,12 +65,16 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         access_key: WEB3FORMS_ACCESS_KEY,
-        subject: `New Quote Request from ${name}`,
+        subject: `New Solar Quote Request from ${name}`,
         from_name: "Voltaic Now Website",
         name: name,
         email: email,
         phone: phone,
-        message: message,
+        property_address: propertyAddress,
+        purchase_preference: purchasePreference,
+        energy_consumption: energyDisplay,
+        interested_in_storage: interestedInStorage ? "Yes" : "No",
+        message: message || "No additional message provided",
       }),
     });
 
