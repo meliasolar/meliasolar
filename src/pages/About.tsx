@@ -131,7 +131,7 @@ const AboutPage = () => {
                     Your Energy Advisor
                   </span>
                   <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mt-4">
-                    Meet Melia King
+                    Meet Melia King 🫶
                   </h1>
                 </div>
 
@@ -317,7 +317,7 @@ const AboutPage = () => {
                   About Us
                 </span>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-4">
-                  Building A <span className="text-primary">Brighter Future</span>, One Home At A Time
+                  Building A <span className="text-primary">Brighter Future</span>, One Home At A Time 🫶
                 </h2>
               </div>
 

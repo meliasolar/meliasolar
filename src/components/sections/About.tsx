@@ -206,7 +206,7 @@ const About = () => {
                 About Us
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-4">
-                Building A <span className="text-primary">Brighter Future</span>, One Home At A Time
+                Building A <span className="text-primary">Brighter Future</span>, One Home At A Time 🫶
               </h2>
             </div>
 

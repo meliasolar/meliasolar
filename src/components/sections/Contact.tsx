@@ -97,7 +97,7 @@ const Contact = () => {
           {/* Left Column - Info */}
           <div>
             <h2 className="font-display text-4xl md:text-5xl font-semibold text-primary-foreground tracking-tight">
-              Get Your Free Quote
+              Get Your Free Quote 🫶
             </h2>
             <p className="text-primary-foreground/80 text-lg mt-6 max-w-md">
               Ready to start saving on your energy bills? Fill out the form and we'll get back to you within 24 hours.
