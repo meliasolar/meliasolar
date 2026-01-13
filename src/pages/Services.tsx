@@ -87,9 +87,16 @@ const ServicesPage = () => {
         <title>Our Services | Melia King Solar</title>
         <meta
           name="description"
-          content="Explore our comprehensive energy services including solar panel installation, Tesla Superchargers, HVAC systems, Title 24 roofing, and QuietCool whole house fans."
+          content="Renewable Energy Solutions For Your Whole Home. Modern, whole home solutions for energy independence."
         />
         <link rel="canonical" href="https://meliasolar.com/services" />
+        <meta property="og:title" content="Renewable Energy Solutions | Melia King Solar" />
+        <meta property="og:description" content="Renewable Energy Solutions For Your Whole Home. Modern, whole home solutions for energy independence." />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://meliasolar.com/services" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
 
       <Header />

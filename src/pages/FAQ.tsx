@@ -101,9 +101,16 @@ const FAQ = () => {
         <title>Frequently Asked Questions | Melia King Solar</title>
         <meta
           name="description"
-          content="Find answers to common questions about solar panel installation, financing, savings, and our energy services. Melia King Solar serves 12 states."
+          content="Frequently Asked Questions. Everything you need to know about going solar and our energy services."
         />
         <link rel="canonical" href="https://meliasolar.com/faq" />
+        <meta property="og:title" content="Frequently Asked Questions | Melia King Solar" />
+        <meta property="og:description" content="Everything you need to know about going solar and our energy services." />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://meliasolar.com/faq" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
 
       <Header />

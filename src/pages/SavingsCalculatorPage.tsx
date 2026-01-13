@@ -10,9 +10,16 @@ const SavingsCalculatorPage = () => {
         <title>Solar Savings Calculator | Melia King Solar</title>
         <meta
           name="description"
-          content="Calculate your potential solar savings with our free solar savings calculator. See how much you can save on electricity bills."
+          content="Solar Savings Calculator. Calculate your potential solar savings and see how much you can save on electricity bills."
         />
         <link rel="canonical" href="https://meliasolar.com/savingscalculator" />
+        <meta property="og:title" content="Solar Savings Calculator | Melia King Solar" />
+        <meta property="og:description" content="Calculate your potential solar savings and see how much you can save on electricity bills." />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://meliasolar.com/savingscalculator" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
 
       <Header />

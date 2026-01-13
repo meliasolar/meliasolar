@@ -59,16 +59,23 @@ const TeslaSupercharger = () => {
   return (
     <>
       <Helmet>
-        <title>Tesla Supercharger Installation | Melia King Solar</title>
+        <title>Tesla Superchargers Pay You | Melia King Solar</title>
         <meta
           name="description"
-          content="Add Tesla Superchargers to your business parking lot and earn lifetime passive income from every charge. Melia is a certified Tesla Supercharger installer."
+          content="Tesla Superchargers Pay You. Add Tesla Superchargers to your business parking lot and collect income from every single charge, for lifetime."
         />
         <meta
           name="keywords"
           content="Tesla Supercharger, EV charging, electric vehicle, commercial charging station, passive income, certified installer"
         />
         <link rel="canonical" href="https://meliasolar.com/supercharger" />
+        <meta property="og:title" content="Tesla Superchargers Pay You | Melia King Solar" />
+        <meta property="og:description" content="Add Tesla Superchargers to your business parking lot and collect income from every single charge, for lifetime." />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://meliasolar.com/supercharger" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
 
       <Header />
