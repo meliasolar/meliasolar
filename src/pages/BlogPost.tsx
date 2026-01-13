@@ -98,8 +98,8 @@ const BlogPost = () => {
   };
 
   const copyToClipboard = async (url?: string) => {
-    // Use canonical URL for clipboard (iMessage, SMS, email work better with direct URLs)
-    const textToCopy = url || getShareableUrl();
+    // Use og-meta URL for clipboard so SMS/iMessage/Line previews show correct OG tags
+    const textToCopy = url || getOgMetaUrl();
     try {
       await navigator.clipboard.writeText(textToCopy);
       toast({ title: "Link copied to clipboard!" });
