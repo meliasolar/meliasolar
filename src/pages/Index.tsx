@@ -21,7 +21,7 @@ const Index = () => {
         <title>Melia King Solar | Your Solar King</title>
         <meta
           name="description"
-          content="Melia King Solar - Your Concierge Energy Advisor in 13 States. Expert solar panel installation, HVAC, Title 24 roofing, and QuietCool whole house fans. Get your free quote today!"
+          content="Melia King Solar - Your Solar King. Expert solar panel installation, HVAC, Title 24 roofing, and QuietCool whole house fans. Get your free quote today!"
         />
         <meta
           name="keywords"
@@ -31,7 +31,7 @@ const Index = () => {
         <meta property="og:title" content="Melia King Solar | Your Solar King" />
         <meta
           property="og:description"
-          content="Your Concierge Energy Advisor in 13 States. Expert solar panel installation and whole-home energy solutions."
+          content="Melia King Solar - Your Solar King. Expert solar panel installation and whole-home energy solutions."
         />
         <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
         <meta property="og:type" content="website" />
