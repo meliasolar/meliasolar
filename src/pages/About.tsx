@@ -97,12 +97,19 @@ const AboutPage = () => {
   return (
     <>
       <Helmet>
-        <title>About Melia King | Your Solar King</title>
+        <title>Meet Melia King | Your Solar King</title>
         <meta
           name="description"
-          content="Meet Melia King, your personal solar energy advisor helping families and businesses across 12 states take control of their energy costs."
+          content="Meet Melia King 🫶 - Your Energy Advisor. Helping families & businesses take control of their energy costs across 12 states."
         />
-        <link rel="canonical" href="https://meliasolar.com/about" />
+        <link rel="canonical" href="https://meliasolar.com/meetmelia" />
+        <meta property="og:title" content="Meet Melia King 🫶 | Your Solar King" />
+        <meta property="og:description" content="Your Energy Advisor. Helping families & businesses take control of their energy costs across 12 states." />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://meliasolar.com/meetmelia" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
 
       <Header />

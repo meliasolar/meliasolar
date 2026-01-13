@@ -61,9 +61,16 @@ const TestimonialsPage = () => {
         <title>Customer Testimonials | Melia King Solar</title>
         <meta
           name="description"
-          content="Read real reviews from homeowners and businesses who made the switch to solar with Melia King. 4.9 stars on Google Reviews."
+          content="What Our Customers Say. Real stories from homeowners and businesses who made the switch to solar with Melia."
         />
         <link rel="canonical" href="https://meliasolar.com/testimonials" />
+        <meta property="og:title" content="What Our Customers Say | Melia King Solar" />
+        <meta property="og:description" content="Real stories from homeowners and businesses who made the switch to solar with Melia. 4.9 stars on Google Reviews." />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://meliasolar.com/testimonials" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
 
       <Header />
