@@ -77,7 +77,7 @@ const ProjectsPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Our Projects | Melia Solar - Real Installations Across California & Texas</title>
+        <title>Our Projects | Melia Solar - Real Installations Across the United States</title>
         <meta name="description" content="Real installations across the United States. See how we're helping businesses & families save on energy costs & secure energy independence." />
         <link rel="canonical" href="https://meliasolar.com/projects" />
         <meta property="og:title" content="Our Projects | Melia Solar" />
