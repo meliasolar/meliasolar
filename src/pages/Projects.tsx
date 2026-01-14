@@ -78,10 +78,10 @@ const ProjectsPage = () => {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>Our Projects | Melia Solar - Real Installations Across California & Texas</title>
-        <meta name="description" content="Browse our portfolio of completed solar, battery, and energy installations across California and Texas. Real results, real savings." />
+        <meta name="description" content="Browse our portfolio of completed solar, battery, and energy installations across the United States. Real results, real savings." />
         <link rel="canonical" href="https://meliasolar.com/projects" />
         <meta property="og:title" content="Our Projects | Melia Solar" />
-        <meta property="og:description" content="Browse our portfolio of completed solar, battery, and energy installations across California and Texas. Real results, real savings." />
+        <meta property="og:description" content="Browse our portfolio of completed solar, battery, and energy installations across the United States. Real results, real savings." />
         <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
         <meta property="og:url" content="https://meliasolar.com/projects" />
         <meta property="og:type" content="website" />
@@ -104,7 +104,7 @@ const ProjectsPage = () => {
             Our Projects
           </h1>
           <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
-            Real solar and energy installations across California and Texas. See how we're helping families save on energy costs.
+            Real solar and energy installations across the United States. See how we're helping families save on energy costs.
           </p>
         </div>
       </section>
