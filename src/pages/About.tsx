@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX, Play, Pause } from "lucide-react";
-import meliaImage from "@/assets/melia-king.png";
+import meliaImage from "@/assets/melia-king-clean.png";
 import meliaVideo from "@/assets/melia-welcome.mp4";
 
 const AboutPage = () => {
