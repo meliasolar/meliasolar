@@ -78,16 +78,16 @@ const ProjectsPage = () => {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>Our Projects | Melia Solar - Real Installations Across California & Texas</title>
-        <meta name="description" content="Browse our portfolio of completed solar, battery, and energy installations across the United States. Real results, real savings." />
+        <meta name="description" content="Real installations across the United States. See how we're helping businesses & families save on energy costs & secure energy independence." />
         <link rel="canonical" href="https://meliasolar.com/projects" />
         <meta property="og:title" content="Our Projects | Melia Solar" />
-        <meta property="og:description" content="Browse our portfolio of completed solar, battery, and energy installations across the United States. Real results, real savings." />
+        <meta property="og:description" content="Real installations across the United States. See how we're helping businesses & families save on energy costs & secure energy independence." />
         <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
         <meta property="og:url" content="https://meliasolar.com/projects" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Our Projects | Melia Solar" />
-        <meta name="twitter:description" content="Browse our portfolio of completed solar, battery, and energy installations." />
+        <meta name="twitter:description" content="Real installations across the United States. See how we're helping businesses & families save on energy costs & secure energy independence." />
         <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
       
