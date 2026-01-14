@@ -161,6 +161,20 @@ const Header = () => {
             </Link>
 
             <Link
+              to="/projects"
+              className={`font-medium transition-colors relative group ${
+                location.pathname === "/projects"
+                  ? "text-accent"
+                  : "text-foreground/80 hover:text-foreground"
+              }`}
+            >
+              Projects
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ${
+                location.pathname === "/projects" ? "w-full" : "w-0 group-hover:w-full"
+              }`} />
+            </Link>
+
+            <Link
               to="/faq"
               className={`font-medium transition-colors relative group ${
                 location.pathname === "/faq"
@@ -283,6 +297,18 @@ const Header = () => {
                 }`}
               >
                 Testimonials
+              </Link>
+
+              <Link
+                to="/projects"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`font-medium py-2 transition-colors ${
+                  location.pathname === "/projects"
+                    ? "text-accent"
+                    : "text-foreground/80 hover:text-foreground"
+                }`}
+              >
+                Projects
               </Link>
 
               <Link

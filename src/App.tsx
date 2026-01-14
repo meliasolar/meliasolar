@@ -18,6 +18,7 @@ const ServiceSection = lazy(() => import("./pages/ServiceSection"));
 const SavingsCalculatorPage = lazy(() => import("./pages/SavingsCalculatorPage"));
 const Testimonials = lazy(() => import("./pages/Testimonials"));
 const TeslaSupercharger = lazy(() => import("./pages/TeslaSupercharger"));
+const Projects = lazy(() => import("./pages/Projects"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
@@ -50,6 +51,7 @@ const App = () => (
                 <Route path="/fans" element={<ServiceSection />} />
                 <Route path="/savingscalculator" element={<SavingsCalculatorPage />} />
                 <Route path="/testimonials" element={<Testimonials />} />
+                <Route path="/projects" element={<Projects />} />
                 <Route path="/tesla-supercharger" element={<Navigate to="/supercharger" replace />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/news" element={<Blog />} />
