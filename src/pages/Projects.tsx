@@ -104,7 +104,7 @@ const ProjectsPage = () => {
             Our Projects
           </h1>
           <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
-            Real solar and energy installations across the United States. See how we're helping families save on energy costs.
+            Real installations across the United States. See how we're helping businesses & families save on energy costs & secure energy independence.
           </p>
         </div>
       </section>
