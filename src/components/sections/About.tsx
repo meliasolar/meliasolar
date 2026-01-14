@@ -1,6 +1,6 @@
 import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import meliaImage from "@/assets/melia-king.webp";
+import meliaImage from "@/assets/melia-king-clean.png";
 import meliaVideo from "@/assets/melia-welcome.mp4";
 
 const About = () => {
