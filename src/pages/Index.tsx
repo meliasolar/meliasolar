@@ -5,7 +5,6 @@ import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
-import MeliaVideoWidget from "@/components/MeliaVideoWidget";
 import LocalBusinessSchema from "@/components/seo/LocalBusinessSchema";
 
 // Lazy load below-the-fold sections to reduce initial JS bundle
@@ -14,6 +13,9 @@ const SavingsCalculator = lazy(() => import("@/components/sections/SavingsCalcul
 const Contact = lazy(() => import("@/components/sections/Contact"));
 const PortfolioCarousel = lazy(() => import("@/components/sections/PortfolioCarousel"));
 const TestimonialsCarousel = lazy(() => import("@/components/sections/TestimonialsCarousel"));
+
+// Defer video widget to not block initial render
+const MeliaVideoWidget = lazy(() => import("@/components/MeliaVideoWidget"));
 
 const Index = () => {
   return (
@@ -60,7 +62,9 @@ const Index = () => {
       </main>
       <Footer />
       <FloatingContactButtons />
-      <MeliaVideoWidget />
+      <Suspense fallback={null}>
+        <MeliaVideoWidget />
+      </Suspense>
     </>
   );
 };

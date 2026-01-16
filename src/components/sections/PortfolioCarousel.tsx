@@ -110,6 +110,8 @@ const PortfolioCarousel = () => {
                   <img
                     src={project.image}
                     alt={project.alt}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover rounded-xl shadow-md transition-transform duration-300 group-hover:scale-[1.02]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />

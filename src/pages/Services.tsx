@@ -146,6 +146,8 @@ const ServicesPage = () => {
                     <img
                       src={service.image}
                       alt={service.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-80 lg:h-96 object-cover object-left"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
