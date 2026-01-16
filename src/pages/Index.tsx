@@ -36,13 +36,13 @@ const Index = () => {
           property="og:description"
           content="Melia King Solar - Your Solar King. Expert solar panel installation and whole-home energy solutions."
         />
-        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-share.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://meliasolar.com" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Melia King Solar | Your Solar King" />
         <meta name="twitter:description" content="Expert solar panel installation and whole-home energy solutions." />
-        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-share.png" />
       </Helmet>
       <LocalBusinessSchema />
 
