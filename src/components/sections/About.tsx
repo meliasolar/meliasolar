@@ -102,7 +102,7 @@ const About = () => {
                 muted={isMuted}
                 playsInline
                 autoPlay
-                preload="auto"
+                preload="none"
                 onEnded={handleVideoEnd}
                 className="w-full aspect-video object-cover bg-background"
               />

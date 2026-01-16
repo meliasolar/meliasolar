@@ -94,6 +94,7 @@ const MeliaVideoWidget = () => {
           autoPlay
           muted={isMuted}
           playsInline
+          preload="none"
           onEnded={handleVideoEnd}
           className="w-64 h-44 object-cover"
         />

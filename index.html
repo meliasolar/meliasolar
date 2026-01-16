@@ -15,7 +15,8 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" />
     </noscript>
     
-    <!-- Hero image preload will be handled by fetchpriority="high" on the img element -->
+    <!-- Preload LCP hero image for faster Largest Contentful Paint -->
+    <link rel="preload" as="image" href="/src/assets/hero-coastal.jpg" type="image/jpeg" fetchpriority="high" />
     
     <title>Melia King Solar | Your Solar King</title>
     <meta
