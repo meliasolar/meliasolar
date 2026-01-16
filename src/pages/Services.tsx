@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import PortfolioCarousel from "@/components/sections/PortfolioCarousel";
 import { Button } from "@/components/ui/button";
+import ServiceSchema from "@/components/seo/ServiceSchema";
 import solarImage from "@/assets/solar-installation-action.jpg";
 import hvacImage from "@/assets/hvac-service.jpg";
 import roofingImage from "@/assets/roofing-service.jpg";
@@ -96,8 +97,15 @@ const ServicesPage = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://meliasolar.com/services" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Renewable Energy Solutions | Melia King Solar" />
+        <meta name="twitter:description" content="Modern, whole home solutions for energy independence." />
         <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
+      <ServiceSchema
+        serviceName="Solar Panel Installation & Energy Solutions"
+        description="Expert solar panel installation, HVAC, Title 24 roofing, and QuietCool whole house fans. Modern, whole home solutions for energy independence."
+        url="https://meliasolar.com/services"
+      />
 
       <Header />
 

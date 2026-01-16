@@ -8,6 +8,8 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Calendar, ArrowLeft, Facebook, Linkedin, Share2, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import ArticleSchema from "@/components/seo/ArticleSchema";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 
 interface BlogPost {
   id: string;
@@ -269,6 +271,7 @@ const BlogPost = () => {
         <title>{post.title} | Melia King Solar</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={getCanonicalUrl()} />
+        <meta name="keywords" content="solar energy, renewable energy, solar installation, energy savings, Melia King Solar" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="article" />
@@ -276,6 +279,7 @@ const BlogPost = () => {
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={ogImage} />
+        <meta property="article:published_time" content={post.created_at} />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -284,6 +288,20 @@ const BlogPost = () => {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={ogImage} />
       </Helmet>
+      <ArticleSchema
+        title={post.title}
+        description={description}
+        url={getCanonicalUrl()}
+        image={ogImage}
+        datePublished={post.created_at}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://meliasolar.com" },
+          { name: "News", url: "https://meliasolar.com/news" },
+          { name: post.title, url: getCanonicalUrl() },
+        ]}
+      />
 
       <Header />
 

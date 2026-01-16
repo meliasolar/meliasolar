@@ -89,6 +89,7 @@ const ProjectsPage = () => {
         <meta name="twitter:title" content="Our Projects | Melia Solar" />
         <meta name="twitter:description" content="Real installations across the United States. See how we're helping businesses & families save on energy costs & secure energy independence." />
         <meta name="twitter:image" content="https://meliasolar.com/og-projects-1.png" />
+        <meta name="keywords" content="solar installation projects, solar panel gallery, residential solar, commercial solar, battery storage, California solar" />
       </Helmet>
       
       <Header />
