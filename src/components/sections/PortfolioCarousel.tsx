@@ -18,20 +18,20 @@ import tesla2 from "@/assets/portfolio/tesla-2.jpg";
 import tesla3 from "@/assets/portfolio/tesla-3.jpg";
 
 const projects = [
-  { image: project14, alt: "Aerial neighborhood view with multiple solar homes" },
-  { image: project1, alt: "Desert solar installation with mountain backdrop" },
-  { image: tesla1, alt: "Tesla Powerwall battery storage installation" },
-  { image: project6, alt: "Coastal property solar installation" },
-  { image: project3, alt: "Commercial rooftop solar array" },
-  { image: project10, alt: "Solar panels on tile roof" },
-  { image: project7, alt: "Luxury estate with solar panels" },
-  { image: tesla2, alt: "Tesla Powerwall side view" },
-  { image: project2, alt: "Aerial view of residential solar panels" },
-  { image: project13, alt: "Spanish tile roof solar installation" },
-  { image: project5, alt: "Multi-roof solar panel system" },
-  { image: project8, alt: "Residential home solar installation" },
-  { image: tesla3, alt: "Large Tesla Powerwall array" },
-  { image: project9, alt: "Neighborhood aerial showing solar home" },
+  { image: project14, alt: "Melia Solar community installation - aerial view of Irvine CA neighborhood with multiple residential solar panel systems" },
+  { image: project1, alt: "Melia Solar desert installation - residential solar panels on Palm Springs CA estate with mountain backdrop" },
+  { image: tesla1, alt: "Melia Solar Tesla Powerwall battery storage installation in San Diego CA home garage" },
+  { image: project6, alt: "Melia Solar coastal installation - rooftop solar panels on Malibu CA oceanfront property" },
+  { image: project3, alt: "Melia Solar commercial installation - large rooftop solar array on Los Angeles CA business building" },
+  { image: project10, alt: "Melia Solar tile roof integration - solar panels installed on Orange County CA Spanish tile roof" },
+  { image: project7, alt: "Melia Solar luxury estate - complete solar energy system on Newport Beach CA mansion" },
+  { image: tesla2, alt: "Melia Solar Tesla Powerwall home battery backup system - wall-mounted installation in Texas home" },
+  { image: project2, alt: "Melia Solar residential installation - aerial view of modern Dallas TX home with rooftop solar panels" },
+  { image: project13, alt: "Melia Solar Spanish tile roof - seamless solar panel integration on Santa Barbara CA home" },
+  { image: project5, alt: "Melia Solar multi-roof system - large residential solar installation on Houston TX property" },
+  { image: project8, alt: "Melia Solar suburban home - residential solar panel installation in Sacramento California" },
+  { image: tesla3, alt: "Melia Solar large battery array - multiple Tesla Powerwall units installed in Phoenix Arizona home" },
+  { image: project9, alt: "Melia Solar neighborhood installation - Las Vegas NV home with complete solar and battery system" },
 ];
 
 const PortfolioCarousel = () => {

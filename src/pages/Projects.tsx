@@ -30,23 +30,24 @@ interface Project {
   location: string;
   category: Category | "Solar + Battery";
   savings: string;
+  alt: string;
 }
 
 const projects: Project[] = [
-  { image: project14, title: "Neighborhood Solar Community", location: "Irvine, CA", category: "Solar", savings: "$380/mo" },
-  { image: project1, title: "Desert Mountain Estate", location: "Palm Springs, CA", category: "Solar", savings: "$520/mo" },
-  { image: tesla1, title: "Tesla Powerwall Installation", location: "San Diego, CA", category: "Battery", savings: "$180/mo" },
-  { image: project6, title: "Coastal Home Solar System", location: "Malibu, CA", category: "Solar", savings: "$450/mo" },
-  { image: project3, title: "Commercial Rooftop Array", location: "Los Angeles, CA", category: "Solar", savings: "$1,200/mo" },
-  { image: project10, title: "Tile Roof Solar Integration", location: "Orange County, CA", category: "Solar", savings: "$340/mo" },
-  { image: project7, title: "Luxury Estate Energy System", location: "Newport Beach, CA", category: "Solar + Battery", savings: "$620/mo" },
-  { image: tesla2, title: "Home Battery Backup System", location: "Austin, TX", category: "Battery", savings: "$210/mo" },
-  { image: project2, title: "Modern Residential Solar", location: "Dallas, TX", category: "Solar", savings: "$390/mo" },
-  { image: project13, title: "Spanish Tile Roof Solar", location: "Santa Barbara, CA", category: "Solar", savings: "$410/mo" },
-  { image: project5, title: "Multi-Roof Solar System", location: "Houston, TX", category: "Solar", savings: "$480/mo" },
-  { image: project8, title: "Suburban Home Solar", location: "Sacramento, CA", category: "Solar", savings: "$320/mo" },
-  { image: tesla3, title: "Large Battery Storage Array", location: "Phoenix, AZ", category: "Battery", savings: "$290/mo" },
-  { image: project9, title: "Neighborhood Solar Home", location: "Las Vegas, NV", category: "Solar + Battery", savings: "$550/mo" },
+  { image: project14, title: "Neighborhood Solar Community", location: "Irvine, CA", category: "Solar", savings: "$380/mo", alt: "Melia Solar community installation - aerial view of Irvine CA neighborhood with multiple residential solar panel systems" },
+  { image: project1, title: "Desert Mountain Estate", location: "Palm Springs, CA", category: "Solar", savings: "$520/mo", alt: "Melia Solar desert installation - residential solar panels on Palm Springs CA estate with mountain backdrop" },
+  { image: tesla1, title: "Tesla Powerwall Installation", location: "San Diego, CA", category: "Battery", savings: "$180/mo", alt: "Melia Solar Tesla Powerwall battery storage installation in San Diego CA home garage" },
+  { image: project6, title: "Coastal Home Solar System", location: "Malibu, CA", category: "Solar", savings: "$450/mo", alt: "Melia Solar coastal installation - rooftop solar panels on Malibu CA oceanfront property" },
+  { image: project3, title: "Commercial Rooftop Array", location: "Los Angeles, CA", category: "Solar", savings: "$1,200/mo", alt: "Melia Solar commercial installation - large rooftop solar array on Los Angeles CA business building" },
+  { image: project10, title: "Tile Roof Solar Integration", location: "Orange County, CA", category: "Solar", savings: "$340/mo", alt: "Melia Solar tile roof integration - solar panels installed on Orange County CA Spanish tile roof" },
+  { image: project7, title: "Luxury Estate Energy System", location: "Newport Beach, CA", category: "Solar + Battery", savings: "$620/mo", alt: "Melia Solar luxury estate - complete solar energy system on Newport Beach CA mansion" },
+  { image: tesla2, title: "Home Battery Backup System", location: "Austin, TX", category: "Battery", savings: "$210/mo", alt: "Melia Solar Tesla Powerwall home battery backup system - wall-mounted installation in Texas home" },
+  { image: project2, title: "Modern Residential Solar", location: "Dallas, TX", category: "Solar", savings: "$390/mo", alt: "Melia Solar residential installation - aerial view of modern Dallas TX home with rooftop solar panels" },
+  { image: project13, title: "Spanish Tile Roof Solar", location: "Santa Barbara, CA", category: "Solar", savings: "$410/mo", alt: "Melia Solar Spanish tile roof - seamless solar panel integration on Santa Barbara CA home" },
+  { image: project5, title: "Multi-Roof Solar System", location: "Houston, TX", category: "Solar", savings: "$480/mo", alt: "Melia Solar multi-roof system - large residential solar installation on Houston TX property" },
+  { image: project8, title: "Suburban Home Solar", location: "Sacramento, CA", category: "Solar", savings: "$320/mo", alt: "Melia Solar suburban home - residential solar panel installation in Sacramento California" },
+  { image: tesla3, title: "Large Battery Storage Array", location: "Phoenix, AZ", category: "Battery", savings: "$290/mo", alt: "Melia Solar large battery array - multiple Tesla Powerwall units installed in Phoenix Arizona home" },
+  { image: project9, title: "Neighborhood Solar Home", location: "Las Vegas, NV", category: "Solar + Battery", savings: "$550/mo", alt: "Melia Solar neighborhood installation - Las Vegas NV home with complete solar and battery system" },
 ];
 
 const categories: Category[] = ["All", "Solar", "Battery", "HVAC", "EV Charger"];
@@ -142,7 +143,7 @@ const ProjectsPage = () => {
                 <div className="aspect-[4/3] overflow-hidden relative">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={project.alt}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
