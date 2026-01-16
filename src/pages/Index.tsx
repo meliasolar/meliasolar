@@ -6,6 +6,7 @@ import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import MeliaVideoWidget from "@/components/MeliaVideoWidget";
+import LocalBusinessSchema from "@/components/seo/LocalBusinessSchema";
 
 // Lazy load below-the-fold sections to reduce initial JS bundle
 const WhySolar = lazy(() => import("@/components/sections/WhySolar"));
@@ -36,7 +37,12 @@ const Index = () => {
         <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://meliasolar.com" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Melia King Solar | Your Solar King" />
+        <meta name="twitter:description" content="Expert solar panel installation and whole-home energy solutions." />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
+      <LocalBusinessSchema />
 
       <Header />
       <main>

@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import FAQSchema from "@/components/seo/FAQSchema";
 
 const FAQ = () => {
   const generalFaqs = [
@@ -95,6 +96,9 @@ const FAQ = () => {
     },
   ];
 
+  // Combine all FAQs for schema
+  const allFaqs = [...generalFaqs, ...financialFaqs, ...installationFaqs, ...serviceFaqs];
+
   return (
     <>
       <Helmet>
@@ -110,8 +114,11 @@ const FAQ = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://meliasolar.com/faq" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Frequently Asked Questions | Melia King Solar" />
+        <meta name="twitter:description" content="Everything you need to know about going solar and our energy services." />
         <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
       </Helmet>
+      <FAQSchema faqs={allFaqs} />
 
       <Header />
 

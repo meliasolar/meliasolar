@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
+import ReviewSchema from "@/components/seo/ReviewSchema";
 
 const TestimonialsPage = () => {
   const testimonials = [
@@ -74,6 +75,7 @@ const TestimonialsPage = () => {
         <meta name="twitter:description" content="Real stories from homeowners and businesses who made the switch to solar with Melia. 4.9 stars on Google Reviews." />
         <meta name="twitter:image" content="https://meliasolar.com/og-testimonials-1.png" />
       </Helmet>
+      <ReviewSchema reviews={testimonials} />
 
       <Header />
 
