@@ -10,7 +10,7 @@ import LocalBusinessSchema from "@/components/seo/LocalBusinessSchema";
 // Lazy load below-the-fold sections to reduce initial JS bundle
 const WhySolar = lazy(() => import("@/components/sections/WhySolar"));
 const SavingsCalculator = lazy(() => import("@/components/sections/SavingsCalculator"));
-const Contact = lazy(() => import("@/components/sections/Contact"));
+
 const PortfolioCarousel = lazy(() => import("@/components/sections/PortfolioCarousel"));
 const TestimonialsCarousel = lazy(() => import("@/components/sections/TestimonialsCarousel"));
 
@@ -57,7 +57,6 @@ const Index = () => {
           <WhySolar />
           <SavingsCalculator />
           <PortfolioCarousel />
-          <Contact />
         </Suspense>
       </main>
       <Footer />
