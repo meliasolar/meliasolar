@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, PiggyBank, Zap } from "lucide-react";
 import heroImage from "@/assets/hero-coastal.jpg";
+import { useContactModal } from "@/contexts/ContactModalContext";
 
 const Hero = () => {
+  const { openContactModal } = useContactModal();
   return (
     <section className="relative flex flex-col overflow-hidden">
       {/* Hero content with background */}
@@ -71,12 +73,7 @@ const Hero = () => {
               <Button
                 variant="solar"
                 size="xl"
-                onClick={() => {
-                  const element = document.getElementById("contact");
-                  if (element) {
-                    element.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
+                onClick={openContactModal}
               >
                 Get Free Quote
                 <ArrowRight className="w-5 h-5" />

@@ -419,14 +419,6 @@ const ContactFormModal = ({ open, onOpenChange }: ContactFormModalProps) => {
         
         {/* Progress Bar */}
         <div className="px-6 pt-6">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-muted-foreground">
-              Step {currentStep + 1} of {steps.length}
-            </span>
-            <span className="text-sm font-medium text-foreground">
-              {steps[currentStep].title}
-            </span>
-          </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-gradient-to-r from-primary to-accent"
