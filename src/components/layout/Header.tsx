@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, Instagram } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { useContactModal } from "@/contexts/ContactModalContext";
 
 const serviceLinks = [
   { name: "Solar Panel Installation", href: "/solar" },
@@ -18,6 +19,7 @@ const Header = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { openContactModal } = useContactModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -215,7 +217,7 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button variant="solar" size="lg" onClick={() => scrollToSection("contact")}>
+            <Button variant="solar" size="lg" onClick={openContactModal}>
               Get A Quote
             </Button>
           </div>
@@ -345,7 +347,7 @@ const Header = () => {
                 Instagram
               </a>
 
-              <Button variant="solar" size="lg" className="mt-2" onClick={() => scrollToSection("contact")}>
+              <Button variant="solar" size="lg" className="mt-2" onClick={() => { setIsMobileMenuOpen(false); openContactModal(); }}>
                 Get A Quote
               </Button>
             </div>

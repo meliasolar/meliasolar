@@ -3,9 +3,11 @@ import { Slider } from "@/components/ui/slider";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, DollarSign, Leaf, TrendingDown } from "lucide-react";
+import { useContactModal } from "@/contexts/ContactModalContext";
 
 const SavingsCalculator = () => {
   const [monthlyBill, setMonthlyBill] = useState([200]);
+  const { openContactModal } = useContactModal();
 
   const currentBill = monthlyBill[0];
   const yearlyCost = currentBill * 12;
@@ -112,12 +114,7 @@ const SavingsCalculator = () => {
               <Button
                 variant="solar"
                 size="xl"
-                onClick={() => {
-                  const element = document.getElementById("contact");
-                  if (element) {
-                    element.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
+                onClick={openContactModal}
               >
                 Get Your Free Quote
                 <ArrowRight className="w-5 h-5" />
