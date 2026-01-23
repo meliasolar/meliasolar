@@ -93,6 +93,19 @@ const Footer = () => {
               </li>
               <li>
                 <Link
+                  to="/projects"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className={`transition-colors text-sm ${
+                    location.pathname === "/projects"
+                      ? "text-accent"
+                      : "text-primary-foreground/80 hover:text-primary-foreground"
+                  }`}
+                >
+                  Projects
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/faq"
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className={`transition-colors text-sm ${
@@ -102,6 +115,19 @@ const Footer = () => {
                   }`}
                 >
                   FAQ
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/news"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className={`transition-colors text-sm ${
+                    location.pathname === "/news"
+                      ? "text-accent"
+                      : "text-primary-foreground/80 hover:text-primary-foreground"
+                  }`}
+                >
+                  News
                 </Link>
               </li>
             </ul>
