@@ -6,8 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowLeft, Facebook, Linkedin, Clock } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Calendar, ArrowLeft, Clock } from "lucide-react";
 import ArticleSchema from "@/components/seo/ArticleSchema";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 
@@ -24,7 +23,6 @@ const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -81,38 +79,6 @@ const BlogPost = () => {
     return `${supabaseUrl}/functions/v1/og-article-image?image=${encodeURIComponent(post.image_url)}`;
   };
 
-  // Share functions - use canonical URL so platforms read the page's OG tags directly
-  const shareOnFacebook = () => {
-    const url = encodeURIComponent(getCanonicalUrl());
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank", "width=600,height=400");
-  };
-
-  const shareOnTwitter = () => {
-    const url = encodeURIComponent(getCanonicalUrl());
-    const text = encodeURIComponent(post?.title || "");
-    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank", "width=600,height=400");
-  };
-
-  const shareOnLinkedIn = () => {
-    const url = encodeURIComponent(getCanonicalUrl());
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank", "width=600,height=400");
-  };
-
-  const copyToClipboard = async (url: string) => {
-    try {
-      await navigator.clipboard.writeText(url);
-      toast({ title: "Link copied to clipboard!" });
-    } catch {
-      // Fallback for older browsers
-      const textArea = document.createElement("textarea");
-      textArea.value = url;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textArea);
-      toast({ title: "Link copied to clipboard!" });
-    }
-  };
 
   // Generate slug from heading text
   const generateSlug = (text: string) => {
@@ -188,26 +154,7 @@ const BlogPost = () => {
     return { contentBeforeImage: beforeHtml, contentAfterImage: afterHtml };
   }, [post?.content]);
 
-  // Handle anchor link clicks to copy full URL
-  useEffect(() => {
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const anchor = target.closest(".anchor-link");
-      if (anchor) {
-        e.preventDefault();
-        const href = anchor.getAttribute("href");
-        if (href) {
-          const fullUrl = `${getCanonicalUrl()}${href}`;
-          copyToClipboard(fullUrl);
-          // Update URL without reload
-          window.history.pushState(null, "", href);
-        }
-      }
-    };
-
-    document.addEventListener("click", handleAnchorClick);
-    return () => document.removeEventListener("click", handleAnchorClick);
-  }, [slug]);
+  // NOTE: We intentionally do not add any copy-to-clipboard behavior on this page.
 
   if (loading) {
     return (
@@ -354,41 +301,6 @@ const BlogPost = () => {
             dangerouslySetInnerHTML={{ __html: contentAfterImage }}
           />
 
-          {/* Share Buttons */}
-          <div className="border-t border-border pt-8">
-            <p className="text-sm font-medium text-foreground mb-4">Share this article</p>
-            <div className="flex flex-wrap gap-3">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={shareOnFacebook}
-                className="gap-2"
-              >
-                <Facebook className="w-4 h-4" />
-                Facebook
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={shareOnTwitter}
-                className="gap-2"
-              >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-                X (Twitter)
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={shareOnLinkedIn}
-                className="gap-2"
-              >
-                <Linkedin className="w-4 h-4" />
-                LinkedIn
-              </Button>
-            </div>
-          </div>
         </article>
       </main>
 
