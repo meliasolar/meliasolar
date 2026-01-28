@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { encode as encodeBase64 } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -15,7 +16,8 @@ async function fetchImageAsBase64(url: string): Promise<string | null> {
       return null;
     }
     const arrayBuffer = await response.arrayBuffer();
-    const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+    // NOTE: Avoid `String.fromCharCode(...bytes)` which can crash with large images.
+    const base64 = encodeBase64(arrayBuffer);
     const contentType = response.headers.get('content-type') || 'image/jpeg';
     return `data:${contentType};base64,${base64}`;
   } catch (error) {
