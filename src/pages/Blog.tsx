@@ -124,15 +124,15 @@ const Blog = () => {
                 <Link key={post.id} to={`/news/${post.slug}`}>
                   <Card className="h-full hover:shadow-elegant transition-shadow group overflow-hidden">
                     {post.image_url ? (
-                      <div className="h-48 overflow-hidden">
+                      <div className="aspect-[16/9] overflow-hidden">
                         <img
                           src={post.image_url}
                           alt={post.title}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
                     ) : (
-                      <div className="h-48 bg-gradient-solar flex items-center justify-center">
+                      <div className="aspect-[16/9] bg-gradient-solar flex items-center justify-center">
                         <span className="text-6xl opacity-30">📰</span>
                       </div>
                     )}

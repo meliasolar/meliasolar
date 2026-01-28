@@ -17,7 +17,6 @@ import project8 from "@/assets/portfolio/project-8.jpg";
 import project9 from "@/assets/portfolio/project-9.jpg";
 import project10 from "@/assets/portfolio/project-10.jpg";
 import project13 from "@/assets/portfolio/project-13.jpg";
-import project14 from "@/assets/portfolio/project-14.jpg";
 import tesla1 from "@/assets/portfolio/tesla-1.jpg";
 import tesla2 from "@/assets/portfolio/tesla-2.jpg";
 import tesla3 from "@/assets/portfolio/tesla-3.jpg";
@@ -34,8 +33,7 @@ interface Project {
 }
 
 const projects: Project[] = [
-  { image: project14, title: "Neighborhood Solar Community", location: "Irvine, CA", category: "Solar", savings: "$380/mo", alt: "Melia Solar community installation - aerial view of Irvine CA neighborhood with multiple residential solar panel systems" },
-  { image: project1, title: "Desert Mountain Estate", location: "Palm Springs, CA", category: "Solar", savings: "$520/mo", alt: "Melia Solar desert installation - residential solar panels on Palm Springs CA estate with mountain backdrop" },
+  { image: project1, title: "Veterans Rehabilitation Center", location: "Palm Springs, CA (IID)", category: "Solar + Battery", savings: "$800/mo", alt: "Melia Solar 35kW commercial installation with 3 Tesla Powerwall 3 batteries at Veterans Rehabilitation Center in Palm Springs CA" },
   { image: tesla1, title: "Tesla Powerwall Installation", location: "San Diego, CA", category: "Battery", savings: "$180/mo", alt: "Melia Solar Tesla Powerwall battery storage installation in San Diego CA home garage" },
   { image: project6, title: "Coastal Home Solar System", location: "Malibu, CA", category: "Solar", savings: "$450/mo", alt: "Melia Solar coastal installation - rooftop solar panels on Malibu CA oceanfront property" },
   { image: project3, title: "Commercial Rooftop Array", location: "Los Angeles, CA", category: "Solar", savings: "$1,200/mo", alt: "Melia Solar commercial installation - large rooftop solar array on Los Angeles CA business building" },
