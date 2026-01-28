@@ -159,19 +159,15 @@ const TestimonialsPage = () => {
         </section>
 
         {/* CTA Section - Leave a Review */}
-        <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+        <section className="py-16 md:py-20 bg-primary/5">
           <div className="container mx-auto px-6 text-center">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
               Had a Great Experience?
             </h2>
-            <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
+            <p className="text-muted-foreground max-w-xl mx-auto mb-8">
               We'd love to hear from you! Share your experience and help others discover the benefits of going solar with Melia.
             </p>
-            <Button
-              size="lg"
-              className="bg-accent text-foreground hover:bg-accent/90"
-              asChild
-            >
+            <Button size="lg" className="rounded-full" asChild>
               <a
                 href="https://maps.app.goo.gl/b8Z83MdUr8dECADZ9"
                 target="_blank"
