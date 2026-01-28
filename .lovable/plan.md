@@ -1,144 +1,204 @@
 
-# Plan: Add Scheduled Publishing for Blog Posts
+# Plan: Fix Social Media Sharing for Blog Articles
 
 ## Overview
-Add the ability to schedule blog posts to be published at a specific future date and time. Posts can be saved as drafts, published immediately, or scheduled for automatic publication.
+This plan addresses the broken social media sharing experience and implements proper 50/50 split share images for blog articles.
 
 ---
 
-## How It Will Work
+## Current Problems Identified
 
-1. **In the Admin Editor**: When creating or editing a post, you'll have three options:
-   - **Draft** - Save without publishing (current behavior)
-   - **Publish Now** - Publish immediately (current behavior)
-   - **Schedule** - Set a future date and time for automatic publication
+Based on your screenshots:
 
-2. **Scheduled Posts**: Will show a "Scheduled" badge with the publication date in the admin list
-
-3. **Automatic Publishing**: A background function will run periodically to publish posts whose scheduled time has passed
-
----
-
-## Database Changes
-
-Add a new column to the `blog_posts` table:
-
-| Column | Type | Purpose |
-|--------|------|---------|
-| `scheduled_at` | `timestamp with time zone` | When the post should be published (null = not scheduled) |
+| Platform | Issue |
+|----------|-------|
+| **Facebook** | Shows generic site meta ("Melia King Solar | Your Solar King") instead of article-specific content |
+| **LinkedIn** | Shows raw edge function URL with no preview at all |
+| **X/Twitter** | Shows article title but displays ugly edge function URL |
+| **Copy Link** | Copies edge function URL which appears as "Text Document" in iMessage |
 
 ---
 
-## Admin Interface Updates
+## Root Cause Analysis
 
-### Publishing Options Section
-Replace the current "Publish immediately" toggle with a more flexible UI:
+The `og-meta` edge function approach has fundamental issues:
+1. Social platforms don't reliably crawl edge function URLs
+2. The immediate JavaScript redirect may execute before crawlers read meta tags
+3. Mobile share dialogs show the ugly Supabase function URL to users
 
+---
+
+## Solution: Canonical URL Approach + Dynamic Image Generation
+
+### Strategy Change
+Instead of redirecting through an edge function, we'll:
+1. **Share the canonical URL** directly (e.g., `https://meliasolar.com/news/article-slug`)
+2. **Generate dynamic 50/50 split images** via a new edge function
+3. **Remove the Copy Link button** since it doesn't work on iPhone
+
+The canonical URL already has OG tags in the page's `<Helmet>`, but we'll update those to use the dynamic split image.
+
+---
+
+## Part 1: Remove Copy Link Button
+
+Simply remove the "Copy Link" button from the share section since it doesn't work reliably on mobile.
+
+### Changes to `src/pages/BlogPost.tsx`
+Remove lines 395-403 (the Copy Link button).
+
+---
+
+## Part 2: Change Share URLs to Canonical
+
+Update all share functions to use the canonical URL instead of the edge function URL.
+
+### Before (current - broken)
+```typescript
+const shareOnFacebook = () => {
+  const url = encodeURIComponent(getOgMetaUrl()); // Edge function URL
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, ...);
+};
+```
+
+### After (fixed)
+```typescript
+const shareOnFacebook = () => {
+  const url = encodeURIComponent(getCanonicalUrl()); // meliasolar.com/news/slug
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, ...);
+};
+```
+
+This works because the canonical blog post page already has proper OG meta tags in the `<Helmet>` component.
+
+---
+
+## Part 3: Create Dynamic 50/50 Split Image Generator
+
+Create a new edge function `og-article-image` that generates a composite image.
+
+### Image Layout (1200×630 pixels)
 ```text
-Publishing Options:
-[ ] Save as Draft
-[ ] Publish Now  
-[x] Schedule for Later
-    [Date Picker] [Time Picker]
-    → Scheduled for: Jan 30, 2026 at 9:00 AM
+┌────────────────────────────────────────────────────────┐
+│                                                        │
+│   ┌─────────────────────┬──────────────────────────┐   │
+│   │                     │                          │   │
+│   │   Article Featured  │    Melia OG Branding     │   │
+│   │   Image (cropped    │    (phoenix logo on      │   │
+│   │   to fit 600×630)   │    white background)     │   │
+│   │                     │                          │   │
+│   └─────────────────────┴──────────────────────────┘   │
+│                                                        │
+│              1200 × 630 pixels total                   │
+└────────────────────────────────────────────────────────┘
 ```
 
-### Post List Badges
-- **Published** (green) - Currently live
-- **Draft** (gray) - Not published, no schedule
-- **Scheduled** (blue/orange) - Has a future publish date with countdown
+### Edge Function: `supabase/functions/og-article-image/index.ts`
 
----
+The function will:
+1. Accept an `image` parameter (the article's featured image URL)
+2. Fetch both images (article image + Melia branding from `/melia-og-image.png`)
+3. Use canvas compositing to create the 50/50 split
+4. Return the resulting PNG with appropriate cache headers
 
-## Public News Page Logic
+### Technical Approach
+Use `satori` + `resvg-js` (same approach as Vercel OG) to render HTML/CSS to an image:
 
-The query on `/news` will be updated to only show posts where:
-- `published = true`, OR
-- `scheduled_at` is set AND `scheduled_at <= now()`
-
-This ensures scheduled posts appear automatically when their time arrives.
-
----
-
-## Automatic Publishing Mechanism
-
-**Option A: Database-Level (Recommended)**
-Create a scheduled database function using `pg_cron` that runs every minute to:
-1. Find posts where `scheduled_at <= NOW()` and `published = false`
-2. Set `published = true` for those posts
-
-**Option B: Query-Based**
-Simply update the public query to treat posts as "published" if their scheduled time has passed. No background job needed - the post appears live the moment the scheduled time is reached.
-
-I recommend **Option B** for simplicity - it requires no cron jobs and works instantly.
-
----
-
-## Technical Implementation
-
-### 1. Database Migration
-```sql
--- Add scheduled_at column
-ALTER TABLE blog_posts 
-ADD COLUMN scheduled_at timestamp with time zone DEFAULT NULL;
-
--- Create index for efficient scheduled post queries
-CREATE INDEX idx_blog_posts_scheduled_at ON blog_posts(scheduled_at) 
-WHERE scheduled_at IS NOT NULL;
-```
-
-### 2. Update Admin Form (`src/pages/AdminBlog.tsx`)
-- Add state for publish mode: `'draft' | 'now' | 'scheduled'`
-- Add date/time picker (using existing date-fns for formatting)
-- Update form submission to include `scheduled_at`
-- Update post list to show scheduled status with date
-
-### 3. Update Public Query (`src/pages/Blog.tsx`)
-Change the query filter from:
 ```typescript
-.eq("published", true)
+// Pseudo-code for the edge function
+import satori from 'satori';
+import { Resvg } from '@resvg/resvg-js';
+
+// Generate HTML layout
+const html = (
+  <div style={{ display: 'flex', width: 1200, height: 630 }}>
+    <img src={articleImage} style={{ width: 600, height: 630, objectFit: 'cover' }} />
+    <img src={meliaOgImage} style={{ width: 600, height: 630, objectFit: 'cover' }} />
+  </div>
+);
+
+// Convert to SVG, then to PNG
+const svg = await satori(html, { width: 1200, height: 630 });
+const png = new Resvg(svg).render().asPng();
+
+return new Response(png, { headers: { 'Content-Type': 'image/png' } });
 ```
-To:
+
+### Fallback
+If the article has no featured image, return the default `melia-og-image.png` without splitting.
+
+---
+
+## Part 4: Update OG Image Tags
+
+Update the `<Helmet>` OG image to point to the dynamic image generator.
+
+### In `src/pages/BlogPost.tsx`
+
 ```typescript
-.or('published.eq.true,and(scheduled_at.not.is.null,scheduled_at.lte.now())')
+// Generate the composite OG image URL
+const getOgImageUrl = () => {
+  if (!post?.image_url) {
+    return `${window.location.origin}/melia-og-image.png`;
+  }
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  return `${supabaseUrl}/functions/v1/og-article-image?image=${encodeURIComponent(post.image_url)}`;
+};
+
+// In Helmet
+<meta property="og:image" content={getOgImageUrl()} />
+<meta name="twitter:image" content={getOgImageUrl()} />
 ```
 
-### 4. Update RLS Policy
-Ensure the "Anyone can read published posts" policy also allows reading scheduled posts whose time has passed.
+---
+
+## Files to Modify/Create
+
+| File | Action | Purpose |
+|------|--------|---------|
+| `src/pages/BlogPost.tsx` | Modify | Remove Copy Link button, update share functions to use canonical URL, update OG image to use composite |
+| `supabase/functions/og-article-image/index.ts` | Create | New function to generate 50/50 split images |
+| `supabase/functions/og-meta/index.ts` | Keep (optional cleanup later) | May be deprecated but leave for now |
 
 ---
 
-## Files to Modify
+## Technical Considerations
 
-| File | Changes |
-|------|---------|
-| Database | Add `scheduled_at` column + index |
-| `src/pages/AdminBlog.tsx` | Add scheduling UI, date/time picker, status badges |
-| `src/pages/Blog.tsx` | Update query to include scheduled posts |
-| `src/pages/BlogPost.tsx` | Update single post query for same logic |
-| RLS Policy | Update read policy to include scheduled posts |
+### Edge Function Dependencies
+The `og-article-image` function will use:
+- `satori` - Converts HTML/CSS to SVG
+- `@resvg/resvg-js` - Converts SVG to PNG
+- These are well-tested libraries used by Vercel's OG image generation
 
----
+### Caching
+Add appropriate cache headers so images aren't regenerated on every request:
+```typescript
+'Cache-Control': 'public, max-age=86400, s-maxage=86400' // 24 hours
+```
 
-## User Experience
-
-**Creating a Scheduled Post:**
-1. Write your article as normal
-2. Instead of "Publish immediately", select "Schedule for later"
-3. Pick date and time
-4. Click "Schedule Post"
-5. Post appears in admin list with "Scheduled for Jan 30 at 9:00 AM" badge
-
-**Managing Scheduled Posts:**
-- Edit the post anytime before publication
-- Change the scheduled date/time
-- Publish immediately if you change your mind
-- Convert back to draft to cancel scheduling
+### Image Dimensions
+- Output: 1200×630 (standard OG image size)
+- Left half: 600×630 (article image, cropped to cover)
+- Right half: 600×630 (Melia branding)
 
 ---
 
-## Edge Cases Handled
+## Expected Results After Implementation
 
-- **Scheduled time in the past**: Treat as "publish now"
-- **Edit a scheduled post**: Can change the schedule or publish immediately
-- **Time zones**: All times stored in UTC, displayed in local time
+| Platform | Expected Behavior |
+|----------|-------------------|
+| **Facebook** | Shows article title, excerpt, and 50/50 split image |
+| **LinkedIn** | Shows article title, excerpt, and 50/50 split image |
+| **X/Twitter** | Shows article title, excerpt, and 50/50 split image |
+| **iMessage** | Shows article preview with proper image (when sharing canonical URL) |
+
+---
+
+## Testing Checklist
+
+1. Share an article to Facebook - verify title, description, and split image appear
+2. Share an article to LinkedIn - verify proper preview
+3. Share an article to X/Twitter - verify proper preview
+4. Test article without featured image - should show default Melia OG image
+5. Verify Copy Link button is removed
+6. Use Facebook Sharing Debugger to validate OG tags: https://developers.facebook.com/tools/debug/
