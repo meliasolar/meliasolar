@@ -244,31 +244,17 @@ const FAQ = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+        <section className="py-16 md:py-20 bg-primary/5">
           <div className="container mx-auto px-6 text-center">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
               Still Have Questions?
             </h2>
-            <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
+            <p className="text-muted-foreground max-w-xl mx-auto mb-8">
               Our team is here to help. Contact us for a free consultation and get personalized answers for your situation.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="bg-accent text-foreground hover:bg-accent/90"
-                asChild
-              >
-                <a href="tel:+13103469466">Call +1 (310) 346-9466</a>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground bg-transparent hover:bg-primary-foreground/10"
-                asChild
-              >
-                <a href="mailto:melia@voltaicnow.com">Email Us</a>
-              </Button>
-            </div>
+            <Button size="lg" className="rounded-full" asChild>
+              <a href="tel:+18182029527">Get a Free Quote</a>
+            </Button>
           </div>
         </section>
       </main>
