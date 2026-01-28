@@ -1,106 +1,144 @@
 
-# Plan: Fix Blog Thumbnails and Favicon Issues
+# Plan: Add Scheduled Publishing for Blog Posts
 
 ## Overview
-This plan addresses two issues: (1) blog grid thumbnails cropping images poorly, and (2) the wrong favicon appearing in Chrome due to an unreplaced SVG file.
+Add the ability to schedule blog posts to be published at a specific future date and time. Posts can be saved as drafts, published immediately, or scheduled for automatic publication.
 
 ---
 
-## Part 1: Blog Grid Thumbnail Fix
+## How It Will Work
 
-### Current Problem
-- Images with different aspect ratios (like the phoenix logo) get cropped when displayed in the 16:9 thumbnail area
-- The `object-cover` CSS forces images to fill the space by cropping
+1. **In the Admin Editor**: When creating or editing a post, you'll have three options:
+   - **Draft** - Save without publishing (current behavior)
+   - **Publish Now** - Publish immediately (current behavior)
+   - **Schedule** - Set a future date and time for automatic publication
 
-### Solution: Show Full Image with Blurred Background
-Instead of cropping, the image will be shown in full with a blurred, scaled-up version as the background. This keeps all cards the same size while showing the entire image.
+2. **Scheduled Posts**: Will show a "Scheduled" badge with the publication date in the admin list
 
-### Changes to `src/pages/Blog.tsx`
+3. **Automatic Publishing**: A background function will run periodically to publish posts whose scheduled time has passed
 
-**Before (cropping)**:
-```tsx
-<div className="aspect-[16/9] overflow-hidden">
-  <img
-    src={post.image_url}
-    alt={post.title}
-    className="w-full h-full object-cover object-center ..."
-  />
-</div>
+---
+
+## Database Changes
+
+Add a new column to the `blog_posts` table:
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `scheduled_at` | `timestamp with time zone` | When the post should be published (null = not scheduled) |
+
+---
+
+## Admin Interface Updates
+
+### Publishing Options Section
+Replace the current "Publish immediately" toggle with a more flexible UI:
+
+```text
+Publishing Options:
+[ ] Save as Draft
+[ ] Publish Now  
+[x] Schedule for Later
+    [Date Picker] [Time Picker]
+    → Scheduled for: Jan 30, 2026 at 9:00 AM
 ```
 
-**After (full image + blurred background)**:
-```tsx
-<div className="aspect-[16/9] overflow-hidden relative bg-muted">
-  {/* Blurred background */}
-  <img
-    src={post.image_url}
-    alt=""
-    aria-hidden="true"
-    className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl opacity-60"
-  />
-  {/* Actual image centered */}
-  <img
-    src={post.image_url}
-    alt={post.title}
-    className="relative w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
-  />
-</div>
+### Post List Badges
+- **Published** (green) - Currently live
+- **Draft** (gray) - Not published, no schedule
+- **Scheduled** (blue/orange) - Has a future publish date with countdown
+
+---
+
+## Public News Page Logic
+
+The query on `/news` will be updated to only show posts where:
+- `published = true`, OR
+- `scheduled_at` is set AND `scheduled_at <= now()`
+
+This ensures scheduled posts appear automatically when their time arrives.
+
+---
+
+## Automatic Publishing Mechanism
+
+**Option A: Database-Level (Recommended)**
+Create a scheduled database function using `pg_cron` that runs every minute to:
+1. Find posts where `scheduled_at <= NOW()` and `published = false`
+2. Set `published = true` for those posts
+
+**Option B: Query-Based**
+Simply update the public query to treat posts as "published" if their scheduled time has passed. No background job needed - the post appears live the moment the scheduled time is reached.
+
+I recommend **Option B** for simplicity - it requires no cron jobs and works instantly.
+
+---
+
+## Technical Implementation
+
+### 1. Database Migration
+```sql
+-- Add scheduled_at column
+ALTER TABLE blog_posts 
+ADD COLUMN scheduled_at timestamp with time zone DEFAULT NULL;
+
+-- Create index for efficient scheduled post queries
+CREATE INDEX idx_blog_posts_scheduled_at ON blog_posts(scheduled_at) 
+WHERE scheduled_at IS NOT NULL;
 ```
 
-### Recommended Upload Dimensions
-For best results, upload images at **1200 x 675 pixels** (16:9 ratio). However, the new implementation will gracefully handle any image dimensions.
+### 2. Update Admin Form (`src/pages/AdminBlog.tsx`)
+- Add state for publish mode: `'draft' | 'now' | 'scheduled'`
+- Add date/time picker (using existing date-fns for formatting)
+- Update form submission to include `scheduled_at`
+- Update post list to show scheduled status with date
 
----
-
-## Part 2: Favicon Fix for Chrome
-
-### Root Cause
-The file `public/favicon.svg` contains a generic purple sun icon (Lovable branding) that was never replaced:
-
-```xml
-<linearGradient ... >
-  <stop offset="0%" style="stop-color:#8b5cf6"/>  <!-- Purple = Lovable -->
-</linearGradient>
+### 3. Update Public Query (`src/pages/Blog.tsx`)
+Change the query filter from:
+```typescript
+.eq("published", true)
+```
+To:
+```typescript
+.or('published.eq.true,and(scheduled_at.not.is.null,scheduled_at.lte.now())')
 ```
 
-Chrome and other browsers auto-discover `/favicon.svg` and prefer it over `.ico` files.
-
-### Solution: Replace favicon.svg and apple-touch-icon.png with Phoenix Logo
-
-**Files to update:**
-1. **`public/favicon.svg`** - Replace with a proper SVG version of the phoenix logo
-2. **`public/apple-touch-icon.png`** - Already correct (no change needed)
-
-### New favicon.svg Content
-Create an SVG that references the phoenix logo visually. Since the logo is a complex graphic, the SVG will be a simplified version or we can convert the PNG to an inline SVG-based image.
-
-The cleanest approach is to create a simple SVG wrapper that maintains brand consistency with the purple phoenix theme.
+### 4. Update RLS Policy
+Ensure the "Anyone can read published posts" policy also allows reading scheduled posts whose time has passed.
 
 ---
 
-## Implementation Summary
+## Files to Modify
 
-| File | Action | Purpose |
-|------|--------|---------|
-| `src/pages/Blog.tsx` | Modify | Add blurred background layer for thumbnails |
-| `public/favicon.svg` | Replace | Remove Lovable sun icon, add phoenix-themed favicon |
-
----
-
-## Testing After Implementation
-
-1. **Blog page**: Verify all thumbnails show full images with nice blurred backgrounds
-2. **Favicon in Chrome**: 
-   - Hard refresh (Ctrl+Shift+R / Cmd+Shift+R)
-   - Navigate to `chrome://settings/clearBrowserData` and clear cached images
-   - Directly visit `https://meliasolar.com/favicon.svg` to confirm new icon
-   - Check browser tab shows purple phoenix
+| File | Changes |
+|------|---------|
+| Database | Add `scheduled_at` column + index |
+| `src/pages/AdminBlog.tsx` | Add scheduling UI, date/time picker, status badges |
+| `src/pages/Blog.tsx` | Update query to include scheduled posts |
+| `src/pages/BlogPost.tsx` | Update single post query for same logic |
+| RLS Policy | Update read policy to include scheduled posts |
 
 ---
 
-## Technical Notes
+## User Experience
 
-- The blurred background technique is commonly used on platforms like YouTube and Spotify
-- No performance impact: same image loaded once, browser caches it
-- Maintains consistent card heights regardless of uploaded image dimensions
-- The favicon.svg replacement is the definitive fix for Chrome's favicon caching
+**Creating a Scheduled Post:**
+1. Write your article as normal
+2. Instead of "Publish immediately", select "Schedule for later"
+3. Pick date and time
+4. Click "Schedule Post"
+5. Post appears in admin list with "Scheduled for Jan 30 at 9:00 AM" badge
+
+**Managing Scheduled Posts:**
+- Edit the post anytime before publication
+- Change the scheduled date/time
+- Publish immediately if you change your mind
+- Convert back to draft to cancel scheduling
+
+---
+
+## Edge Cases Handled
+
+- **Scheduled time in the past**: Treat as "publish now"
+- **Edit a scheduled post**: Can change the schedule or publish immediately
+- **Time zones**: All times stored in UTC, displayed in local time
