@@ -218,8 +218,9 @@ const AboutPage = () => {
                       </button>
                     )}
 
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-2 pr-10">
-                      <p className="text-xs font-medium text-foreground truncate">
+                    {/* Label - positioned at top center to avoid overlapping captions */}
+                    <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-background/90 to-transparent p-2 pointer-events-none">
+                      <p className="text-xs font-medium text-foreground text-center">
                         Welcome from Melia! 👋
                       </p>
                     </div>
@@ -292,8 +293,9 @@ const AboutPage = () => {
                       </button>
                     )}
 
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-3 pr-14">
-                      <p className="text-sm font-medium text-foreground">
+                    {/* Label - positioned at top center to avoid overlapping captions */}
+                    <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-background/90 to-transparent p-3 pointer-events-none">
+                      <p className="text-sm font-medium text-foreground text-center">
                         Welcome from Melia! 👋
                       </p>
                     </div>
