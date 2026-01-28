@@ -1,4 +1,3 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { encode as encodeBase64 } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 
 const corsHeaders = {
@@ -16,7 +15,6 @@ async function fetchImageAsBase64(url: string): Promise<string | null> {
       return null;
     }
     const arrayBuffer = await response.arrayBuffer();
-    // NOTE: Avoid `String.fromCharCode(...bytes)` which can crash with large images.
     const base64 = encodeBase64(arrayBuffer);
     const contentType = response.headers.get('content-type') || 'image/jpeg';
     return `data:${contentType};base64,${base64}`;
@@ -26,7 +24,7 @@ async function fetchImageAsBase64(url: string): Promise<string | null> {
   }
 }
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -126,7 +124,6 @@ serve(async (req) => {
 
   } catch (error: unknown) {
     console.error('Error in og-article-image function:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     
     // On error, redirect to default image
     return new Response(null, {

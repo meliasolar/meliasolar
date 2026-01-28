@@ -1,4 +1,3 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -6,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -14,7 +13,8 @@ serve(async (req) => {
 
   try {
     const url = new URL(req.url);
-    const slug = url.searchParams.get('slug');
+    // Extract slug from query param (from redirect :splat) or path
+    const slug = url.searchParams.get('slug') || url.pathname.split('/').pop();
     
     console.log('OG Meta request for slug:', slug);
 
@@ -42,7 +42,7 @@ serve(async (req) => {
     }
 
     // Get the origin for building URLs
-    const origin = url.searchParams.get('origin') || 'https://meliasolar.com';
+    const origin = 'https://meliasolar.com';
     const canonicalUrl = `${origin}/news/${slug}`;
     const defaultImage = `${origin}/melia-og-image.png`;
 
@@ -67,7 +67,10 @@ serve(async (req) => {
       .substring(0, 160)
       .trim() + '...';
 
-    const ogImage = post.image_url || defaultImage;
+    // Use the og-article-image function to generate a nice OG image with blurred background
+    const ogImage = post.image_url 
+      ? `${supabaseUrl}/functions/v1/og-article-image?image=${encodeURIComponent(post.image_url)}`
+      : defaultImage;
 
     console.log('Generating OG meta for:', post.title);
     console.log('OG Image:', ogImage);
