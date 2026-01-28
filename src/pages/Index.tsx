@@ -49,11 +49,11 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
-        <Suspense fallback={<div className="min-h-[200px]" />}>
+        <Suspense fallback={<div className="min-h-[300px] bg-muted/30 animate-pulse rounded-lg mx-6" />}>
           <TestimonialsCarousel />
         </Suspense>
         <About />
-        <Suspense fallback={<div className="min-h-[200px]" />}>
+        <Suspense fallback={<div className="min-h-[400px] bg-muted/30 animate-pulse rounded-lg mx-6" />}>
           <WhySolar />
           <SavingsCalculator />
           <PortfolioCarousel />
