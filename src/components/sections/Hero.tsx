@@ -29,6 +29,7 @@ const Hero = () => {
               height={1080}
               fetchPriority="high"
               decoding="sync"
+              style={{ contentVisibility: 'auto' }}
             />
           </picture>
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />

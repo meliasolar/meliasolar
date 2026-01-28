@@ -11,11 +11,20 @@ const About = lazy(() => import("@/components/sections/About"));
 const WhySolar = lazy(() => import("@/components/sections/WhySolar"));
 const SavingsCalculator = lazy(() => import("@/components/sections/SavingsCalculator"));
 const PortfolioCarousel = lazy(() => import("@/components/sections/PortfolioCarousel"));
+
+// Extra-deferred sections - only load when near viewport
 const TestimonialsCarousel = lazy(() => import("@/components/sections/TestimonialsCarousel"));
 const InstagramFeed = lazy(() => import("@/components/sections/InstagramFeed"));
 
-// Defer video widget to not block initial render
-const MeliaVideoWidget = lazy(() => import("@/components/MeliaVideoWidget"));
+// Defer video widget to not block initial render - load after page is interactive
+const MeliaVideoWidget = lazy(() => 
+  new Promise<typeof import("@/components/MeliaVideoWidget")>(resolve => {
+    // Delay loading until after main content is rendered
+    requestIdleCallback(() => {
+      import("@/components/MeliaVideoWidget").then(resolve);
+    }, { timeout: 3000 });
+  })
+);
 
 // Skeleton for About section
 const AboutSkeleton = () => (
@@ -36,16 +45,28 @@ const AboutSkeleton = () => (
 const Index = () => {
   const [showTestimonials, setShowTestimonials] = useState(false);
   const [showInstagram, setShowInstagram] = useState(false);
+  const [showPortfolio, setShowPortfolio] = useState(false);
   const testimonialsRef = useRef<HTMLDivElement>(null);
   const instagramRef = useRef<HTMLDivElement>(null);
+  const portfolioRef = useRef<HTMLDivElement>(null);
 
-  // Defer TestimonialsCarousel until near viewport
+  // Defer heavy sections until near viewport for better LCP
   useEffect(() => {
     const testimonialsObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setShowTestimonials(true);
           testimonialsObserver.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+
+    const portfolioObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowPortfolio(true);
+          portfolioObserver.disconnect();
         }
       },
       { rootMargin: '300px' }
@@ -64,12 +85,16 @@ const Index = () => {
     if (testimonialsRef.current) {
       testimonialsObserver.observe(testimonialsRef.current);
     }
+    if (portfolioRef.current) {
+      portfolioObserver.observe(portfolioRef.current);
+    }
     if (instagramRef.current) {
       instagramObserver.observe(instagramRef.current);
     }
 
     return () => {
       testimonialsObserver.disconnect();
+      portfolioObserver.disconnect();
       instagramObserver.disconnect();
     };
   }, []);
@@ -118,8 +143,15 @@ const Index = () => {
         <Suspense fallback={<div className="min-h-[400px] bg-muted/30 animate-pulse rounded-lg mx-6" />}>
           <WhySolar />
           <SavingsCalculator />
-          <PortfolioCarousel />
         </Suspense>
+        {/* Portfolio - deferred to improve LCP */}
+        <div ref={portfolioRef}>
+          {showPortfolio && (
+            <Suspense fallback={<div className="min-h-[300px] bg-muted/30 animate-pulse rounded-lg mx-6" />}>
+              <PortfolioCarousel />
+            </Suspense>
+          )}
+        </div>
         {/* Instagram Feed - deferred loading for performance */}
         <div ref={instagramRef}>
           {showInstagram && (
