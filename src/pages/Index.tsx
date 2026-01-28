@@ -14,7 +14,6 @@ const PortfolioCarousel = lazy(() => import("@/components/sections/PortfolioCaro
 
 // Extra-deferred sections - only load when near viewport
 const TestimonialsCarousel = lazy(() => import("@/components/sections/TestimonialsCarousel"));
-const InstagramFeed = lazy(() => import("@/components/sections/InstagramFeed"));
 
 // Defer video widget to not block initial render - load after page is interactive
 const MeliaVideoWidget = lazy(() => 
@@ -44,10 +43,8 @@ const AboutSkeleton = () => (
 
 const Index = () => {
   const [showTestimonials, setShowTestimonials] = useState(false);
-  const [showInstagram, setShowInstagram] = useState(false);
   const [showPortfolio, setShowPortfolio] = useState(false);
   const testimonialsRef = useRef<HTMLDivElement>(null);
-  const instagramRef = useRef<HTMLDivElement>(null);
   const portfolioRef = useRef<HTMLDivElement>(null);
 
   // Defer heavy sections until near viewport for better LCP
@@ -72,30 +69,16 @@ const Index = () => {
       { rootMargin: '300px' }
     );
 
-    const instagramObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShowInstagram(true);
-          instagramObserver.disconnect();
-        }
-      },
-      { rootMargin: '400px' }
-    );
-
     if (testimonialsRef.current) {
       testimonialsObserver.observe(testimonialsRef.current);
     }
     if (portfolioRef.current) {
       portfolioObserver.observe(portfolioRef.current);
     }
-    if (instagramRef.current) {
-      instagramObserver.observe(instagramRef.current);
-    }
 
     return () => {
       testimonialsObserver.disconnect();
       portfolioObserver.disconnect();
-      instagramObserver.disconnect();
     };
   }, []);
 
@@ -149,14 +132,6 @@ const Index = () => {
           {showPortfolio && (
             <Suspense fallback={<div className="min-h-[300px] bg-muted/30 animate-pulse rounded-lg mx-6" />}>
               <PortfolioCarousel />
-            </Suspense>
-          )}
-        </div>
-        {/* Instagram Feed - deferred loading for performance */}
-        <div ref={instagramRef}>
-          {showInstagram && (
-            <Suspense fallback={<div className="min-h-[300px] bg-muted/30 animate-pulse rounded-lg mx-6" />}>
-              <InstagramFeed />
             </Suspense>
           )}
         </div>
