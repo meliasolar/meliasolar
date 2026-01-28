@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
               <img 
-                src="/logo.png" 
+                src="/images/logo.webp" 
                 alt="Melia King Solar" 
                 className="w-10 h-10 rounded-lg"
                 width={40}

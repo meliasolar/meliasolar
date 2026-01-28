@@ -70,7 +70,7 @@ const Header = () => {
             className="flex items-center gap-2 group cursor-pointer"
           >
             <img 
-              src="/logo.png" 
+              src="/images/logo.webp" 
               alt="Melia King Solar" 
               className="w-10 h-10 rounded-lg transition-transform group-hover:scale-110"
               width={40}

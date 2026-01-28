@@ -133,7 +133,7 @@ const About = () => {
           <div className="relative">
             <div className="aspect-[4/5] rounded-2xl bg-muted overflow-hidden" style={{ minHeight: '400px' }}>
               <img
-                src="/images/melia-portrait.png"
+                src="/images/melia-portrait.webp"
                 alt="Melia King - Solar Energy Advisor"
                 className="w-full h-full object-cover object-top"
                 width={544}
