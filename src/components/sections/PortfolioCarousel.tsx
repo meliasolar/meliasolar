@@ -6,7 +6,6 @@ import project1 from "@/assets/portfolio/project-1.jpg";
 import project2 from "@/assets/portfolio/project-2.jpg";
 import project3 from "@/assets/portfolio/project-3.jpg";
 import project5 from "@/assets/portfolio/project-5.jpg";
-import project6 from "@/assets/portfolio/project-6.jpg";
 import project7 from "@/assets/portfolio/project-7.jpg";
 import project8 from "@/assets/portfolio/project-8.jpg";
 import project9 from "@/assets/portfolio/project-9.jpg";
@@ -21,7 +20,6 @@ const projects = [
   { image: project14, alt: "Melia Solar community installation - aerial view of Irvine CA neighborhood with multiple residential solar panel systems" },
   { image: project1, alt: "Melia Solar desert installation - residential solar panels on Palm Springs CA estate with mountain backdrop" },
   { image: tesla1, alt: "Melia Solar Tesla Powerwall battery storage installation in San Diego CA home garage" },
-  { image: project6, alt: "Melia Solar coastal installation - rooftop solar panels on Malibu CA oceanfront property" },
   { image: project3, alt: "Melia Solar commercial installation - large rooftop solar array on Los Angeles CA business building" },
   { image: project10, alt: "Melia Solar tile roof integration - solar panels installed on Orange County CA Spanish tile roof" },
   { image: project7, alt: "Melia Solar luxury estate - complete solar energy system on Newport Beach CA mansion" },

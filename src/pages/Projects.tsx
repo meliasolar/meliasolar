@@ -11,7 +11,6 @@ import project1 from "@/assets/portfolio/project-1.jpg";
 import project2 from "@/assets/portfolio/project-2.jpg";
 import project3 from "@/assets/portfolio/project-3.jpg";
 import project5 from "@/assets/portfolio/project-5.jpg";
-import project6 from "@/assets/portfolio/project-6.jpg";
 import project7 from "@/assets/portfolio/project-7.jpg";
 import project8 from "@/assets/portfolio/project-8.jpg";
 import project9 from "@/assets/portfolio/project-9.jpg";
@@ -35,7 +34,6 @@ interface Project {
 const projects: Project[] = [
   { image: project1, title: "Veterans Rehabilitation Center", location: "Palm Springs, CA (IID)", category: "Solar + Battery", savings: "$800/mo", alt: "Melia Solar 35kW commercial installation with 3 Tesla Powerwall 3 batteries at Veterans Rehabilitation Center in Palm Springs CA" },
   { image: tesla1, title: "Tesla Powerwall Installation", location: "San Diego, CA", category: "Battery", savings: "$180/mo", alt: "Melia Solar Tesla Powerwall battery storage installation in San Diego CA home garage" },
-  { image: project6, title: "Coastal Home Solar System", location: "Malibu, CA", category: "Solar", savings: "$450/mo", alt: "Melia Solar coastal installation - rooftop solar panels on Malibu CA oceanfront property" },
   { image: project3, title: "Commercial Rooftop Array", location: "Los Angeles, CA", category: "Solar", savings: "$1,200/mo", alt: "Melia Solar commercial installation - large rooftop solar array on Los Angeles CA business building" },
   { image: project10, title: "Tile Roof Solar Integration", location: "Orange County, CA", category: "Solar", savings: "$340/mo", alt: "Melia Solar tile roof integration - solar panels installed on Orange County CA Spanish tile roof" },
   { image: project7, title: "Luxury Estate Energy System", location: "Newport Beach, CA", category: "Solar + Battery", savings: "$620/mo", alt: "Melia Solar luxury estate - complete solar energy system on Newport Beach CA mansion" },
