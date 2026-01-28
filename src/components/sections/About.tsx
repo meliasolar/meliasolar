@@ -70,7 +70,7 @@ const About = () => {
       <div className="container mx-auto px-6">
         {/* Mobile Video Widget - appears above Meet Melia section */}
         {!isVideoDismissed && (
-          <div className="md:hidden mb-8">
+          <div className="md:hidden mb-8" style={{ minHeight: '180px' }}>
             <div className="relative rounded-2xl overflow-hidden bg-background/90 backdrop-blur-sm border border-primary/30 animate-pulse-glow">
               {/* Close button */}
               <button
@@ -129,9 +129,9 @@ const About = () => {
 
         {/* Meet Melia Section */}
         <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto mb-24">
-          {/* Image */}
+          {/* Image - fixed dimensions to prevent layout shift */}
           <div className="relative">
-            <div className="aspect-[4/5] rounded-2xl bg-background overflow-hidden">
+            <div className="aspect-[4/5] rounded-2xl bg-muted overflow-hidden" style={{ minHeight: '400px' }}>
               <img
                 src="/images/melia-portrait.png"
                 alt="Melia King - Solar Energy Advisor"

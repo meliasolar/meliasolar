@@ -75,6 +75,8 @@ const Header = () => {
               className="w-10 h-10 rounded-lg transition-transform group-hover:scale-110"
               width={40}
               height={40}
+              loading="eager"
+              decoding="async"
             />
             <div className="flex flex-col text-left">
               <span className="font-display text-xl font-semibold text-foreground">

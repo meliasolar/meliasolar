@@ -120,13 +120,17 @@ const AboutPage = () => {
         <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-secondary to-background">
           <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
-              {/* Image */}
+              {/* Image - with dimensions to prevent layout shift */}
               <div className="relative">
-                <div className="aspect-[4/5] rounded-2xl bg-background overflow-hidden shadow-medium">
+                <div className="aspect-[4/5] rounded-2xl bg-muted overflow-hidden shadow-medium" style={{ minHeight: '400px' }}>
                   <img
                     src="/images/melia-portrait.png"
                     alt="Melia King - Solar Energy Advisor"
                     className="w-full h-full object-cover object-top"
+                    width={544}
+                    height={680}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-2xl bg-accent/20 -z-10" />

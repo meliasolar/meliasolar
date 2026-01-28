@@ -17,6 +17,8 @@ const Footer = () => {
                 className="w-10 h-10 rounded-lg"
                 width={40}
                 height={40}
+                loading="lazy"
+                decoding="async"
               />
               <div className="flex flex-col">
                 <span className="font-display text-xl font-semibold">
