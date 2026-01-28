@@ -12,7 +12,7 @@ const LocalBusinessSchema = () => {
     url: "https://meliasolar.com",
     telephone: "+1-310-346-9466",
     email: "meliaking@voltaicnow.com",
-    logo: "https://meliasolar.com/logo.png",
+    logo: "https://meliasolar.com/images/logo.webp",
     image: "https://meliasolar.com/melia-og-image.png",
     priceRange: "$$",
     address: {
