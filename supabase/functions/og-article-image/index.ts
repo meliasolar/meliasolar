@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 // Convert image to base64 data URL
@@ -27,7 +27,7 @@ async function fetchImageAsBase64(url: string): Promise<string | null> {
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
@@ -49,11 +49,8 @@ serve(async (req) => {
       });
     }
 
-    // Fetch both images
-    const [articleImageData, brandImageData] = await Promise.all([
-      fetchImageAsBase64(articleImageUrl),
-      fetchImageAsBase64('https://meliasolar.com/melia-og-image.png'),
-    ]);
+    // Fetch the featured article image
+    const articleImageData = await fetchImageAsBase64(articleImageUrl);
 
     // If article image fails to load, return default
     if (!articleImageData) {
@@ -68,58 +65,54 @@ serve(async (req) => {
       });
     }
 
-    // Generate SVG with embedded images for the 50/50 split
-    // Using SVG because it's natively supported and can embed images
+    // Generate SVG with tasteful blurred background + centered full image.
+    // Using SVG because it's natively supported and can embed images.
     const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <clipPath id="leftClip">
-      <rect x="0" y="0" width="600" height="630"/>
-    </clipPath>
-    <clipPath id="rightClip">
-      <rect x="600" y="0" width="600" height="630"/>
-    </clipPath>
+    <filter id="bgBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="24"/>
+      <feColorMatrix type="matrix" values="
+        1 0 0 0 0
+        0 1 0 0 0
+        0 0 1 0 0
+        0 0 0 0.95 0
+      "/>
+    </filter>
+    <linearGradient id="vignette" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#000" stop-opacity="0.20" />
+    </linearGradient>
   </defs>
-  
-  <!-- Background -->
-  <rect width="1200" height="630" fill="#ffffff"/>
-  
-  <!-- Left half - Article Image (cropped to cover) -->
-  <g clip-path="url(#leftClip)">
-    <image 
-      xlink:href="${articleImageData}" 
-      x="0" 
-      y="0" 
-      width="600" 
-      height="630" 
-      preserveAspectRatio="xMidYMid slice"
+
+  <!-- Blurred background (cover) -->
+  <image
+    xlink:href="${articleImageData}"
+    x="0"
+    y="0"
+    width="1200"
+    height="630"
+    preserveAspectRatio="xMidYMid slice"
+    filter="url(#bgBlur)"
+  />
+  <rect width="1200" height="630" fill="url(#vignette)" />
+
+  <!-- Foreground image (contain, no cropping) -->
+  <g>
+    <rect x="80" y="60" width="1040" height="510" rx="28" fill="#000" opacity="0.18" />
+    <rect x="70" y="50" width="1060" height="530" rx="28" fill="#fff" opacity="0.12" />
+    <image
+      xlink:href="${articleImageData}"
+      x="80"
+      y="60"
+      width="1040"
+      height="510"
+      preserveAspectRatio="xMidYMid meet"
     />
   </g>
-  
-  <!-- Right half - Melia Branding -->
-  <g clip-path="url(#rightClip)">
-    ${brandImageData ? `
-    <image 
-      xlink:href="${brandImageData}" 
-      x="600" 
-      y="0" 
-      width="600" 
-      height="630" 
-      preserveAspectRatio="xMidYMid slice"
-    />
-    ` : `
-    <!-- Fallback: Purple gradient with text -->
-    <rect x="600" y="0" width="600" height="630" fill="#8b5cf6"/>
-    <text x="900" y="315" text-anchor="middle" font-family="system-ui, sans-serif" font-size="48" font-weight="600" fill="white">Melia King</text>
-    <text x="900" y="375" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" fill="white" opacity="0.9">SOLAR</text>
-    `}
-  </g>
-  
-  <!-- Subtle divider line -->
-  <line x1="600" y1="0" x2="600" y2="630" stroke="#e5e7eb" stroke-width="2"/>
 </svg>`;
 
-    console.log('Generated SVG for 50/50 split image');
+    console.log('Generated SVG for blurred-background OG image');
 
     return new Response(svg, {
       headers: {
