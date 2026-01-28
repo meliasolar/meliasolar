@@ -154,7 +154,7 @@ const AboutPage = () => {
                   <div className="md:hidden relative rounded-2xl overflow-hidden bg-background/90 backdrop-blur-sm border border-primary/30">
                     <button
                       onClick={() => setIsDismissedMobile(true)}
-                      className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+                      className="absolute top-2 right-2 z-10 p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-background/80 hover:bg-background transition-colors"
                       aria-label="Close video"
                     >
                       <X className="w-4 h-4 text-foreground" />
@@ -163,7 +163,7 @@ const AboutPage = () => {
                     {/* Play/Pause button */}
                     <button
                       onClick={togglePlayMobile}
-                      className="absolute top-2 left-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+                      className="absolute top-2 left-2 z-10 p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-background/80 hover:bg-background transition-colors"
                       aria-label={isPlayingMobile ? "Pause" : "Play"}
                     >
                       {isPlayingMobile ? (
@@ -176,7 +176,7 @@ const AboutPage = () => {
                     {/* Mute button */}
                     <button
                       onClick={toggleMuteMobile}
-                      className="absolute bottom-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+                      className="absolute bottom-2 right-2 z-10 p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-background/80 hover:bg-background transition-colors"
                       aria-label={isMutedMobile ? "Unmute" : "Mute"}
                     >
                       {isMutedMobile ? (
@@ -194,7 +194,15 @@ const AboutPage = () => {
                       muted={isMutedMobile}
                       playsInline
                       className="w-full aspect-video object-cover"
-                    />
+                    >
+                      <track 
+                        kind="captions" 
+                        src="/videos/melia-welcome.vtt" 
+                        srcLang="en" 
+                        label="English"
+                        default
+                      />
+                    </video>
 
                     {showSoundOverlayMobile && isMutedMobile && (
                       <button
@@ -260,7 +268,15 @@ const AboutPage = () => {
                       muted={isMutedDesktop}
                       playsInline
                       className="w-full aspect-video object-cover"
-                    />
+                    >
+                      <track 
+                        kind="captions" 
+                        src="/videos/melia-welcome.vtt" 
+                        srcLang="en" 
+                        label="English"
+                        default
+                      />
+                    </video>
 
                     {showSoundOverlayDesktop && isMutedDesktop && (
                       <button
