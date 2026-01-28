@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.og-article-image]
 verify_jwt = false
+
+[functions.sitemap]
+verify_jwt = false
