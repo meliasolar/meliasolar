@@ -69,7 +69,7 @@ const MeliaVideoWidget = () => {
         {/* Close button */}
         <button
           onClick={handleDismiss}
-          className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+          className="absolute top-2 right-2 z-10 p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-background/80 hover:bg-background transition-colors"
           aria-label="Close video"
         >
           <X className="w-4 h-4 text-foreground" />
@@ -78,7 +78,7 @@ const MeliaVideoWidget = () => {
         {/* Mute toggle */}
         <button
           onClick={toggleMute}
-          className="absolute bottom-2 right-2 z-10 p-1.5 rounded-full bg-background/80 hover:bg-background transition-colors"
+          className="absolute bottom-2 right-2 z-10 p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-background/80 hover:bg-background transition-colors"
           aria-label={isMuted ? "Unmute" : "Mute"}
         >
           {isMuted ? (
@@ -97,7 +97,15 @@ const MeliaVideoWidget = () => {
           preload="none"
           onEnded={handleVideoEnd}
           className="w-64 h-44 object-cover"
-        />
+        >
+          <track 
+            kind="captions" 
+            src="/videos/melia-welcome.vtt" 
+            srcLang="en" 
+            label="English"
+            default
+          />
+        </video>
 
         {showSoundOverlay && isMuted && (
           <button

@@ -135,18 +135,20 @@ const PortfolioCarousel = () => {
           </div>
 
           {/* Dots Indicator */}
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-1 mt-6">
             {projects.map((_, index) => (
               <button
                 key={index}
                 onClick={() => emblaApi?.scrollTo(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  index === selectedIndex 
-                    ? "bg-primary w-6" 
-                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                }`}
+                className="w-12 h-12 p-4 flex items-center justify-center"
                 aria-label={`Go to slide ${index + 1}`}
-              />
+              >
+                <span className={`block rounded-full transition-all ${
+                  index === selectedIndex 
+                    ? "w-6 h-2 bg-primary" 
+                    : "w-2 h-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                }`} />
+              </button>
             ))}
           </div>
         </div>

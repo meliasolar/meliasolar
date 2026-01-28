@@ -21,12 +21,12 @@ const Footer = () => {
                 <span className="font-display text-xl font-semibold">
                   Melia King
                 </span>
-                <span className="text-xs text-primary-foreground/70 tracking-widest uppercase">
+                <span className="text-xs text-primary-foreground tracking-widest uppercase">
                   Solar
                 </span>
               </div>
             </Link>
-            <div className="text-primary-foreground/80 text-sm leading-relaxed space-y-2">
+            <div className="text-primary-foreground text-sm leading-relaxed space-y-2">
               <p>Melia makes solar possible for businesses &amp; homeowners by keeping the cost less than or equal to their existing energy bill.</p>
               <p>Your cost does not go up!</p>
               <p>Our equipment is the highest quality &amp; our team is the highest caliber. You can count on Melia.</p>
@@ -35,9 +35,9 @@ const Footer = () => {
 
           {/* Navigation - hidden on mobile */}
           <div className="hidden md:block">
-            <h4 className="font-display text-lg font-semibold mb-4">
+            <h3 className="font-display text-lg font-semibold mb-4">
               Explore
-            </h4>
+            </h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -135,9 +135,9 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-display text-lg font-semibold mb-4">
+            <h3 className="font-display text-lg font-semibold mb-4">
               Get In Touch
-            </h4>
+            </h3>
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-primary-foreground/80 text-sm">
                 <Phone className="w-4 h-4" />
@@ -176,7 +176,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center">
-          <p className="text-primary-foreground/60 text-sm">
+          <p className="text-primary-foreground/80 text-sm">
             © {new Date().getFullYear()} Melia King Solar. All rights reserved.
           </p>
         </div>

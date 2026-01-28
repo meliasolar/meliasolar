@@ -61,6 +61,7 @@ const SavingsCalculator = () => {
                     max={20000}
                     step={10}
                     className="w-full"
+                    aria-label="Monthly electricity bill amount"
                   />
                   <div className="flex justify-between text-sm text-muted-foreground mt-2">
                     <span>$100</span>
