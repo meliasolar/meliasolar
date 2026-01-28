@@ -12,6 +12,7 @@ const WhySolar = lazy(() => import("@/components/sections/WhySolar"));
 const SavingsCalculator = lazy(() => import("@/components/sections/SavingsCalculator"));
 const PortfolioCarousel = lazy(() => import("@/components/sections/PortfolioCarousel"));
 const TestimonialsCarousel = lazy(() => import("@/components/sections/TestimonialsCarousel"));
+const InstagramFeed = lazy(() => import("@/components/sections/InstagramFeed"));
 
 // Defer video widget to not block initial render
 const MeliaVideoWidget = lazy(() => import("@/components/MeliaVideoWidget"));
@@ -34,25 +35,43 @@ const AboutSkeleton = () => (
 
 const Index = () => {
   const [showTestimonials, setShowTestimonials] = useState(false);
+  const [showInstagram, setShowInstagram] = useState(false);
   const testimonialsRef = useRef<HTMLDivElement>(null);
+  const instagramRef = useRef<HTMLDivElement>(null);
 
   // Defer TestimonialsCarousel until near viewport
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const testimonialsObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setShowTestimonials(true);
-          observer.disconnect();
+          testimonialsObserver.disconnect();
         }
       },
       { rootMargin: '300px' }
     );
 
+    const instagramObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowInstagram(true);
+          instagramObserver.disconnect();
+        }
+      },
+      { rootMargin: '400px' }
+    );
+
     if (testimonialsRef.current) {
-      observer.observe(testimonialsRef.current);
+      testimonialsObserver.observe(testimonialsRef.current);
+    }
+    if (instagramRef.current) {
+      instagramObserver.observe(instagramRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      testimonialsObserver.disconnect();
+      instagramObserver.disconnect();
+    };
   }, []);
 
   return (
@@ -101,6 +120,14 @@ const Index = () => {
           <SavingsCalculator />
           <PortfolioCarousel />
         </Suspense>
+        {/* Instagram Feed - deferred loading for performance */}
+        <div ref={instagramRef}>
+          {showInstagram && (
+            <Suspense fallback={<div className="min-h-[300px] bg-muted/30 animate-pulse rounded-lg mx-6" />}>
+              <InstagramFeed />
+            </Suspense>
+          )}
+        </div>
       </main>
       <Footer />
       <FloatingContactButtons />
