@@ -6,7 +6,7 @@ import FloatingContactButtons from "@/components/FloatingContactButtons";
 import PortfolioCarousel from "@/components/sections/PortfolioCarousel";
 import { Button } from "@/components/ui/button";
 import ServiceSchema from "@/components/seo/ServiceSchema";
-import solarImage from "@/assets/portfolio/project-6.jpg";
+
 import hvacImage from "@/assets/hvac-service.jpg";
 import roofingImage from "@/assets/roofing-service.jpg";
 import quietcoolImage from "@/assets/quietcool-service.jpg";
@@ -19,7 +19,7 @@ const ServicesPage = () => {
       title: "Solar Panel Installation",
       description:
         "Solar power is the cornerstone of our offerings — a renewable and green source of energy that allows homeowners to be less dependent on traditional electricity sources. Solar systems are becoming more efficient and cost-effective every day! Invest in a solar system to ensure your home is equipped to stay ahead of the changing energy landscape.",
-      image: solarImage,
+      image: null,
       features: [
         "Custom system design",
         "Premium tier-1 panels",
@@ -138,20 +138,22 @@ const ServicesPage = () => {
                   }`}
                 >
                   {/* Image */}
-                  <div
-                    className={`relative rounded-2xl overflow-hidden shadow-medium ${
-                      index % 2 === 1 ? "lg:order-2" : ""
-                    }`}
-                  >
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-80 lg:h-96 object-cover object-left"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
-                  </div>
+                  {service.image && (
+                    <div
+                      className={`relative rounded-2xl overflow-hidden shadow-medium ${
+                        index % 2 === 1 ? "lg:order-2" : ""
+                      }`}
+                    >
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-80 lg:h-96 object-cover object-left"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
+                    </div>
+                  )}
 
                   {/* Content */}
                   <div
