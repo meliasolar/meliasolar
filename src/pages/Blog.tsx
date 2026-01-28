@@ -22,10 +22,11 @@ const Blog = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      // Get posts that are published OR scheduled and past their scheduled time
       const { data, error } = await supabase
         .from("blog_posts")
         .select("id, title, content, image_url, created_at, slug")
-        .eq("published", true)
+        .or(`published.eq.true,and(scheduled_at.not.is.null,scheduled_at.lte.${new Date().toISOString()})`)
         .order("created_at", { ascending: false });
 
       if (!error && data) {

@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/layout/Header";
@@ -9,10 +10,15 @@ import RichTextEditor from "@/components/RichTextEditor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Save, Upload, X, Image as ImageIcon } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, Save, X, Image as ImageIcon, CalendarIcon, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+type PublishMode = "draft" | "now" | "scheduled";
 
 interface BlogPost {
   id: string;
@@ -20,6 +26,7 @@ interface BlogPost {
   content: string;
   image_url: string | null;
   published: boolean;
+  scheduled_at: string | null;
   created_at: string;
 }
 
@@ -36,10 +43,36 @@ const AdminBlog = () => {
     title: "",
     content: "",
     image_url: "",
-    published: false,
   });
+  const [publishMode, setPublishMode] = useState<PublishMode>("draft");
+  const [scheduledDate, setScheduledDate] = useState<Date | undefined>(undefined);
+  const [scheduledTime, setScheduledTime] = useState("09:00");
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+
+  // Helper to determine publish mode from a post
+  const getPublishModeFromPost = (post: BlogPost): PublishMode => {
+    if (post.published) return "now";
+    if (post.scheduled_at) return "scheduled";
+    return "draft";
+  };
+
+  // Helper to get scheduled datetime from date and time
+  const getScheduledDateTime = (): string | null => {
+    if (publishMode !== "scheduled" || !scheduledDate) return null;
+    const [hours, minutes] = scheduledTime.split(":").map(Number);
+    const dateTime = new Date(scheduledDate);
+    dateTime.setHours(hours, minutes, 0, 0);
+    return dateTime.toISOString();
+  };
+
+  // Helper to check if scheduled time is in the past
+  const isScheduledInPast = (): boolean => {
+    if (publishMode !== "scheduled" || !scheduledDate) return false;
+    const scheduledDateTime = getScheduledDateTime();
+    if (!scheduledDateTime) return false;
+    return new Date(scheduledDateTime) <= new Date();
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -116,6 +149,10 @@ const AdminBlog = () => {
 
     setIsSaving(true);
 
+    // If scheduled time is in the past, treat as publish now
+    const effectivePublishMode = isScheduledInPast() ? "now" : publishMode;
+    const scheduledDateTime = effectivePublishMode === "scheduled" ? getScheduledDateTime() : null;
+
     try {
       if (editingPost) {
         const { error } = await supabase
@@ -124,28 +161,41 @@ const AdminBlog = () => {
             title: formData.title,
             content: formData.content,
             image_url: formData.image_url || null,
-            published: formData.published,
+            published: effectivePublishMode === "now",
+            scheduled_at: scheduledDateTime,
           })
           .eq("id", editingPost.id);
 
         if (error) throw error;
-        toast({ title: "Post updated successfully!" });
+        toast({ 
+          title: effectivePublishMode === "scheduled" 
+            ? `Post scheduled for ${format(new Date(scheduledDateTime!), "PPP 'at' p")}` 
+            : "Post updated successfully!" 
+        });
       } else {
         const { error } = await supabase.from("blog_posts").insert({
           title: formData.title,
           content: formData.content,
           image_url: formData.image_url || null,
-          published: formData.published,
+          published: effectivePublishMode === "now",
+          scheduled_at: scheduledDateTime,
           author_id: user?.id,
         });
 
         if (error) throw error;
-        toast({ title: "Post created successfully!" });
+        toast({ 
+          title: effectivePublishMode === "scheduled" 
+            ? `Post scheduled for ${format(new Date(scheduledDateTime!), "PPP 'at' p")}` 
+            : "Post created successfully!" 
+        });
       }
 
       setIsEditing(false);
       setEditingPost(null);
-      setFormData({ title: "", content: "", image_url: "", published: false });
+      setFormData({ title: "", content: "", image_url: "" });
+      setPublishMode("draft");
+      setScheduledDate(undefined);
+      setScheduledTime("09:00");
       fetchPosts();
     } catch (error: any) {
       toast({
@@ -164,8 +214,17 @@ const AdminBlog = () => {
       title: post.title,
       content: post.content,
       image_url: post.image_url || "",
-      published: post.published,
     });
+    const mode = getPublishModeFromPost(post);
+    setPublishMode(mode);
+    if (post.scheduled_at) {
+      const scheduledDate = new Date(post.scheduled_at);
+      setScheduledDate(scheduledDate);
+      setScheduledTime(format(scheduledDate, "HH:mm"));
+    } else {
+      setScheduledDate(undefined);
+      setScheduledTime("09:00");
+    }
     setIsEditing(true);
   };
 
@@ -253,7 +312,10 @@ const AdminBlog = () => {
                   onClick={() => {
                     setIsEditing(true);
                     setEditingPost(null);
-                    setFormData({ title: "", content: "", image_url: "", published: false });
+                    setFormData({ title: "", content: "", image_url: "" });
+                    setPublishMode("draft");
+                    setScheduledDate(undefined);
+                    setScheduledTime("09:00");
                   }}
                   variant="solar"
                 >
@@ -358,19 +420,99 @@ const AdminBlog = () => {
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <Switch
-                      id="published"
-                      checked={formData.published}
-                      onCheckedChange={(checked) => setFormData({ ...formData, published: checked })}
-                    />
-                    <Label htmlFor="published">Publish immediately</Label>
+                  {/* Publishing Options */}
+                  <div className="space-y-4 p-4 bg-muted/50 rounded-lg border border-border">
+                    <Label className="text-base font-medium">Publishing Options</Label>
+                    <RadioGroup
+                      value={publishMode}
+                      onValueChange={(value) => setPublishMode(value as PublishMode)}
+                      className="space-y-3"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <RadioGroupItem value="draft" id="draft" />
+                        <Label htmlFor="draft" className="font-normal cursor-pointer">
+                          Save as Draft
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <RadioGroupItem value="now" id="now" />
+                        <Label htmlFor="now" className="font-normal cursor-pointer">
+                          Publish Now
+                        </Label>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <RadioGroupItem value="scheduled" id="scheduled" className="mt-0.5" />
+                        <div className="flex-1 space-y-3">
+                          <Label htmlFor="scheduled" className="font-normal cursor-pointer">
+                            Schedule for Later
+                          </Label>
+                          
+                          {publishMode === "scheduled" && (
+                            <div className="flex flex-wrap gap-3 pt-1">
+                              {/* Date Picker */}
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <Button
+                                    variant="outline"
+                                    className={cn(
+                                      "w-[200px] justify-start text-left font-normal",
+                                      !scheduledDate && "text-muted-foreground"
+                                    )}
+                                  >
+                                    <CalendarIcon className="mr-2 h-4 w-4" />
+                                    {scheduledDate ? format(scheduledDate, "PPP") : "Pick a date"}
+                                  </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                  <Calendar
+                                    mode="single"
+                                    selected={scheduledDate}
+                                    onSelect={setScheduledDate}
+                                    disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                                    initialFocus
+                                    className="p-3 pointer-events-auto"
+                                  />
+                                </PopoverContent>
+                              </Popover>
+                              
+                              {/* Time Picker */}
+                              <div className="flex items-center gap-2">
+                                <Clock className="h-4 w-4 text-muted-foreground" />
+                                <Input
+                                  type="time"
+                                  value={scheduledTime}
+                                  onChange={(e) => setScheduledTime(e.target.value)}
+                                  className="w-[130px]"
+                                />
+                              </div>
+                              
+                              {scheduledDate && (
+                                <p className="w-full text-sm text-muted-foreground">
+                                  → Will publish: {format(scheduledDate, "EEEE, MMMM d, yyyy")} at {scheduledTime}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </RadioGroup>
                   </div>
 
                   <div className="flex gap-3 pt-4">
-                    <Button type="submit" variant="solar" disabled={isSaving}>
+                    <Button 
+                      type="submit" 
+                      variant="solar" 
+                      disabled={isSaving || (publishMode === "scheduled" && !scheduledDate)}
+                    >
                       <Save className="w-4 h-4 mr-2" />
-                      {isSaving ? "Saving..." : editingPost ? "Update Post" : "Create Post"}
+                      {isSaving 
+                        ? "Saving..." 
+                        : publishMode === "scheduled" 
+                          ? "Schedule Post" 
+                          : editingPost 
+                            ? "Update Post" 
+                            : "Create Post"
+                      }
                     </Button>
                     <Button
                       type="button"
@@ -411,13 +553,18 @@ const AdminBlog = () => {
                         />
                       )}
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
                           <h3 className="font-semibold text-foreground truncate">
                             {post.title}
                           </h3>
                           {post.published ? (
                             <span className="inline-flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full flex-shrink-0">
                               <Eye className="w-3 h-3" /> Published
+                            </span>
+                          ) : post.scheduled_at ? (
+                            <span className="inline-flex items-center gap-1 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full flex-shrink-0">
+                              <CalendarIcon className="w-3 h-3" /> 
+                              Scheduled: {format(new Date(post.scheduled_at), "MMM d, yyyy 'at' p")}
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1 text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full flex-shrink-0">

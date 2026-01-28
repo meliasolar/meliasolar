@@ -30,11 +30,12 @@ const BlogPost = () => {
     const fetchPost = async () => {
       if (!slug) return;
       
+      // Get post if published OR scheduled and past its scheduled time
       const { data, error } = await supabase
         .from("blog_posts")
         .select("id, title, content, image_url, created_at, slug")
         .eq("slug", slug)
-        .eq("published", true)
+        .or(`published.eq.true,and(scheduled_at.not.is.null,scheduled_at.lte.${new Date().toISOString()})`)
         .maybeSingle();
 
       if (!error && data) {
