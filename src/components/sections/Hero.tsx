@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, PiggyBank, Zap } from "lucide-react";
-import heroImage from "@/assets/hero-coastal.jpg";
 import { useContactModal } from "@/contexts/ContactModalContext";
 
 const Hero = () => {
@@ -11,15 +10,27 @@ const Hero = () => {
       <div className="relative min-h-[auto] md:min-h-[75vh] lg:min-h-[70vh] flex items-center">
         {/* Background Image - only covers this area, not the stats */}
         <div className="absolute inset-0 md:block">
-          <img
-            src={heroImage}
-            alt="Solar panels on California home"
-            className="w-full h-full object-cover"
-            width={1920}
-            height={1080}
-            fetchPriority="high"
-            decoding="async"
-          />
+          <picture>
+            <source
+              media="(max-width: 640px)"
+              srcSet="/images/hero-mobile.webp"
+              type="image/webp"
+            />
+            <source
+              media="(min-width: 641px)"
+              srcSet="/images/hero-desktop.webp"
+              type="image/webp"
+            />
+            <img
+              src="/images/hero-desktop.webp"
+              alt="Solar panels on California home"
+              className="w-full h-full object-cover"
+              width={1920}
+              height={1080}
+              fetchPriority="high"
+              decoding="sync"
+            />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />
         </div>
 
@@ -39,11 +50,11 @@ const Hero = () => {
             </h1>
 
             {/* Subheadline - LCP element, no animation for immediate render */}
-            <div className="bg-purple-100/30 border border-purple-300/60 px-3 py-2 rounded-lg backdrop-blur-sm w-fit">
+            <div className="bg-primary/10 border border-primary/30 px-3 py-2 rounded-lg backdrop-blur-sm w-fit">
               <div
                 className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
               >
-                <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for <span className="text-purple-600">businesses</span> &amp; for <span className="text-purple-600">homeowners</span>.</p>
+                <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for <span className="text-primary">businesses</span> &amp; for <span className="text-primary">homeowners</span>.</p>
                 <p className="font-bold italic flex items-center gap-2">
                   <PiggyBank className="w-5 h-5 text-accent flex-shrink-0" />
                   <span className="relative">

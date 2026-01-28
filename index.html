@@ -4,19 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Preconnect to Google Fonts for faster font loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Preload LCP hero images for faster Largest Contentful Paint -->
+    <link 
+      rel="preload" 
+      as="image" 
+      href="/images/hero-mobile.webp" 
+      type="image/webp"
+      media="(max-width: 640px)"
+      fetchpriority="high" 
+    />
+    <link 
+      rel="preload" 
+      as="image" 
+      href="/images/hero-desktop.webp" 
+      type="image/webp"
+      media="(min-width: 641px)"
+      fetchpriority="high" 
+    />
     
-    <!-- Load fonts asynchronously to prevent render blocking -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" />
-    </noscript>
-    
-    <!-- Preload LCP hero image for faster Largest Contentful Paint -->
-    <link rel="preload" as="image" href="/src/assets/hero-coastal.jpg" type="image/jpeg" fetchpriority="high" />
+    <!-- Preload self-hosted fonts -->
+    <link rel="preload" as="font" href="/fonts/inter-400.woff2" type="font/woff2" crossorigin />
+    <link rel="preload" as="font" href="/fonts/inter-600.woff2" type="font/woff2" crossorigin />
+    <link rel="preload" as="font" href="/fonts/playfair-700.woff2" type="font/woff2" crossorigin />
     
     <title>Melia King Solar | Your Solar King</title>
     <meta
@@ -52,8 +61,31 @@
     <meta name="twitter:description" content="Your Solar King. Expert solar panel installation in 12+ states." />
     <meta name="twitter:image" content="https://meliasolar.com/melia-og-share.png" />
     
-    <!-- Critical CSS for faster FCP - includes above-the-fold styles -->
+    <!-- Critical CSS for faster FCP - includes above-the-fold styles and self-hosted fonts -->
     <style>
+      /* Self-hosted fonts with font-display: swap to prevent render blocking */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('/fonts/inter-400.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url('/fonts/inter-600.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Playfair Display';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('/fonts/playfair-700.woff2') format('woff2');
+      }
+      
       *,*::before,*::after{box-sizing:border-box}
       body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:#fff;color:#1a1a1a;line-height:1.6}
       #root{min-height:100vh}
