@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowLeft, Facebook, Linkedin, Share2, Clock } from "lucide-react";
+import { Calendar, ArrowLeft, Facebook, Linkedin, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import ArticleSchema from "@/components/seo/ArticleSchema";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
@@ -72,44 +72,40 @@ const BlogPost = () => {
     return `${window.location.origin}/news/${slug}`;
   };
 
-  // Get the shareable URL - use canonical URL for direct sharing (iMessage, SMS, email)
-  const getShareableUrl = () => {
-    return getCanonicalUrl();
-  };
-
-  // Get the edge function URL for social platforms that properly parse OG meta
-  const getOgMetaUrl = () => {
+  // Get the dynamic 50/50 split OG image URL
+  const getOgImageUrl = () => {
+    if (!post?.image_url) {
+      return `${window.location.origin}/melia-og-image.png`;
+    }
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const origin = encodeURIComponent(window.location.origin);
-    return `${supabaseUrl}/functions/v1/og-meta?slug=${slug}&origin=${origin}`;
+    return `${supabaseUrl}/functions/v1/og-article-image?image=${encodeURIComponent(post.image_url)}`;
   };
 
+  // Share functions - use canonical URL so platforms read the page's OG tags directly
   const shareOnFacebook = () => {
-    const url = encodeURIComponent(getOgMetaUrl());
+    const url = encodeURIComponent(getCanonicalUrl());
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank", "width=600,height=400");
   };
 
   const shareOnTwitter = () => {
-    const url = encodeURIComponent(getOgMetaUrl());
+    const url = encodeURIComponent(getCanonicalUrl());
     const text = encodeURIComponent(post?.title || "");
     window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, "_blank", "width=600,height=400");
   };
 
   const shareOnLinkedIn = () => {
-    const url = encodeURIComponent(getOgMetaUrl());
+    const url = encodeURIComponent(getCanonicalUrl());
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank", "width=600,height=400");
   };
 
-  const copyToClipboard = async (url?: string) => {
-    // Use og-meta URL for clipboard so SMS/iMessage/Line previews show correct OG tags
-    const textToCopy = url || getOgMetaUrl();
+  const copyToClipboard = async (url: string) => {
     try {
-      await navigator.clipboard.writeText(textToCopy);
+      await navigator.clipboard.writeText(url);
       toast({ title: "Link copied to clipboard!" });
     } catch {
       // Fallback for older browsers
       const textArea = document.createElement("textarea");
-      textArea.value = textToCopy;
+      textArea.value = url;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand("copy");
@@ -262,9 +258,8 @@ const BlogPost = () => {
   }
 
   const description = getExcerpt(post.content);
-  // Use featured image for sharing, fallback to Melia default image
-  const defaultOgImage = `${window.location.origin}/melia-og-image.png`;
-  const ogImage = post.image_url || defaultOgImage;
+  // Use dynamic 50/50 split image for sharing
+  const ogImage = getOgImageUrl();
 
   return (
     <>
@@ -391,15 +386,6 @@ const BlogPost = () => {
               >
                 <Linkedin className="w-4 h-4" />
                 LinkedIn
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => copyToClipboard()}
-                className="gap-2"
-              >
-                <Share2 className="w-4 h-4" />
-                Copy Link
               </Button>
             </div>
           </div>
