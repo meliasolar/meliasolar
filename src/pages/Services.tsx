@@ -7,10 +7,11 @@ import PortfolioCarousel from "@/components/sections/PortfolioCarousel";
 import { Button } from "@/components/ui/button";
 import ServiceSchema from "@/components/seo/ServiceSchema";
 
-import hvacImage from "@/assets/hvac-service.jpg";
-import roofingImage from "@/assets/roofing-service.jpg";
-import quietcoolImage from "@/assets/quietcool-service.jpg";
-import teslaImage from "@/assets/tesla-supercharger-service.jpg";
+// Static paths for WebP images - served from public folder for proper caching
+const hvacImage = "/images/services/hvac-service.webp";
+const roofingImage = "/images/services/roofing-service.webp";
+const quietcoolImage = "/images/services/quietcool-service.webp";
+const teslaImage = "/images/services/tesla-supercharger-service.webp";
 
 const ServicesPage = () => {
   const services = [
