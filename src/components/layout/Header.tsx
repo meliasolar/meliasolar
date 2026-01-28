@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, Instagram } from "lucide-react";
-import logo from "@/assets/logo.png";
 import { useContactModal } from "@/contexts/ContactModalContext";
 
 const serviceLinks = [
@@ -71,9 +70,11 @@ const Header = () => {
             className="flex items-center gap-2 group cursor-pointer"
           >
             <img 
-              src={logo} 
+              src="/logo.png" 
               alt="Melia King Solar" 
               className="w-10 h-10 rounded-lg transition-transform group-hover:scale-110"
+              width={40}
+              height={40}
             />
             <div className="flex flex-col text-left">
               <span className="font-display text-xl font-semibold text-foreground">

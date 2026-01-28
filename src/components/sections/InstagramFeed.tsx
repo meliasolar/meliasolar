@@ -1,5 +1,5 @@
-import { Instagram, Play, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { Instagram, Play, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef, useState, useEffect, useCallback } from "react";
 
 import insta1 from "@/assets/instagram/insta-1.jpg";
 import insta2 from "@/assets/instagram/insta-2.jpg";
@@ -40,26 +40,30 @@ const InstagramFeed = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const checkScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
-  };
+  const checkScroll = useCallback(() => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+  }, []);
+
+  // Throttle scroll handler with requestAnimationFrame to prevent forced reflow
+  const throttledCheckScroll = useCallback(() => {
+    requestAnimationFrame(checkScroll);
+  }, [checkScroll]);
 
   useEffect(() => {
     checkScroll();
     const ref = scrollRef.current;
     if (ref) {
-      ref.addEventListener("scroll", checkScroll);
-      window.addEventListener("resize", checkScroll);
+      ref.addEventListener("scroll", throttledCheckScroll, { passive: true });
+      window.addEventListener("resize", throttledCheckScroll, { passive: true });
       return () => {
-        ref.removeEventListener("scroll", checkScroll);
-        window.removeEventListener("resize", checkScroll);
+        ref.removeEventListener("scroll", throttledCheckScroll);
+        window.removeEventListener("resize", throttledCheckScroll);
       };
     }
-  }, []);
+  }, [throttledCheckScroll, checkScroll]);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {

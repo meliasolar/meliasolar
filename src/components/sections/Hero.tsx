@@ -38,11 +38,8 @@ const Hero = () => {
         <div className="relative container mx-auto px-6 pt-20 lg:pt-24 pb-8 lg:pb-6">
           <div className="max-w-2xl space-y-6">
 
-            {/* Headline */}
-            <h1
-              className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight animate-fade-up"
-              style={{ animationDelay: "0.2s" }}
-            >
+            {/* Headline - no animation delay for faster LCP */}
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight animate-fade-up">
               Your Personal
               <span className="block">
                 <span className="text-gradient-solar">Solar</span> King
@@ -76,11 +73,8 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* CTAs with Trusted Expert badge */}
-            <div
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-up"
-              style={{ animationDelay: "0.4s" }}
-            >
+            {/* CTAs with Trusted Expert badge - no delay on mobile */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-up md:[animation-delay:0.1s]">
               <Button
                 variant="solar"
                 size="xl"
@@ -100,11 +94,8 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Stats - separate from hero background */}
-      <div
-        className="bg-background relative z-10 animate-fade-up"
-        style={{ animationDelay: "0.5s" }}
-      >
+      {/* Stats - separate from hero background, no delay on mobile */}
+      <div className="bg-background relative z-10 animate-fade-up md:[animation-delay:0.15s]">
         <div className="container mx-auto px-6">
           <div className="max-w-2xl">
             <div className="grid grid-cols-3 gap-8 py-6 border-t border-border/50">

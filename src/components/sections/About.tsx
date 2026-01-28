@@ -1,7 +1,5 @@
 import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import meliaImage from "@/assets/melia-king-clean.png";
-import meliaVideo from "@/assets/melia-welcome.mp4";
 
 const About = () => {
   const [isMuted, setIsMuted] = useState(true);
@@ -98,7 +96,7 @@ const About = () => {
 
               <video
                 ref={videoRef}
-                src={meliaVideo}
+                src="/videos/melia-welcome.mp4"
                 muted={isMuted}
                 playsInline
                 autoPlay
@@ -135,7 +133,7 @@ const About = () => {
           <div className="relative">
             <div className="aspect-[4/5] rounded-2xl bg-background overflow-hidden">
               <img
-                src={meliaImage}
+                src="/images/melia-portrait.png"
                 alt="Melia King - Solar Energy Advisor"
                 className="w-full h-full object-cover object-top"
                 width={544}
