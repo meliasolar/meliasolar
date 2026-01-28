@@ -7,18 +7,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sun, Battery, Wind, Zap } from "lucide-react";
 
-import project1 from "@/assets/portfolio/project-1.jpg";
-import project2 from "@/assets/portfolio/project-2.jpg";
-import project3 from "@/assets/portfolio/project-3.jpg";
-import project5 from "@/assets/portfolio/project-5.jpg";
-import project7 from "@/assets/portfolio/project-7.jpg";
-import project8 from "@/assets/portfolio/project-8.jpg";
-import project9 from "@/assets/portfolio/project-9.jpg";
-import project10 from "@/assets/portfolio/project-10.jpg";
-import project13 from "@/assets/portfolio/project-13.jpg";
-import tesla1 from "@/assets/portfolio/tesla-1.jpg";
-import tesla2 from "@/assets/portfolio/tesla-2.jpg";
-import tesla3 from "@/assets/portfolio/tesla-3.jpg";
+// Static paths for WebP images - served from public folder for proper caching
+const project1 = "/images/portfolio/project-1.webp";
+const project2 = "/images/portfolio/project-2.webp";
+const project3 = "/images/portfolio/project-3.webp";
+const project5 = "/images/portfolio/project-5.webp";
+const project7 = "/images/portfolio/project-7.webp";
+const project8 = "/images/portfolio/project-8.webp";
+const project9 = "/images/portfolio/project-9.webp";
+const project10 = "/images/portfolio/project-10.webp";
+const project13 = "/images/portfolio/project-13.webp";
+const tesla1 = "/images/portfolio/tesla-1.webp";
+const tesla2 = "/images/portfolio/tesla-2.webp";
+const tesla3 = "/images/portfolio/tesla-3.webp";
 
 type Category = "All" | "Solar" | "Battery" | "HVAC" | "EV Charger";
 

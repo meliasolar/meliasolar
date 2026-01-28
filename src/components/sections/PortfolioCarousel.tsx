@@ -2,27 +2,21 @@ import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Sun } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 
-// Use string paths instead of static imports to enable lazy loading
+// Static paths for WebP images - served from public folder for proper caching
 const projectImages = [
-  { path: () => import("@/assets/portfolio/project-1.jpg"), alt: "Melia Solar desert installation - residential solar panels on Palm Springs CA estate with mountain backdrop" },
-  { path: () => import("@/assets/portfolio/tesla-1.jpg"), alt: "Melia Solar Tesla Powerwall battery storage installation in San Diego CA home garage" },
-  { path: () => import("@/assets/portfolio/project-3.jpg"), alt: "Melia Solar commercial installation - large rooftop solar array on Los Angeles CA business building" },
-  { path: () => import("@/assets/portfolio/project-10.jpg"), alt: "Melia Solar tile roof integration - solar panels installed on Orange County CA Spanish tile roof" },
-  { path: () => import("@/assets/portfolio/project-7.jpg"), alt: "Melia Solar luxury estate - complete solar energy system on Newport Beach CA mansion" },
-  { path: () => import("@/assets/portfolio/tesla-2.jpg"), alt: "Melia Solar Tesla Powerwall home battery backup system - wall-mounted installation in Texas home" },
-  { path: () => import("@/assets/portfolio/project-2.jpg"), alt: "Melia Solar residential installation - aerial view of modern Dallas TX home with rooftop solar panels" },
-  { path: () => import("@/assets/portfolio/project-13.jpg"), alt: "Melia Solar Spanish tile roof - seamless solar panel integration on Santa Barbara CA home" },
-  { path: () => import("@/assets/portfolio/project-5.jpg"), alt: "Melia Solar multi-roof system - large residential solar installation on Houston TX property" },
-  { path: () => import("@/assets/portfolio/project-8.jpg"), alt: "Melia Solar suburban home - residential solar panel installation in Sacramento California" },
-  { path: () => import("@/assets/portfolio/tesla-3.jpg"), alt: "Melia Solar large battery array - multiple Tesla Powerwall units installed in Phoenix Arizona home" },
-  { path: () => import("@/assets/portfolio/project-9.jpg"), alt: "Melia Solar neighborhood installation - Las Vegas NV home with complete solar and battery system" },
+  { path: "/images/portfolio/project-1.webp", alt: "Melia Solar desert installation - residential solar panels on Palm Springs CA estate with mountain backdrop" },
+  { path: "/images/portfolio/tesla-1.webp", alt: "Melia Solar Tesla Powerwall battery storage installation in San Diego CA home garage" },
+  { path: "/images/portfolio/project-3.webp", alt: "Melia Solar commercial installation - large rooftop solar array on Los Angeles CA business building" },
+  { path: "/images/portfolio/project-10.webp", alt: "Melia Solar tile roof integration - solar panels installed on Orange County CA Spanish tile roof" },
+  { path: "/images/portfolio/project-7.webp", alt: "Melia Solar luxury estate - complete solar energy system on Newport Beach CA mansion" },
+  { path: "/images/portfolio/tesla-2.webp", alt: "Melia Solar Tesla Powerwall home battery backup system - wall-mounted installation in Texas home" },
+  { path: "/images/portfolio/project-2.webp", alt: "Melia Solar residential installation - aerial view of modern Dallas TX home with rooftop solar panels" },
+  { path: "/images/portfolio/project-13.webp", alt: "Melia Solar Spanish tile roof - seamless solar panel integration on Santa Barbara CA home" },
+  { path: "/images/portfolio/project-5.webp", alt: "Melia Solar multi-roof system - large residential solar installation on Houston TX property" },
+  { path: "/images/portfolio/project-8.webp", alt: "Melia Solar suburban home - residential solar panel installation in Sacramento California" },
+  { path: "/images/portfolio/tesla-3.webp", alt: "Melia Solar large battery array - multiple Tesla Powerwall units installed in Phoenix Arizona home" },
+  { path: "/images/portfolio/project-9.webp", alt: "Melia Solar neighborhood installation - Las Vegas NV home with complete solar and battery system" },
 ];
-
-interface LoadedProject {
-  image: string;
-  alt: string;
-  loaded: boolean;
-}
 
 const PortfolioCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
@@ -34,26 +28,6 @@ const PortfolioCarousel = () => {
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [projects, setProjects] = useState<LoadedProject[]>(
-    projectImages.map(p => ({ image: '', alt: p.alt, loaded: false }))
-  );
-
-  // Load images dynamically
-  useEffect(() => {
-    projectImages.forEach((project, index) => {
-      project.path().then((module) => {
-        setProjects(prev => {
-          const newProjects = [...prev];
-          newProjects[index] = { 
-            image: module.default, 
-            alt: project.alt, 
-            loaded: true 
-          };
-          return newProjects;
-        });
-      });
-    });
-  }, []);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -112,22 +86,18 @@ const PortfolioCarousel = () => {
           {/* Embla Carousel */}
           <div className="overflow-hidden rounded-xl" ref={emblaRef}>
             <div className="flex gap-4">
-              {projects.map((project, index) => (
+              {projectImages.map((project, index) => (
                 <div
                   key={index}
                   className="flex-shrink-0 w-[85%] sm:w-[45%] lg:w-[30%] aspect-[4/3] relative group"
                 >
-                  {project.loaded ? (
-                    <img
-                      src={project.image}
-                      alt={project.alt}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover rounded-xl shadow-md transition-transform duration-300 group-hover:scale-[1.02]"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-muted rounded-xl animate-pulse" />
-                  )}
+                  <img
+                    src={project.path}
+                    alt={project.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover rounded-xl shadow-md transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               ))}
@@ -136,7 +106,7 @@ const PortfolioCarousel = () => {
 
           {/* Dots Indicator */}
           <div className="flex justify-center gap-1 mt-6">
-            {projects.map((_, index) => (
+            {projectImages.map((_, index) => (
               <button
                 key={index}
                 onClick={() => emblaApi?.scrollTo(index)}
