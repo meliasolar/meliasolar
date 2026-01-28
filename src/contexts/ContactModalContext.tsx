@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, ReactNode } from "react";
-import ContactFormModal from "@/components/ContactFormModal";
+import { createContext, useContext, useState, ReactNode, lazy, Suspense } from "react";
+
+const ContactFormModal = lazy(() => import("@/components/ContactFormModal"));
 
 interface ContactModalContextType {
   openContactModal: () => void;
@@ -29,7 +30,11 @@ export const ContactModalProvider = ({ children }: ContactModalProviderProps) =>
   return (
     <ContactModalContext.Provider value={{ openContactModal, closeContactModal }}>
       {children}
-      <ContactFormModal open={isOpen} onOpenChange={setIsOpen} />
+      {isOpen && (
+        <Suspense fallback={null}>
+          <ContactFormModal open={isOpen} onOpenChange={setIsOpen} />
+        </Suspense>
+      )}
     </ContactModalContext.Provider>
   );
 };

@@ -5,8 +5,6 @@ import Footer from "@/components/layout/Footer";
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX, Play, Pause } from "lucide-react";
-import meliaImage from "@/assets/melia-king-clean.png";
-import meliaVideo from "@/assets/melia-welcome.mp4";
 
 const AboutPage = () => {
   // Mobile video state
@@ -126,7 +124,7 @@ const AboutPage = () => {
               <div className="relative">
                 <div className="aspect-[4/5] rounded-2xl bg-background overflow-hidden shadow-medium">
                   <img
-                    src={meliaImage}
+                    src="/images/melia-portrait.png"
                     alt="Melia King - Solar Energy Advisor"
                     className="w-full h-full object-cover object-top"
                   />
@@ -188,7 +186,7 @@ const AboutPage = () => {
 
                     <video
                       ref={videoRefMobile}
-                      src={meliaVideo}
+                      src="/videos/melia-welcome.mp4"
                       autoPlay
                       loop
                       muted={isMutedMobile}
@@ -262,7 +260,7 @@ const AboutPage = () => {
 
                     <video
                       ref={videoRefDesktop}
-                      src={meliaVideo}
+                      src="/videos/melia-welcome.mp4"
                       autoPlay
                       loop
                       muted={isMutedDesktop}
