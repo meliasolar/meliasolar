@@ -33,10 +33,10 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
+          {/* Navigation - hidden on mobile */}
+          <div className="hidden md:block">
             <h4 className="font-display text-lg font-semibold mb-4">
-              Quick Links
+              Explore
             </h4>
             <ul className="space-y-3">
               <li>
