@@ -348,15 +348,15 @@ const AboutPage = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+        <section className="py-10 md:py-14 bg-secondary">
           <div className="container mx-auto px-6 text-center">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
               Ready to Get Started?
             </h2>
-            <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
+            <p className="text-muted-foreground text-base max-w-xl mx-auto mb-6">
               Contact Melia today for a free consultation and discover how much you can save with solar.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
                 size="lg"
                 className="bg-accent text-foreground hover:bg-accent/90"
@@ -367,7 +367,6 @@ const AboutPage = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground bg-transparent hover:bg-primary-foreground/10"
                 asChild
               >
                 <a href="mailto:meliaking@voltaicnow.com">Email Us</a>
