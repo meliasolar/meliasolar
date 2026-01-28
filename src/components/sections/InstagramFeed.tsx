@@ -1,37 +1,32 @@
 import { Instagram, Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useEffect, useCallback } from "react";
 
-import insta1 from "@/assets/instagram/insta-1.jpg";
-import insta2 from "@/assets/instagram/insta-2.jpg";
-import insta3 from "@/assets/instagram/insta-3.jpg";
-import insta4 from "@/assets/instagram/insta-4.jpg";
-import insta5 from "@/assets/instagram/insta-5.jpg";
-
+// Static paths for portfolio images - reusing existing optimized WebP images
 const instagramPosts = [
   {
     url: "https://www.instagram.com/reel/DRS9bIhkhdz/",
     type: "reel",
-    image: insta1,
+    image: "/images/portfolio/project-1.webp",
   },
   {
     url: "https://www.instagram.com/p/DRvh1UrCSuI/",
     type: "post",
-    image: insta2,
+    image: "/images/portfolio/project-2.webp",
   },
   {
     url: "https://www.instagram.com/reel/DSRl-xSgP1B/",
     type: "reel",
-    image: insta3,
+    image: "/images/portfolio/tesla-1.webp",
   },
   {
     url: "https://www.instagram.com/reel/DSRmsYwgGlH/",
     type: "reel",
-    image: insta4,
+    image: "/images/portfolio/project-3.webp",
   },
   {
     url: "https://www.instagram.com/reel/DSRo70YABC2/",
     type: "reel",
-    image: insta5,
+    image: "/images/portfolio/project-5.webp",
   },
 ];
 

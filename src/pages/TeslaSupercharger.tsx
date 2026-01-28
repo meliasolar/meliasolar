@@ -11,7 +11,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import teslaImage from "@/assets/tesla-supercharger-service.jpg";
+// Static path for WebP image - served from public folder for proper caching
+const teslaImage = "/images/services/tesla-supercharger-service.webp";
 
 const TeslaSupercharger = () => {
   const benefits = [
