@@ -6,7 +6,7 @@ import FloatingContactButtons from "@/components/FloatingContactButtons";
 import PortfolioCarousel from "@/components/sections/PortfolioCarousel";
 import { Button } from "@/components/ui/button";
 import ServiceSchema from "@/components/seo/ServiceSchema";
-import solarImage from "@/assets/solar-installation-action.jpg";
+import solarImage from "@/assets/portfolio/project-6.jpg";
 import hvacImage from "@/assets/hvac-service.jpg";
 import roofingImage from "@/assets/roofing-service.jpg";
 import quietcoolImage from "@/assets/quietcool-service.jpg";

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import solarImage from "@/assets/solar-service.jpg";
+import solarImage from "@/assets/portfolio/project-6.jpg";
 import hvacImage from "@/assets/hvac-service.jpg";
 import roofingImage from "@/assets/roofing-service.jpg";
 import quietcoolImage from "@/assets/quietcool-service.jpg";
