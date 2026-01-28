@@ -124,11 +124,19 @@ const Blog = () => {
                 <Link key={post.id} to={`/news/${post.slug}`}>
                   <Card className="h-full hover:shadow-elegant transition-shadow group overflow-hidden">
                     {post.image_url ? (
-                      <div className="aspect-[16/9] overflow-hidden">
+                      <div className="aspect-[16/9] overflow-hidden relative bg-muted">
+                        {/* Blurred background */}
+                        <img
+                          src={post.image_url}
+                          alt=""
+                          aria-hidden="true"
+                          className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl opacity-60"
+                        />
+                        {/* Actual image centered */}
                         <img
                           src={post.image_url}
                           alt={post.title}
-                          className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                          className="relative w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
                     ) : (
