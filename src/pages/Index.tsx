@@ -19,9 +19,11 @@ const TestimonialsCarousel = lazy(() => import("@/components/sections/Testimonia
 const MeliaVideoWidget = lazy(() => 
   new Promise<typeof import("@/components/MeliaVideoWidget")>(resolve => {
     // Delay loading until after main content is rendered
-    requestIdleCallback(() => {
+    // Use requestIdleCallback with setTimeout fallback for Safari
+    const scheduleLoad = window.requestIdleCallback || ((cb: () => void) => setTimeout(cb, 100));
+    scheduleLoad(() => {
       import("@/components/MeliaVideoWidget").then(resolve);
-    }, { timeout: 3000 });
+    });
   })
 );
 
