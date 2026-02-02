@@ -28,12 +28,13 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Fetch the blog post
+    // Fetch the blog post (including scheduled posts that have gone live)
+    const now = new Date().toISOString();
     const { data: post, error } = await supabase
       .from('blog_posts')
-      .select('id, title, content, image_url, created_at, slug')
+      .select('id, title, content, image_url, created_at, slug, scheduled_at')
       .eq('slug', slug)
-      .eq('published', true)
+      .or(`published.eq.true,and(scheduled_at.not.is.null,scheduled_at.lte.${now})`)
       .maybeSingle();
 
     if (error) {

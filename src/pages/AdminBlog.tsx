@@ -49,6 +49,7 @@ const AdminBlog = () => {
   const [scheduledTime, setScheduledTime] = useState("09:00");
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [isDraggingFeatured, setIsDraggingFeatured] = useState(false);
 
   // Helper to determine publish mode from a post
   const getPublishModeFromPost = (post: BlogPost): PublishMode => {
@@ -135,6 +136,34 @@ const AdminBlog = () => {
     } finally {
       setIsUploadingImage(false);
     }
+  };
+
+  const handleFeaturedDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingFeatured(true);
+  };
+
+  const handleFeaturedDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingFeatured(false);
+  };
+
+  const handleFeaturedDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingFeatured(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    const imageFile = files.find(file => file.type.startsWith("image/"));
+
+    if (!imageFile) {
+      toast({ variant: "destructive", title: "Please drop an image file" });
+      return;
+    }
+
+    await handleImageUpload(imageFile);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -378,10 +407,25 @@ const AdminBlog = () => {
                     ) : (
                       <div
                         onClick={() => fileInputRef.current?.click()}
-                        className="border-2 border-dashed border-border rounded-lg p-8 text-center cursor-pointer hover:border-primary transition-colors"
+                        onDragOver={handleFeaturedDragOver}
+                        onDragLeave={handleFeaturedDragLeave}
+                        onDrop={handleFeaturedDrop}
+                        className={cn(
+                          "border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors",
+                          isDraggingFeatured 
+                            ? "border-primary bg-primary/10" 
+                            : "border-border hover:border-primary"
+                        )}
                       >
                         {isUploadingImage ? (
                           <p className="text-muted-foreground">Uploading...</p>
+                        ) : isDraggingFeatured ? (
+                          <>
+                            <ImageIcon className="w-10 h-10 text-primary mx-auto mb-3" />
+                            <p className="text-primary font-medium mb-1">
+                              Drop image here
+                            </p>
+                          </>
                         ) : (
                           <>
                             <ImageIcon className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
@@ -560,6 +604,10 @@ const AdminBlog = () => {
                           {post.published ? (
                             <span className="inline-flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full flex-shrink-0">
                               <Eye className="w-3 h-3" /> Published
+                            </span>
+                          ) : post.scheduled_at && new Date(post.scheduled_at) <= new Date() ? (
+                            <span className="inline-flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full flex-shrink-0">
+                              <Eye className="w-3 h-3" /> Live (Scheduled)
                             </span>
                           ) : post.scheduled_at ? (
                             <span className="inline-flex items-center gap-1 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full flex-shrink-0">
