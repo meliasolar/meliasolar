@@ -73,8 +73,8 @@ const Header = () => {
               src="/images/logo.webp" 
               alt="Melia King Solar" 
               className="w-10 h-10 rounded-lg transition-transform group-hover:scale-110"
-              width={40}
-              height={40}
+              width={70}
+              height={70}
               loading="eager"
               decoding="async"
             />
