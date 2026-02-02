@@ -1,138 +1,157 @@
 
-# PageSpeed Fixes & Image Replacement Plan
+# Add Video Support with Autoplay and "Tap for Sound" Button
 
-## Summary
-
-This plan addresses:
-1. Replace 3 images with new uploaded versions
-2. **Keep old logo.webp** (renamed) since it's used in SEO schema markup
-3. Fix PageSpeed issues from the network dependency tree screenshot
+This plan adds video upload capability to blog posts with autoplay and a "Tap for sound" overlay, matching the MeliaVideoWidget experience.
 
 ---
 
-## Part 1: Image Replacements
+## Overview
 
-### Images to Replace
-
-| Current File | New File | Used In |
-|-------------|----------|---------|
-| `public/images/hero-mobile.webp` | `user-uploads://hero-2.webp` | Hero section background (mobile) |
-| `public/images/melia-portrait.webp` | `user-uploads://Melia_on_stage-2.webp` | Meet Melia section |
-| `public/images/logo.webp` → **renamed to** `logo-old.webp` | Keep for SEO schemas | LocalBusinessSchema, ArticleSchema |
-| New: `public/images/logo.webp` | `user-uploads://phoenix_purple_70x70.webp` | Header & Footer |
-
-### Logo File Strategy (Keep Old Logo)
-
-The old logo is referenced in **SEO Schema markup**:
-- `src/components/seo/LocalBusinessSchema.tsx` line 15: `"logo": "https://meliasolar.com/images/logo.webp"`
-- `src/components/seo/ArticleSchema.tsx` line 42: publisher logo
-
-**Action:** Rename old logo to `logo-old.webp`, then copy new logo to `logo.webp`. Update schema files to point to `logo-old.webp` to preserve the existing branding in structured data.
+Videos embedded in blog posts will:
+- **Autoplay muted** (required by browsers for autoplay to work)
+- **Show "Tap for sound" overlay** when muted
+- **Display mute/unmute toggle** button in corner
+- **Play inline** on mobile (no fullscreen takeover)
+- Support **MP4** and **WebM** formats
 
 ---
 
-## Part 2: PageSpeed Fixes - Critical Path Optimization
+## Implementation
 
-The screenshot shows a **1,803ms critical path latency** with many JavaScript chunks loading sequentially. Key issues:
+### Part 1: Create BlogVideo Component
 
-### Issue 1: Render-Blocking CSS (Est. 300ms savings)
-- `/assets/index-liqMOeiU.css` - 13.73 KiB, 700ms
-- **Fix:** The CSS is already inlined in index.html for critical styles. The main CSS file is deferred by Vite naturally.
+**New File: `src/components/BlogVideo.tsx`**
 
-### Issue 2: Long JavaScript Chain
-The network tree shows excessive JS chunk loading:
-- `index-DhMKBaNl.js` - 843ms, 154.46 KiB (main bundle)
-- `About-Cl-IGQWc.js` - 1,558ms  
-- `WhySolar-CKztcc14.js` - 1,550ms
-- `SavingsCalculator...js` - 1,803ms (longest)
-- `TestimonialsCarousel...js` - 1,617ms
-- `MeliaVideoWidget...js` - 1,532ms
+A React component that wraps video elements with the "Tap for sound" overlay:
 
-**Current lazy loading strategy in Index.tsx is good**, but we can improve by:
-
-### Fix A: Reduce initial bundle - Remove unused Toaster components
-
-Currently `App.tsx` imports **two** toaster libraries:
 ```tsx
-import { Toaster } from "@/components/ui/toaster";      // Heavy
-import { Toaster as Sonner } from "@/components/ui/sonner";  // Lighter
+// BlogVideo.tsx - handles autoplay + sound overlay like MeliaVideoWidget
+const BlogVideo = ({ src }: { src: string }) => {
+  const [isMuted, setIsMuted] = useState(true);
+  const [showSoundOverlay, setShowSoundOverlay] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Autoplay muted, show "Tap for sound" button
+  // When clicked, unmute and hide overlay
+  // Mute toggle button in corner
+};
 ```
 
-**Action:** Remove the duplicate Toaster if only one is used, or lazy load them.
+Key features:
+- Volume set to 50% when unmuted
+- "Tap for sound" overlay disappears after first unmute
+- Corner mute/unmute toggle button (Volume2/VolumeX icons)
+- Rounded corners and shadow matching blog content style
 
-### Fix B: Defer more sections in Index.tsx
+### Part 2: Update RichTextEditor for Video Upload
 
-Current deferred sections:
-- ✅ TestimonialsCarousel (deferred with IntersectionObserver)
-- ✅ PortfolioCarousel (deferred with IntersectionObserver)
-- ✅ MeliaVideoWidget (deferred with requestIdleCallback)
+**File: `src/components/RichTextEditor.tsx`**
 
-Could also defer:
-- WhySolar
-- SavingsCalculator
+Changes:
+1. Create unified `uploadMedia` function handling both images and videos
+2. Register custom Quill video blot that creates `<video>` elements
+3. Add video handler to toolbar
+4. Accept video MIME types in drag/drop/paste
+5. Size limits: 5MB for images, 25MB for videos
 
-**Action:** Wrap WhySolar and SavingsCalculator in IntersectionObserver-based loading like TestimonialsCarousel to reduce initial JS payload.
-
-### Fix C: Preconnect to Supabase for faster API requests
-
-The site likely makes requests to Supabase. Add preconnect hints in index.html.
-
-**Action:** Add to `index.html`:
+Video blot will insert:
 ```html
-<link rel="preconnect" href="https://tccujdytaskukotfjapn.supabase.co" />
+<video src="..." controls autoplay muted playsinline preload="metadata" />
+```
+
+### Part 3: Update BlogPost to Render Interactive Videos
+
+**File: `src/pages/BlogPost.tsx`**
+
+Since we need React state for the sound overlay, we can't just use `dangerouslySetInnerHTML`. Instead:
+
+1. Update DOMPurify to allow `<video>` and `<source>` elements
+2. After sanitization, find all `<video>` elements in the content
+3. Replace each `<video>` with a placeholder `<div data-video-src="...">` 
+4. In the render, map these placeholders to `<BlogVideo>` components
+
+This approach keeps the React interactivity while preserving the content structure.
+
+### Part 4: Add Styling
+
+**File: `src/styles/rich-text-editor.css`**
+
+Add editor preview styles for videos:
+```css
+.rich-text-editor .ql-editor video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+```
+
+**File: `src/styles/blog-content.css`**
+
+Add published blog styles:
+```css
+.blog-content .blog-video-wrapper {
+  position: relative;
+  max-width: 100%;
+  margin: 1.5rem auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.blog-content .blog-video-wrapper video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 ```
 
 ---
 
-## Part 3: Code Changes
+## File Changes Summary
 
-### File 1: `public/images/logo-old.webp`
-- Copy existing `logo.webp` to `logo-old.webp` before overwriting
-
-### File 2: `public/images/logo.webp`  
-- Replace with `user-uploads://phoenix_purple_70x70.webp`
-
-### File 3: `public/images/hero-mobile.webp`
-- Replace with `user-uploads://hero-2.webp`
-
-### File 4: `public/images/melia-portrait.webp`
-- Replace with `user-uploads://Melia_on_stage-2.webp`
-
-### File 5: `src/components/seo/LocalBusinessSchema.tsx`
-- Line 15: Change `logo.webp` → `logo-old.webp`
-
-### File 6: `src/components/seo/ArticleSchema.tsx`
-- Line 42: Change `logo.webp` → `logo-old.webp`
-
-### File 7: `src/components/layout/Header.tsx`
-- Update logo dimensions to match new 70x70 image (currently set to 40x40 display size - this is fine, but width/height attributes should reflect actual image size for proper resource hinting)
-
-### File 8: `src/pages/Index.tsx`
-- Add IntersectionObserver deferred loading for WhySolar and SavingsCalculator sections
-- Reduce initial JavaScript bundle size further
-
-### File 9: `index.html`
-- Add preconnect hint for Supabase API
+| File | Changes |
+|------|---------|
+| `src/components/BlogVideo.tsx` | **NEW** - React component with autoplay + "Tap for sound" overlay |
+| `src/components/RichTextEditor.tsx` | Add video upload, custom video blot, accept MP4/WebM |
+| `src/pages/BlogPost.tsx` | Allow video elements in DOMPurify, replace with BlogVideo components |
+| `src/styles/rich-text-editor.css` | Add video element styles for editor |
+| `src/styles/blog-content.css` | Add video wrapper styles for published posts |
 
 ---
 
-## Implementation Order
+## Technical Details
 
-1. **Copy old logo** to `logo-old.webp`
-2. **Replace images** (logo, hero-mobile, melia-portrait)
-3. **Update SEO schemas** to reference `logo-old.webp`
-4. **Update Index.tsx** to defer more sections
-5. **Add preconnect** in index.html
+### Accepted File Types
+- **Images**: `image/png`, `image/jpeg`, `image/webp`, `image/gif`
+- **Videos**: `video/mp4`, `video/webm`
+
+### Size Limits
+- Images: 5MB (unchanged)
+- Videos: 25MB (keeps clips short for page speed)
+
+### Video Attributes for Performance
+- `autoplay` - Start playing immediately
+- `muted` - Required for autoplay to work in browsers
+- `playsinline` - Prevent fullscreen on mobile
+- `preload="metadata"` - Only load dimensions/duration initially
+- `loop` - Optional, videos will loop by default
+
+### "Tap for Sound" Behavior
+1. Video starts autoplaying muted
+2. Overlay shows "Tap for sound" button centered over video
+3. Tapping overlay unmutes video and hides overlay
+4. Mute toggle button remains in corner for manual control
+5. Overlay only shows once per video (after unmute, it stays hidden)
 
 ---
 
-## Expected Results
+## Expected Result
 
 After implementation:
-- New purple phoenix logo displays in header/footer
-- New hero image loads for mobile visitors
-- New Melia stage photo in Meet Melia section
-- Old logo preserved for SEO structured data
-- Reduced initial JavaScript bundle (fewer chunks blocking LCP)
-- Faster API connections via preconnect hints
-- Critical path latency reduced from 1,803ms
+- Video upload button appears in blog editor toolbar
+- Drag/drop and paste support for video files
+- Videos autoplay muted when blog post loads
+- "Tap for sound" overlay appears on each video
+- Tapping enables audio and hides overlay
+- Mute toggle button always available in corner
+- Clean, rounded video player matching site design
