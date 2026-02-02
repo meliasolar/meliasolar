@@ -31,11 +31,12 @@ Deno.serve(async (req) => {
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Fetch all published blog posts
+    // Fetch all published blog posts (including scheduled posts that have gone live)
+    const now = new Date().toISOString();
     const { data: posts, error } = await supabase
       .from("blog_posts")
-      .select("slug, updated_at, created_at")
-      .eq("published", true)
+      .select("slug, updated_at, created_at, scheduled_at")
+      .or(`published.eq.true,and(scheduled_at.not.is.null,scheduled_at.lte.${now})`)
       .order("created_at", { ascending: false });
 
     if (error) {
