@@ -91,6 +91,7 @@ const MeliaVideoWidget = forwardRef<HTMLDivElement>((_, ref) => {
         <video
           ref={videoRef}
           src="/videos/melia-welcome.mp4"
+          poster="/images/melia-portrait.webp"
           autoPlay
           muted={isMuted}
           playsInline
