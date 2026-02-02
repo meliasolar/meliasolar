@@ -8,9 +8,11 @@ import LocalBusinessSchema from "@/components/seo/LocalBusinessSchema";
 
 // Lazy load below-the-fold sections to reduce initial JS bundle
 const About = lazy(() => import("@/components/sections/About"));
+const PortfolioCarousel = lazy(() => import("@/components/sections/PortfolioCarousel"));
+
+// Extra-deferred sections - only load when near viewport (reduces initial JS)
 const WhySolar = lazy(() => import("@/components/sections/WhySolar"));
 const SavingsCalculator = lazy(() => import("@/components/sections/SavingsCalculator"));
-const PortfolioCarousel = lazy(() => import("@/components/sections/PortfolioCarousel"));
 
 // Extra-deferred sections - only load when near viewport
 const TestimonialsCarousel = lazy(() => import("@/components/sections/TestimonialsCarousel"));
@@ -46,8 +48,10 @@ const AboutSkeleton = () => (
 const Index = () => {
   const [showTestimonials, setShowTestimonials] = useState(false);
   const [showPortfolio, setShowPortfolio] = useState(false);
+  const [showWhySolar, setShowWhySolar] = useState(false);
   const testimonialsRef = useRef<HTMLDivElement>(null);
   const portfolioRef = useRef<HTMLDivElement>(null);
+  const whySolarRef = useRef<HTMLDivElement>(null);
 
   // Defer heavy sections until near viewport for better LCP
   useEffect(() => {
@@ -71,16 +75,30 @@ const Index = () => {
       { rootMargin: '300px' }
     );
 
+    const whySolarObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowWhySolar(true);
+          whySolarObserver.disconnect();
+        }
+      },
+      { rootMargin: '400px' }
+    );
+
     if (testimonialsRef.current) {
       testimonialsObserver.observe(testimonialsRef.current);
     }
     if (portfolioRef.current) {
       portfolioObserver.observe(portfolioRef.current);
     }
+    if (whySolarRef.current) {
+      whySolarObserver.observe(whySolarRef.current);
+    }
 
     return () => {
       testimonialsObserver.disconnect();
       portfolioObserver.disconnect();
+      whySolarObserver.disconnect();
     };
   }, []);
 
@@ -125,10 +143,15 @@ const Index = () => {
         <Suspense fallback={<AboutSkeleton />}>
           <About />
         </Suspense>
-        <Suspense fallback={<div className="min-h-[400px] bg-muted/30 animate-pulse rounded-lg mx-6" />}>
-          <WhySolar />
-          <SavingsCalculator />
-        </Suspense>
+        {/* WhySolar & SavingsCalculator - deferred to improve LCP */}
+        <div ref={whySolarRef}>
+          {showWhySolar && (
+            <Suspense fallback={<div className="min-h-[400px] bg-muted/30 animate-pulse rounded-lg mx-6" />}>
+              <WhySolar />
+              <SavingsCalculator />
+            </Suspense>
+          )}
+        </div>
         {/* Portfolio - deferred to improve LCP */}
         <div ref={portfolioRef}>
           {showPortfolio && (

@@ -39,7 +39,7 @@ const ArticleSchema = ({
       url: "https://meliasolar.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://meliasolar.com/images/logo.webp",
+        url: "https://meliasolar.com/images/logo-old.webp",
       },
     },
     mainEntityOfPage: {
