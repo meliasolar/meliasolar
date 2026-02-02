@@ -1,139 +1,144 @@
-# Performance Optimization Plan: Target Score 95+
 
-## Current Progress
 
-| Metric | Before | After Phase 1 | Target |
-|--------|--------|---------------|--------|
-| Performance Score | 68 | **88** ✅ | 95+ |
-| LCP | 8.1s | **3.2s** | < 2.5s |
-| FCP | 1.9s | 1.9s | < 1.8s |
-| Speed Index | 6.4s | **4.5s** | < 3.0s |
-| CLS | 0 | 0.075 | < 0.1 |
-| TBT | 0ms | 0ms ✅ | 0ms |
+# Blog Admin Improvements Plan
+
+This plan addresses two issues:
+1. **Featured image drag and drop not working** - The drop zone only works with clicks
+2. **Scheduled blog posts showing wrong status** - Posts with past scheduled dates still show "Scheduled" instead of "Live"
 
 ---
 
-## Completed ✅
+## Part 1: Fix Featured Image Drag and Drop
 
-### Phase 1: Portfolio Image Optimization
-- [x] Copied 8 WebP images to `public/images/portfolio/`
-- [x] Updated hero images to WebP
-- [x] Refactored `PortfolioCarousel.tsx` to use static paths
-- [x] Refactored `Projects.tsx` to use static paths
-- [x] Deleted old JPG files from `src/assets/portfolio/`
+### Problem
+The featured image upload area shows "Click to upload or drag and drop" but only clicking works. The drag and drop event handlers are missing.
 
----
+### Solution
+Add proper drag/drop event handlers to the featured image upload zone.
 
-## Remaining Work
+### Changes to `src/pages/AdminBlog.tsx`
 
-### Phase 2: Convert Remaining Portfolio Images to WebP
-
-**User action required** - Upload WebP versions of:
-
-| Current File | Location | Status |
-|--------------|----------|--------|
-| `project-4.jpg` | `src/assets/portfolio/` | ⏳ Needs WebP |
-| `project-10.jpg` | `src/assets/portfolio/` | ⏳ Needs WebP |
-| `project-11.jpg` | `src/assets/portfolio/` | ⏳ Needs WebP |
-| `project-12.jpg` | `src/assets/portfolio/` | ⏳ Needs WebP |
-| `project-13.jpg` | `src/assets/portfolio/` | ⏳ Needs WebP |
-| `project-14.jpg` | `src/assets/portfolio/` | ⏳ Needs WebP |
-| `tesla-1.jpg` | `src/assets/portfolio/` | ⏳ Needs WebP |
-| `tesla-2.jpg` | `src/assets/portfolio/` | ⏳ Needs WebP |
-
----
-
-### Phase 3: Convert Service Images to WebP
-
-**User action required** - Upload WebP versions of:
-
-| Current File | Est. Size | Target |
-|--------------|-----------|--------|
-| `hvac-service.jpg` | ~200KB | < 50KB |
-| `quietcool-service.jpg` | ~200KB | < 50KB |
-| `roofing-service.jpg` | ~200KB | < 50KB |
-| `tesla-supercharger-service.jpg` | ~200KB | < 50KB |
-
-After upload:
-- Copy to `public/images/services/`
-- Update `Services.tsx` and `TeslaSupercharger.tsx`
-- Delete old JPGs
-
----
-
-### Phase 4: Convert Instagram Images to WebP
-
-**User action required** - Upload WebP versions of:
-
-| Current File | Target Size |
-|--------------|-------------|
-| `insta-1.jpg` | < 30KB |
-| `insta-2.jpg` | < 30KB |
-| `insta-3.jpg` | < 30KB |
-| `insta-4.jpg` | < 30KB |
-| `insta-5.jpg` | < 30KB |
-
-After upload:
-- Copy to `public/images/instagram/`
-- Update `InstagramFeed.tsx`
-- Delete old JPGs
-
----
-
-### Phase 5: Fix CLS (0.075)
-
-Add explicit `width` and `height` attributes to all images to prevent layout shift:
-
-```tsx
-<img 
-  src="/images/portfolio/project-1.webp"
-  alt="..."
-  width={800}
-  height={600}
-  loading="lazy"
-/>
+**Step 1: Add drag state tracking (after line 51)**
+```typescript
+const [isDraggingFeatured, setIsDraggingFeatured] = useState(false);
 ```
 
+**Step 2: Add drag/drop handlers (after the existing `handleImageUpload` function, around line 138)**
+```typescript
+const handleFeaturedDragOver = (e: React.DragEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDraggingFeatured(true);
+};
+
+const handleFeaturedDragLeave = (e: React.DragEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDraggingFeatured(false);
+};
+
+const handleFeaturedDrop = async (e: React.DragEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDraggingFeatured(false);
+
+  const files = Array.from(e.dataTransfer.files);
+  const imageFile = files.find(file => file.type.startsWith("image/"));
+
+  if (!imageFile) {
+    toast({ variant: "destructive", title: "Please drop an image file" });
+    return;
+  }
+
+  await handleImageUpload(imageFile);
+};
+```
+
+**Step 3: Update the drop zone div (lines 379-396)**
+- Add `onDragOver`, `onDragLeave`, and `onDrop` handlers
+- Add visual feedback when dragging (blue border highlight)
+- Show "Drop image here" text while dragging
+
 ---
 
-### Phase 6: Optimize Melia Portrait
+## Part 2: Fix Scheduled Blog Post Display
 
-The `melia-portrait.webp` (currently ~200KB) could be optimized further:
-- Create mobile version: 400px width, < 50KB
-- Create desktop version: 800px width, < 100KB
-- Use `<picture>` element with srcset
+### Problem
+The "Heat Pumps + Solar" post was scheduled for January 29, 2026. Today is February 2, 2026, but the Admin panel still shows "Scheduled" badge instead of indicating it's live.
 
----
+### Solution
+Update the status badge logic to show "Live" for scheduled posts whose publish time has passed.
 
-## Image Compression Settings
+### Changes to `src/pages/AdminBlog.tsx`
 
-Use https://squoosh.app with these settings:
+**Update status badge logic (lines 560-573)**
 
-| Image Type | Format | Quality | Max Width |
-|------------|--------|---------|-----------|
-| Portfolio | WebP | 80% | 800px |
-| Services | WebP | 80% | 600px |
-| Instagram | WebP | 75% | 400px |
-| Portrait | WebP | 85% | 800px |
+Current logic:
+- `published = true` → Green "Published" badge
+- `scheduled_at exists` → Blue "Scheduled" badge
+- Else → Gray "Draft" badge
 
----
-
-## Expected Final Results
-
-| Metric | Current | After All Phases |
-|--------|---------|------------------|
-| Performance Score | 88 | 95+ |
-| LCP | 3.2s | < 2.0s |
-| Image Savings | 1,726 KiB | 0 KiB |
-| Total Image Payload | ~2 MB | < 500 KB |
+New logic:
+- `published = true` → Green "Published" badge
+- `scheduled_at exists AND scheduled_at <= now()` → Green "Live (Scheduled)" badge
+- `scheduled_at exists AND scheduled_at > now()` → Blue "Scheduled" badge
+- Else → Gray "Draft" badge
 
 ---
 
-## Next Action
+## Part 3: Fix Edge Functions for Scheduled Posts
 
-**User to provide:**
-1. WebP versions of remaining 8 portfolio images (project-4, 10-14, tesla-1-2)
-2. WebP versions of 4 service images
-3. WebP versions of 5 Instagram images
+### Problem
+The sitemap and OG meta edge functions only query for `published = true`, meaning scheduled posts that have "gone live" don't appear in the sitemap and won't have proper social media sharing.
 
-Or prioritize: Just upload the **portfolio images** first for biggest impact.
+### Changes to `supabase/functions/sitemap/index.ts`
+
+**Update query (lines 35-39)**
+
+Current:
+```typescript
+.eq("published", true)
+```
+
+New:
+```typescript
+.or(`published.eq.true,and(scheduled_at.not.is.null,scheduled_at.lte.${new Date().toISOString()})`)
+```
+
+### Changes to `supabase/functions/og-meta/index.ts`
+
+**Update query (lines 32-37)**
+
+Current:
+```typescript
+.eq('published', true)
+```
+
+New:
+```typescript
+.or(`published.eq.true,and(scheduled_at.not.is.null,scheduled_at.lte.${new Date().toISOString()})`)
+```
+
+Also need to add `scheduled_at` to the select fields.
+
+---
+
+## Summary of Files to Modify
+
+| File | Changes |
+|------|---------|
+| `src/pages/AdminBlog.tsx` | Add drag/drop state, handlers, update drop zone UI, fix status badge logic |
+| `supabase/functions/sitemap/index.ts` | Include scheduled posts in sitemap query |
+| `supabase/functions/og-meta/index.ts` | Include scheduled posts in OG meta query |
+
+---
+
+## Expected Results
+
+After implementation:
+- Dragging an image onto the featured image box will upload it
+- Visual feedback shows when dragging over the drop zone
+- Scheduled posts that have passed their publish time show a green "Live (Scheduled)" badge
+- Scheduled posts appear in the sitemap for SEO
+- Scheduled posts work correctly for social media sharing
+
