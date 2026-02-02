@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Calendar, ArrowLeft, Clock } from "lucide-react";
 import ArticleSchema from "@/components/seo/ArticleSchema";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
+import BlogVideo from "@/components/BlogVideo";
+import BlogContentWithVideos from "@/components/BlogContentWithVideos";
 
 interface BlogPost {
   id: string;
@@ -91,20 +93,38 @@ const BlogPost = () => {
       .trim();
   };
 
-  // Process content to add IDs to headings, insert featured image after ~2 paragraphs, and make headings linkable
-  const { contentBeforeImage, contentAfterImage } = useMemo(() => {
-    if (!post?.content) return { contentBeforeImage: "", contentAfterImage: "" };
+  // Process content to add IDs to headings, insert featured image after ~2 paragraphs, 
+  // make headings linkable, and extract videos for interactive rendering
+  const { contentBeforeImage, contentAfterImage, videoSources } = useMemo(() => {
+    if (!post?.content) return { contentBeforeImage: "", contentAfterImage: "", videoSources: [] };
     
-    // Sanitize HTML content to prevent XSS attacks
+    // Sanitize HTML content to prevent XSS attacks - allow video elements
     const sanitizedContent = DOMPurify.sanitize(post.content, {
-      ADD_TAGS: ['iframe'],
-      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'target'],
+      ADD_TAGS: ['iframe', 'video', 'source'],
+      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'target', 
+                 'controls', 'autoplay', 'muted', 'loop', 'playsinline', 'poster', 'preload', 'type'],
       ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
     });
     
     // Parse the sanitized HTML and add IDs to headings
     const parser = new DOMParser();
     const doc = parser.parseFromString(sanitizedContent, "text/html");
+    
+    // Extract video sources and replace with placeholders
+    const videos = doc.querySelectorAll("video");
+    const extractedVideoSources: string[] = [];
+    
+    videos.forEach((video, index) => {
+      const src = video.getAttribute("src");
+      if (src) {
+        extractedVideoSources.push(src);
+        // Replace video with a placeholder div
+        const placeholder = doc.createElement("div");
+        placeholder.setAttribute("data-video-placeholder", String(index));
+        placeholder.className = "blog-video-placeholder";
+        video.parentNode?.replaceChild(placeholder, video);
+      }
+    });
     
     const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
     headings.forEach((heading) => {
@@ -152,7 +172,7 @@ const BlogPost = () => {
     const beforeHtml = beforeElements.map(el => el.outerHTML).join('');
     const afterHtml = afterElements.map(el => el.outerHTML).join('');
     
-    return { contentBeforeImage: beforeHtml, contentAfterImage: afterHtml };
+    return { contentBeforeImage: beforeHtml, contentAfterImage: afterHtml, videoSources: extractedVideoSources };
   }, [post?.content]);
 
   // NOTE: We intentionally do not add any copy-to-clipboard behavior on this page.
@@ -277,10 +297,10 @@ const BlogPost = () => {
             </div>
           </header>
 
-          {/* Content - First Half */}
-          <div 
-            className="blog-content prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-6 prose-h2:border-b prose-h2:border-border prose-h2:pb-3"
-            dangerouslySetInnerHTML={{ __html: contentBeforeImage }}
+          {/* Content - First Half with Video Components */}
+          <BlogContentWithVideos 
+            html={contentBeforeImage} 
+            videoSources={videoSources} 
           />
 
           {/* Featured Image - Smaller and in middle */}
@@ -296,10 +316,11 @@ const BlogPost = () => {
             </div>
           )}
 
-          {/* Content - Second Half */}
-          <div 
-            className="blog-content prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-strong:text-foreground prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-6 prose-h2:border-b prose-h2:border-border prose-h2:pb-3 mb-12"
-            dangerouslySetInnerHTML={{ __html: contentAfterImage }}
+          {/* Content - Second Half with Video Components */}
+          <BlogContentWithVideos 
+            html={contentAfterImage} 
+            videoSources={videoSources}
+            className="mb-12"
           />
 
         </article>

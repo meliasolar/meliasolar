@@ -1,9 +1,35 @@
 import { useRef, useMemo, useState, useCallback } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "@/styles/rich-text-editor.css";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+
+// Register custom video blot that creates proper <video> elements
+const BlockEmbed = Quill.import("blots/block/embed");
+
+class VideoBlot extends (BlockEmbed as any) {
+  static blotName = "video";
+  static tagName = "video";
+
+  static create(url: string) {
+    const node = super.create() as HTMLVideoElement;
+    node.setAttribute("src", url);
+    node.setAttribute("controls", "true");
+    node.setAttribute("autoplay", "true");
+    node.setAttribute("muted", "true");
+    node.setAttribute("playsinline", "true");
+    node.setAttribute("preload", "metadata");
+    node.setAttribute("loop", "true");
+    return node;
+  }
+
+  static value(node: HTMLElement) {
+    return node.getAttribute("src");
+  }
+}
+
+Quill.register(VideoBlot);
 
 interface RichTextEditorProps {
   content: string;
@@ -15,16 +41,28 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
   const quillRef = useRef<ReactQuill>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const uploadImage = useCallback(async (file: File) => {
+  const uploadMedia = useCallback(async (file: File) => {
+    const isVideo = file.type.startsWith("video/");
+    const isImage = file.type.startsWith("image/");
+
     // Validate file type
-    if (!file.type.startsWith("image/")) {
-      toast.error("Only image files are allowed");
+    if (!isImage && !isVideo) {
+      toast.error("Only image and video files are allowed");
       return;
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image must be less than 5MB");
+    // Validate specific video types
+    if (isVideo && !["video/mp4", "video/webm"].includes(file.type)) {
+      toast.error("Only MP4 and WebM video formats are supported");
+      return;
+    }
+
+    // Size limits: 5MB for images, 25MB for videos
+    const maxSize = isVideo ? 25 * 1024 * 1024 : 5 * 1024 * 1024;
+    const maxSizeLabel = isVideo ? "25MB" : "5MB";
+
+    if (file.size > maxSize) {
+      toast.error(`${isVideo ? "Video" : "Image"} must be less than ${maxSizeLabel}`);
       return;
     }
 
@@ -33,7 +71,8 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
 
     // Show loading state
     const range = quill.getSelection(true);
-    quill.insertText(range.index, "Uploading image...", { italic: true });
+    const loadingText = `Uploading ${isVideo ? "video" : "image"}...`;
+    quill.insertText(range.index, loadingText, { italic: true });
 
     try {
       // Generate unique filename
@@ -52,16 +91,22 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
         .from("blog-images")
         .getPublicUrl(data.path);
 
-      // Remove loading text and insert image
-      quill.deleteText(range.index, "Uploading image...".length);
-      quill.insertEmbed(range.index, "image", urlData.publicUrl);
+      // Remove loading text and insert media
+      quill.deleteText(range.index, loadingText.length);
+      
+      if (isVideo) {
+        quill.insertEmbed(range.index, "video", urlData.publicUrl);
+      } else {
+        quill.insertEmbed(range.index, "image", urlData.publicUrl);
+      }
+      
       quill.setSelection(range.index + 1, 0);
 
-      toast.success("Image uploaded successfully");
+      toast.success(`${isVideo ? "Video" : "Image"} uploaded successfully`);
     } catch (error) {
       console.error("Upload error:", error);
-      quill.deleteText(range.index, "Uploading image...".length);
-      toast.error("Failed to upload image. Make sure you're logged in as admin.");
+      quill.deleteText(range.index, loadingText.length);
+      toast.error(`Failed to upload ${isVideo ? "video" : "image"}. Make sure you're logged in as admin.`);
     }
   }, []);
 
@@ -74,10 +119,24 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
     input.onchange = async () => {
       const file = input.files?.[0];
       if (file) {
-        await uploadImage(file);
+        await uploadMedia(file);
       }
     };
-  }, [uploadImage]);
+  }, [uploadMedia]);
+
+  const videoHandler = useCallback(() => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "video/mp4,video/webm");
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (file) {
+        await uploadMedia(file);
+      }
+    };
+  }, [uploadMedia]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -97,42 +156,47 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
     setIsDragging(false);
 
     const files = Array.from(e.dataTransfer.files);
-    const imageFiles = files.filter(file => file.type.startsWith("image/"));
+    const mediaFiles = files.filter(file => 
+      file.type.startsWith("image/") || 
+      file.type === "video/mp4" || 
+      file.type === "video/webm"
+    );
 
-    if (imageFiles.length === 0) {
-      toast.error("No valid image files found");
+    if (mediaFiles.length === 0) {
+      toast.error("No valid image or video files found");
       return;
     }
 
-    // Upload all images
-    for (const file of imageFiles) {
-      await uploadImage(file);
+    // Upload all media files
+    for (const file of mediaFiles) {
+      await uploadMedia(file);
     }
-  }, [uploadImage]);
+  }, [uploadMedia]);
 
   const handlePaste = useCallback(async (e: React.ClipboardEvent) => {
     const items = e.clipboardData.items;
     
     for (const item of items) {
-      if (item.type.startsWith("image/")) {
+      if (item.type.startsWith("image/") || item.type === "video/mp4" || item.type === "video/webm") {
         e.preventDefault();
         const file = item.getAsFile();
         if (file) {
-          await uploadImage(file);
+          await uploadMedia(file);
         }
         break;
       }
     }
-  }, [uploadImage]);
+  }, [uploadMedia]);
 
   const modules = useMemo(() => ({
     toolbar: {
       container: "#toolbar-top",
       handlers: {
         image: imageHandler,
+        video: videoHandler,
       },
     },
-  }), [imageHandler]);
+  }), [imageHandler, videoHandler]);
 
   const toolbarButtons = (
     <>
@@ -155,6 +219,7 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
       <button className="ql-code-block" />
       <button className="ql-link" />
       <button className="ql-image" />
+      <button className="ql-video" title="Insert video" />
       <button className="ql-clean" />
     </>
   );
@@ -174,6 +239,7 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
     "code-block",
     "link",
     "image",
+    "video",
   ];
 
   return (
@@ -187,7 +253,7 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
       {isDragging && (
         <div className="absolute inset-0 bg-primary/10 z-10 flex items-center justify-center pointer-events-none rounded-md">
           <div className="bg-background px-4 py-2 rounded-md shadow-lg border">
-            <p className="text-sm font-medium">Drop images here to upload</p>
+            <p className="text-sm font-medium">Drop images or videos here to upload</p>
           </div>
         </div>
       )}

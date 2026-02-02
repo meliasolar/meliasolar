@@ -154,6 +154,25 @@
   display: block;
 }
 
+/* Videos */
+.blog-content .blog-video-wrapper {
+  position: relative;
+  max-width: 100%;
+  margin: 1.5rem auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.blog-content .blog-video-wrapper video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.blog-content .blog-video-placeholder {
+  display: none;
+}
+
 /* Horizontal rule */
 .blog-content hr {
   border: none;
