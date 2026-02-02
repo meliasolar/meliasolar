@@ -29,8 +29,6 @@
     /* Accent - Warm orange for highlights */
     --accent: 30 95% 55%;
     --accent-foreground: 0 0% 10%;
-    /* Accessible accent for text - meets 4.5:1 contrast on light backgrounds */
-    --accent-text: 30 90% 38%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;

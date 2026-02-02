@@ -101,7 +101,6 @@ const About = forwardRef<HTMLElement>((_, ref) => {
               <video
                 ref={videoRef}
                 src="/videos/melia-welcome.mp4"
-                poster="/images/melia-portrait.webp"
                 muted={isMuted}
                 playsInline
                 autoPlay
@@ -154,9 +153,9 @@ const About = forwardRef<HTMLElement>((_, ref) => {
           {/* Content */}
           <div className="space-y-8">
             <div>
-            <span className="text-[hsl(var(--accent-text))] font-semibold text-sm uppercase tracking-widest">
-              Your Energy Advisor
-            </span>
+              <span className="text-accent font-semibold text-sm uppercase tracking-widest">
+                Your Energy Advisor
+              </span>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-4">
                 Meet <span className="text-primary">Melia</span> King
               </h2>
@@ -205,9 +204,9 @@ const About = forwardRef<HTMLElement>((_, ref) => {
           {/* Content */}
           <div className="space-y-8">
             <div className="text-center">
-            <span className="text-[hsl(var(--accent-text))] font-semibold text-sm uppercase tracking-widest">
-              About Us
-            </span>
+              <span className="text-accent font-semibold text-sm uppercase tracking-widest">
+                About Us
+              </span>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-4">
                 Building A <span className="text-primary">Brighter Future</span>, One Home At A Time 🫶
               </h2>
