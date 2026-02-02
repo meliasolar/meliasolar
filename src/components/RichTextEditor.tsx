@@ -3,7 +3,7 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "@/styles/rich-text-editor.css";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 
 // Register custom video blot that creates proper <video> elements
 const BlockEmbed = Quill.import("blots/block/embed");
@@ -40,6 +40,7 @@ interface RichTextEditorProps {
 const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }: RichTextEditorProps) => {
   const quillRef = useRef<ReactQuill>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const { toast } = useToast();
 
   const uploadMedia = useCallback(async (file: File) => {
     const isVideo = file.type.startsWith("video/");
@@ -47,13 +48,13 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
 
     // Validate file type
     if (!isImage && !isVideo) {
-      toast.error("Only image and video files are allowed");
+      toast({ title: "Error", description: "Only image and video files are allowed", variant: "destructive" });
       return;
     }
 
     // Validate specific video types
     if (isVideo && !["video/mp4", "video/webm"].includes(file.type)) {
-      toast.error("Only MP4 and WebM video formats are supported");
+      toast({ title: "Error", description: "Only MP4 and WebM video formats are supported", variant: "destructive" });
       return;
     }
 
@@ -62,7 +63,7 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
     const maxSizeLabel = isVideo ? "25MB" : "5MB";
 
     if (file.size > maxSize) {
-      toast.error(`${isVideo ? "Video" : "Image"} must be less than ${maxSizeLabel}`);
+      toast({ title: "Error", description: `${isVideo ? "Video" : "Image"} must be less than ${maxSizeLabel}`, variant: "destructive" });
       return;
     }
 
@@ -102,13 +103,13 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
       
       quill.setSelection(range.index + 1, 0);
 
-      toast.success(`${isVideo ? "Video" : "Image"} uploaded successfully`);
+      toast({ title: "Success", description: `${isVideo ? "Video" : "Image"} uploaded successfully` });
     } catch (error) {
       console.error("Upload error:", error);
       quill.deleteText(range.index, loadingText.length);
-      toast.error(`Failed to upload ${isVideo ? "video" : "image"}. Make sure you're logged in as admin.`);
+      toast({ title: "Error", description: `Failed to upload ${isVideo ? "video" : "image"}. Make sure you're logged in as admin.`, variant: "destructive" });
     }
-  }, []);
+  }, [toast]);
 
   const imageHandler = useCallback(() => {
     const input = document.createElement("input");
@@ -163,7 +164,7 @@ const RichTextEditor = ({ content, onChange, placeholder = "Start writing..." }:
     );
 
     if (mediaFiles.length === 0) {
-      toast.error("No valid image or video files found");
+      toast({ title: "Error", description: "No valid image or video files found", variant: "destructive" });
       return;
     }
 

@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, forwardRef } from "react";
 import { useLocation } from "react-router-dom";
 import { X, Volume2, VolumeX } from "lucide-react";
-import meliaVideo from "@/assets/melia-welcome.mp4";
 
-const MeliaVideoWidget = () => {
+const MeliaVideoWidget = forwardRef<HTMLDivElement>((_, ref) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
@@ -59,6 +58,7 @@ const MeliaVideoWidget = () => {
 
   return (
     <div
+      ref={ref}
       className={`fixed bottom-6 left-6 z-50 transition-all duration-500 ease-out hidden md:block ${
         isVisible
           ? "translate-x-0 opacity-100"
@@ -90,7 +90,7 @@ const MeliaVideoWidget = () => {
 
         <video
           ref={videoRef}
-          src={meliaVideo}
+          src="/videos/melia-welcome.mp4"
           autoPlay
           muted={isMuted}
           playsInline
@@ -128,6 +128,8 @@ const MeliaVideoWidget = () => {
       </div>
     </div>
   );
-};
+});
+
+MeliaVideoWidget.displayName = "MeliaVideoWidget";
 
 export default MeliaVideoWidget;

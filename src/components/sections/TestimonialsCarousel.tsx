@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { Star, Quote } from "lucide-react";
 
 const testimonials = [
@@ -44,9 +45,9 @@ const testimonials = [
   },
 ];
 
-const TestimonialsCarousel = () => {
+const TestimonialsCarousel = forwardRef<HTMLElement>((_, ref) => {
   return (
-    <section className="pt-2 pb-8 md:py-12 bg-gradient-to-b from-background to-muted/30 overflow-hidden">
+    <section ref={ref} className="pt-2 pb-8 md:py-12 bg-gradient-to-b from-background to-muted/30 overflow-hidden">
       <div className="container mx-auto px-6 mb-10">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto">
@@ -135,6 +136,8 @@ const TestimonialsCarousel = () => {
       </div>
     </section>
   );
-};
+});
+
+TestimonialsCarousel.displayName = "TestimonialsCarousel";
 
 export default TestimonialsCarousel;

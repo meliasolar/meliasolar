@@ -1,7 +1,7 @@
 import { CheckCircle2, Award, Heart, Users, X, Volume2, VolumeX } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, forwardRef } from "react";
 
-const About = () => {
+const About = forwardRef<HTMLElement>((_, ref) => {
   const [isMuted, setIsMuted] = useState(true);
   const [isVideoDismissed, setIsVideoDismissed] = useState(false);
   const [showSoundOverlay, setShowSoundOverlay] = useState(true);
@@ -66,7 +66,11 @@ const About = () => {
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 bg-secondary">
+    <section id="about" ref={(node) => {
+      sectionRef.current = node;
+      if (typeof ref === 'function') ref(node);
+      else if (ref) ref.current = node;
+    }} className="py-24 bg-secondary">
       <div className="container mx-auto px-6">
         {/* Mobile Video Widget - appears above Meet Melia section */}
         {!isVideoDismissed && (
@@ -225,6 +229,8 @@ const About = () => {
       </div>
     </section>
   );
-};
+});
+
+About.displayName = "About";
 
 export default About;
