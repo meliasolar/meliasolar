@@ -1,157 +1,169 @@
 
-# Add Video Support with Autoplay and "Tap for Sound" Button
+# PageSpeed Optimization Plan - Mobile Score 90 → 95+
 
-This plan adds video upload capability to blog posts with autoplay and a "Tap for sound" overlay, matching the MeliaVideoWidget experience.
-
----
-
-## Overview
-
-Videos embedded in blog posts will:
-- **Autoplay muted** (required by browsers for autoplay to work)
-- **Show "Tap for sound" overlay** when muted
-- **Display mute/unmute toggle** button in corner
-- **Play inline** on mobile (no fullscreen takeover)
-- Support **MP4** and **WebM** formats
+This plan addresses the specific issues shown in your PageSpeed Insights screenshot to restore and improve your mobile performance score.
 
 ---
 
-## Implementation
+## Issues Identified
 
-### Part 1: Create BlogVideo Component
+| Issue | Impact | Solution |
+|-------|--------|----------|
+| Avoid enormous network payloads (15,922 KiB) | Major | Remove bundled 7.6MB video from `src/assets/` |
+| Reduce unused JavaScript (81 KiB) | High | Remove duplicate Sonner toast library |
+| Reduce unused CSS (10 KiB) | Medium | Already minimal - no action needed |
+| Forced reflow | Medium | Optimize pulse animation |
+| Console ref warnings | Minor | Fix forwardRef on lazy-loaded components |
 
-**New File: `src/components/BlogVideo.tsx`**
+---
 
-A React component that wraps video elements with the "Tap for sound" overlay:
+## Part 1: Remove Bundled Video (Biggest Win)
 
-```tsx
-// BlogVideo.tsx - handles autoplay + sound overlay like MeliaVideoWidget
-const BlogVideo = ({ src }: { src: string }) => {
-  const [isMuted, setIsMuted] = useState(true);
-  const [showSoundOverlay, setShowSoundOverlay] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
+**Problem:** The video is imported from `src/assets/melia-welcome.mp4` which causes Vite to bundle the 7.6MB file into the JavaScript. This is the primary cause of the "enormous network payloads" issue.
 
-  // Autoplay muted, show "Tap for sound" button
-  // When clicked, unmute and hide overlay
-  // Mute toggle button in corner
-};
+**Solution:**
+- Update `MeliaVideoWidget.tsx` to use the static path `/videos/melia-welcome.mp4` instead of importing from `src/assets/`
+- Delete the duplicate `src/assets/melia-welcome.mp4` file
+
+**File changes:**
+
+`src/components/MeliaVideoWidget.tsx`:
+```typescript
+// REMOVE this import line:
+// import meliaVideo from "@/assets/melia-welcome.mp4";
+
+// CHANGE the video src from:
+<video src={meliaVideo} ...>
+
+// TO:
+<video src="/videos/melia-welcome.mp4" ...>
 ```
 
-Key features:
-- Volume set to 50% when unmuted
-- "Tap for sound" overlay disappears after first unmute
-- Corner mute/unmute toggle button (Volume2/VolumeX icons)
-- Rounded corners and shadow matching blog content style
+**Delete file:** `src/assets/melia-welcome.mp4`
 
-### Part 2: Update RichTextEditor for Video Upload
+**Expected savings:** ~7.6MB reduction in JavaScript bundle
 
-**File: `src/components/RichTextEditor.tsx`**
+---
 
-Changes:
-1. Create unified `uploadMedia` function handling both images and videos
-2. Register custom Quill video blot that creates `<video>` elements
-3. Add video handler to toolbar
-4. Accept video MIME types in drag/drop/paste
-5. Size limits: 5MB for images, 25MB for videos
+## Part 2: Remove Duplicate Toast Library (81 KiB savings)
 
-Video blot will insert:
-```html
-<video src="..." controls autoplay muted playsinline preload="metadata" />
+**Problem:** The app loads TWO toast libraries:
+1. `@radix-ui/react-toast` (Shadcn Toaster) - used in Auth, Contact, AdminBlog
+2. `sonner` - only used in RichTextEditor
+
+**Solution:** Consolidate to use only the Shadcn Toaster
+
+**File changes:**
+
+`src/components/RichTextEditor.tsx`:
+```typescript
+// CHANGE import from:
+import { toast } from "sonner";
+
+// TO:
+import { useToast } from "@/hooks/use-toast";
+
+// Inside the component, add:
+const { toast } = useToast();
+
+// CHANGE toast calls from:
+toast.error("message");
+toast.success("message");
+
+// TO:
+toast({ title: "Error", description: "message", variant: "destructive" });
+toast({ title: "Success", description: "message" });
 ```
 
-### Part 3: Update BlogPost to Render Interactive Videos
+`src/App.tsx`:
+```typescript
+// REMOVE these lines:
+import { Toaster as Sonner } from "@/components/ui/sonner";
+// and
+<Sonner />
+```
 
-**File: `src/pages/BlogPost.tsx`**
+**Expected savings:** ~81 KiB of unused JavaScript
 
-Since we need React state for the sound overlay, we can't just use `dangerouslySetInnerHTML`. Instead:
+---
 
-1. Update DOMPurify to allow `<video>` and `<source>` elements
-2. After sanitization, find all `<video>` elements in the content
-3. Replace each `<video>` with a placeholder `<div data-video-src="...">` 
-4. In the render, map these placeholders to `<BlogVideo>` components
+## Part 3: Fix Console Ref Warnings
 
-This approach keeps the React interactivity while preserving the content structure.
+**Problem:** The console shows "Function components cannot be given refs" for `About`, `TestimonialsCarousel`, and `MeliaVideoWidget`. This happens because these components are lazy-loaded in `Index.tsx` but don't use `forwardRef`.
 
-### Part 4: Add Styling
+**Impact:** While not directly affecting PageSpeed, these warnings indicate potential issues with React's reconciliation.
 
-**File: `src/styles/rich-text-editor.css`**
+**Solution:** Wrap the exported components with `forwardRef` to properly handle refs from Suspense
 
-Add editor preview styles for videos:
+`src/components/sections/About.tsx`:
+```typescript
+import { forwardRef } from "react";
+
+const About = forwardRef<HTMLElement>((props, ref) => {
+  // ... existing code
+  return (
+    <section id="about" ref={ref} ...>
+    ...
+  );
+});
+
+About.displayName = "About";
+export default About;
+```
+
+Apply same pattern to:
+- `src/components/sections/TestimonialsCarousel.tsx`
+- `src/components/MeliaVideoWidget.tsx`
+
+---
+
+## Part 4: Optimize Pulse Animation (Forced Reflow)
+
+**Problem:** The `animate-pulse-glow` animation may be causing forced reflow on mobile devices.
+
+**Current code in `index.css`:**
 ```css
-.rich-text-editor .ql-editor video {
-  max-width: 100%;
-  height: auto;
-  border-radius: 0.5rem;
-  margin: 1rem 0;
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+  will-change: opacity;
+  box-shadow: 0 0 25px hsl(var(--primary) / 0.4), 
+              0 0 50px hsl(var(--primary) / 0.2);
 }
 ```
 
-**File: `src/styles/blog-content.css`**
+**Solution:** The animation is already optimized (only animates opacity). The forced reflow is likely coming from other sources. I'll add `contain: layout` to isolate paint operations:
 
-Add published blog styles:
 ```css
-.blog-content .blog-video-wrapper {
-  position: relative;
-  max-width: 100%;
-  margin: 1.5rem auto;
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-
-.blog-content .blog-video-wrapper video {
-  width: 100%;
-  height: auto;
-  display: block;
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+  will-change: opacity;
+  contain: layout;
+  box-shadow: 0 0 25px hsl(var(--primary) / 0.4), 
+              0 0 50px hsl(var(--primary) / 0.2);
 }
 ```
 
 ---
 
-## File Changes Summary
+## Summary of Changes
 
-| File | Changes |
-|------|---------|
-| `src/components/BlogVideo.tsx` | **NEW** - React component with autoplay + "Tap for sound" overlay |
-| `src/components/RichTextEditor.tsx` | Add video upload, custom video blot, accept MP4/WebM |
-| `src/pages/BlogPost.tsx` | Allow video elements in DOMPurify, replace with BlogVideo components |
-| `src/styles/rich-text-editor.css` | Add video element styles for editor |
-| `src/styles/blog-content.css` | Add video wrapper styles for published posts |
-
----
-
-## Technical Details
-
-### Accepted File Types
-- **Images**: `image/png`, `image/jpeg`, `image/webp`, `image/gif`
-- **Videos**: `video/mp4`, `video/webm`
-
-### Size Limits
-- Images: 5MB (unchanged)
-- Videos: 25MB (keeps clips short for page speed)
-
-### Video Attributes for Performance
-- `autoplay` - Start playing immediately
-- `muted` - Required for autoplay to work in browsers
-- `playsinline` - Prevent fullscreen on mobile
-- `preload="metadata"` - Only load dimensions/duration initially
-- `loop` - Optional, videos will loop by default
-
-### "Tap for Sound" Behavior
-1. Video starts autoplaying muted
-2. Overlay shows "Tap for sound" button centered over video
-3. Tapping overlay unmutes video and hides overlay
-4. Mute toggle button remains in corner for manual control
-5. Overlay only shows once per video (after unmute, it stays hidden)
+| File | Action |
+|------|--------|
+| `src/components/MeliaVideoWidget.tsx` | Remove video import, use static path, add forwardRef |
+| `src/assets/melia-welcome.mp4` | **DELETE** |
+| `src/components/RichTextEditor.tsx` | Replace sonner with useToast |
+| `src/App.tsx` | Remove Sonner import and component |
+| `src/components/sections/About.tsx` | Add forwardRef |
+| `src/components/sections/TestimonialsCarousel.tsx` | Add forwardRef |
+| `src/index.css` | Add `contain: layout` to pulse animation |
 
 ---
 
-## Expected Result
+## Expected Results
 
 After implementation:
-- Video upload button appears in blog editor toolbar
-- Drag/drop and paste support for video files
-- Videos autoplay muted when blog post loads
-- "Tap for sound" overlay appears on each video
-- Tapping enables audio and hides overlay
-- Mute toggle button always available in corner
-- Clean, rounded video player matching site design
+- **Network payload:** Reduced from 15,922 KiB to ~8,000 KiB (7.6MB video removed from bundle)
+- **Unused JavaScript:** Reduced by 81 KiB (Sonner library removed)
+- **Console warnings:** Eliminated ref warnings
+- **Forced reflow:** Minimized with containment
+- **Mobile PageSpeed:** Expected improvement from 90 → 95+
