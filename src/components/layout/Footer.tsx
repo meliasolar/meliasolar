@@ -48,7 +48,7 @@ const Footer = () => {
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className={`transition-colors text-sm ${
                     location.pathname === "/meetmelia" || location.pathname === "/about"
-                      ? "text-accent"
+                      ? "text-primary-foreground underline underline-offset-4"
                       : "text-primary-foreground/80 hover:text-primary-foreground"
                   }`}
                 >
@@ -61,7 +61,7 @@ const Footer = () => {
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className={`transition-colors text-sm ${
                     location.pathname === "/services"
-                      ? "text-accent"
+                      ? "text-primary-foreground underline underline-offset-4"
                       : "text-primary-foreground/80 hover:text-primary-foreground"
                   }`}
                 >
@@ -74,7 +74,7 @@ const Footer = () => {
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className={`transition-colors text-sm ${
                     location.pathname === "/savingscalculator"
-                      ? "text-accent"
+                      ? "text-primary-foreground underline underline-offset-4"
                       : "text-primary-foreground/80 hover:text-primary-foreground"
                   }`}
                 >
@@ -87,7 +87,7 @@ const Footer = () => {
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className={`transition-colors text-sm ${
                     location.pathname === "/testimonials"
-                      ? "text-accent"
+                      ? "text-primary-foreground underline underline-offset-4"
                       : "text-primary-foreground/80 hover:text-primary-foreground"
                   }`}
                 >
@@ -100,7 +100,7 @@ const Footer = () => {
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className={`transition-colors text-sm ${
                     location.pathname === "/projects"
-                      ? "text-accent"
+                      ? "text-primary-foreground underline underline-offset-4"
                       : "text-primary-foreground/80 hover:text-primary-foreground"
                   }`}
                 >
@@ -113,7 +113,7 @@ const Footer = () => {
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className={`transition-colors text-sm ${
                     location.pathname === "/faq"
-                      ? "text-accent"
+                      ? "text-primary-foreground underline underline-offset-4"
                       : "text-primary-foreground/80 hover:text-primary-foreground"
                   }`}
                 >
@@ -126,7 +126,7 @@ const Footer = () => {
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className={`transition-colors text-sm ${
                     location.pathname === "/news"
-                      ? "text-accent"
+                      ? "text-primary-foreground underline underline-offset-4"
                       : "text-primary-foreground/80 hover:text-primary-foreground"
                   }`}
                 >
