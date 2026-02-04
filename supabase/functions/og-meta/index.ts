@@ -45,7 +45,7 @@ Deno.serve(async (req) => {
     // Get the origin for building URLs
     const origin = 'https://meliasolar.com';
     const canonicalUrl = `${origin}/news/${slug}`;
-    const defaultImage = `${origin}/melia-og-image.png`;
+    const defaultImage = `${origin}/melia-og-share.png`;
 
     if (!post) {
       console.log('Post not found for slug:', slug);
