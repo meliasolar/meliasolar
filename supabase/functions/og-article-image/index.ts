@@ -99,13 +99,13 @@ Deno.serve(async (req) => {
 
   <!-- Foreground image (contain, no cropping) -->
   <g>
-    <rect x="80" y="60" width="1040" height="510" rx="28" fill="#000" opacity="0.18" />
-    <rect x="70" y="50" width="1060" height="530" rx="28" fill="#fff" opacity="0.12" />
+    <rect x="150" y="60" width="900" height="510" rx="28" fill="#000" opacity="0.18" />
+    <rect x="140" y="50" width="920" height="530" rx="28" fill="#fff" opacity="0.12" />
     <image
       xlink:href="${articleImageData}"
-      x="80"
+      x="150"
       y="60"
-      width="1040"
+      width="900"
       height="510"
       preserveAspectRatio="xMidYMid meet"
     />
@@ -130,7 +130,7 @@ Deno.serve(async (req) => {
       status: 302,
       headers: {
         ...corsHeaders,
-        'Location': 'https://meliasolar.com/melia-og-image.png',
+        'Location': 'https://meliasolar.com/melia-og-share.png',
         'Cache-Control': 'public, max-age=3600',
       },
     });
