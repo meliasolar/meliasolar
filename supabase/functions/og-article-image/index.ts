@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
         status: 302,
         headers: {
           ...corsHeaders,
-          'Location': 'https://meliasolar.com/melia-og-image.png',
+        'Location': 'https://meliasolar.com/melia-og-share.png',
           'Cache-Control': 'public, max-age=86400',
         },
       });
@@ -59,7 +59,7 @@ Deno.serve(async (req) => {
         status: 302,
         headers: {
           ...corsHeaders,
-          'Location': 'https://meliasolar.com/melia-og-image.png',
+          'Location': 'https://meliasolar.com/melia-og-share.png',
           'Cache-Control': 'public, max-age=86400',
         },
       });
