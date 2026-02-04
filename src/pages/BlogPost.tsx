@@ -8,6 +8,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Calendar, ArrowLeft, Clock } from "lucide-react";
+import ShareButton from "@/components/ShareButton";
 import ArticleSchema from "@/components/seo/ArticleSchema";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import BlogVideo from "@/components/BlogVideo";
@@ -285,15 +286,18 @@ const BlogPost = () => {
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
               {post.title}
             </h1>
-            <div className="flex items-center gap-4 text-muted-foreground">
-              <span className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                {formatDate(post.created_at)}
-              </span>
-              <span className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                {getReadingTime(post.content)}
-              </span>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-4 text-muted-foreground">
+                <span className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  {formatDate(post.created_at)}
+                </span>
+                <span className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  {getReadingTime(post.content)}
+                </span>
+              </div>
+              <ShareButton slug={post.slug} title={post.title} />
             </div>
           </header>
 
