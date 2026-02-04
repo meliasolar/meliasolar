@@ -1,167 +1,105 @@
 
-# PageSpeed & Accessibility Fix Plan
 
-This plan addresses the contrast issues and optimizes video loading to improve mobile PageSpeed score and WCAG accessibility compliance.
+# Blog Article Share Image Fix
+
+## Problem Summary
+When sharing blog article URLs (e.g., `/news/how-solar-beat-coal-gas-nuclear-combined`) on social media platforms like Facebook, Twitter, LinkedIn, or iMessage, the featured image is not appearing in the share preview. Instead, the default site image is shown.
+
+## Root Cause
+The current architecture has a working edge function setup, but **Lovable's hosting does not process the `public/_redirects` file** for proxy rewrites. This means:
+
+1. The `og-meta` edge function correctly generates HTML with proper OG meta tags (verified working when called directly)
+2. The `og-article-image` edge function correctly generates dynamic share images with blurred backgrounds
+3. However, requests to `/news/*` are served directly by the SPA instead of being proxied to the edge function
+4. Social media crawlers (which don't execute JavaScript) only see the default meta tags from `index.html`, not the dynamic article-specific tags
+
+## Solution Overview
+Since Lovable hosting doesn't support proxy rewrites, we need an alternative approach. The recommended solution is to **modify the share URLs to use the edge function directly** for social media sharing purposes.
+
+### How It Works
+1. Create a new shareable URL pattern that goes through the edge function
+2. The edge function serves crawler-friendly HTML with proper OG tags
+3. Users clicking shared links get redirected to the SPA automatically (the edge function already does this)
 
 ---
 
-## Issues Identified from Screenshots
+## Implementation Details
 
-| Issue | Location | Fix |
-|-------|----------|-----|
-| Low contrast: "YOUR ENERGY ADVISOR" | About.tsx line 156 | Darken accent color for text on light backgrounds |
-| Low contrast: "ABOUT US" | About.tsx line 207 | Same fix |
-| Low contrast: Footer links on purple | Footer.tsx | Use high-contrast foreground colors |
-| Video loaded twice | MeliaVideoWidget + About.tsx | Use poster image on mobile video, lazy-load desktop widget |
-| 81 KiB unused JS | Sonner residual | Already removed - may need cache clear |
+### 1. Update Edge Function URL Pattern
+Modify the `og-meta` edge function to handle requests at a dedicated path that can be used for sharing.
 
----
-
-## Part 1: Fix Contrast Issues
-
-### Root Cause
-The `text-accent` class uses warm orange (`hsl(30, 95%, 55%)`) which has these contrast ratios:
-- On white/light backgrounds: ~2.5:1 (FAILS - needs 4.5:1)
-- On purple footer (`bg-primary`): ~2.8:1 (FAILS)
-
-### Solution: Create Accessible Text Accent Color
-
-**File: `src/index.css`**
-
-Add a new CSS variable for accessible accent text:
-```css
-:root {
-  /* Existing accent for decorative elements */
-  --accent: 30 95% 55%;
-  
-  /* NEW: Darker accessible accent for text - meets 4.5:1 on white */
-  --accent-text: 30 90% 38%;
-}
+**Current flow (broken):**
+```text
+Social share URL: meliasolar.com/news/article-slug
+     ↓
+Lovable hosting (ignores _redirects)
+     ↓
+Serves SPA index.html
+     ↓
+Crawler sees default meta tags ❌
 ```
 
-### Update Components Using text-accent
-
-**File: `src/components/sections/About.tsx`**
-
-Lines 156-157 and 207-208: Change `text-accent` to use the accessible variant:
-```tsx
-// Before:
-<span className="text-accent font-semibold text-sm uppercase tracking-widest">
-
-// After:
-<span className="text-[hsl(30,90%,38%)] font-semibold text-sm uppercase tracking-widest">
+**New flow (working):**
+```text
+Social share URL: [supabase-url]/functions/v1/og-meta?slug=article-slug
+     ↓
+Edge function serves HTML with OG tags
+     ↓
+Crawler sees article-specific meta tags ✓
+     ↓
+Real users redirected to meliasolar.com/news/article-slug
 ```
 
-This creates a darker orange (`hsl(30, 90%, 38%)`) that maintains brand identity while meeting WCAG AA contrast requirements (4.5:1) on light backgrounds.
+### 2. Simplify by Using Direct Edge Function URLs
+Since the edge function already:
+- Generates proper OG meta tags with article title, description, and featured image
+- Includes JavaScript redirect for real users to the actual SPA page
+- Returns correct canonical URLs pointing to the real site
+
+We can use the edge function URL directly as the shareable link.
+
+### 3. Add a "Copy Share Link" Feature to Blog Posts
+Add a button on blog post pages that copies a crawler-friendly share URL. This gives users an optimized link to share that will display proper previews.
+
+**Implementation:**
+- Add a share button to `BlogPost.tsx`
+- The button copies the edge function URL with the article slug
+- When shared, crawlers see the proper meta tags
+- Users clicking the link get redirected to the real page
+
+### 4. Alternative: Custom Domain with CDN
+For a more seamless experience (using the actual domain for share URLs), the site can be configured with a CDN like Cloudflare that supports edge redirects. This would require:
+- Enabling "Allow traffic through a CDN or proxy" in Lovable domain settings
+- Configuring Cloudflare Page Rules or Workers to proxy `/news/*` to the edge function for crawler user agents
 
 ---
 
-## Part 2: Fix Footer Contrast
+## Files to Modify
 
-**File: `src/components/layout/Footer.tsx`**
+| File | Change |
+|------|--------|
+| `src/pages/BlogPost.tsx` | Add share button that copies edge function URL |
+| `src/components/ui/` (new) | Create ShareButton component |
 
-The footer uses `bg-primary` (purple) with `text-accent` for active links. The orange-on-purple combination fails contrast requirements.
-
-### Solution: Use high-contrast color for active footer links
-
-Change active link styling from `text-accent` to `text-primary-foreground` with underline decoration:
-
-```tsx
-// Before:
-className={`transition-colors text-sm ${
-  location.pathname === "/meetmelia"
-    ? "text-accent"
-    : "text-primary-foreground/80 hover:text-primary-foreground"
-}`}
-
-// After:
-className={`transition-colors text-sm ${
-  location.pathname === "/meetmelia"
-    ? "text-primary-foreground underline underline-offset-4"
-    : "text-primary-foreground/80 hover:text-primary-foreground"
-}`}
-```
-
-This uses white text (which has excellent contrast on purple) with an underline to indicate the active state.
-
----
-
-## Part 3: Optimize Video Loading
-
-### Current Problem
-- `MeliaVideoWidget.tsx` loads video on desktop (hidden on mobile)
-- `About.tsx` loads the same video on mobile
-- Both reference `/videos/melia-welcome.mp4` (7.6MB)
-- Desktop users may load video even if widget is dismissed
-
-### Solution: Add preload="none" to delay loading until interaction
-
-Both components already have `preload="none"` which is correct. The issue in PageSpeed may be from a cached report before the fix, or from the video actually loading when autoplayed.
-
-**Additional optimization**: Add a poster image so users see a preview before video loads:
-
-**File: `src/components/MeliaVideoWidget.tsx`** - Add poster attribute:
-```tsx
-<video
-  ref={videoRef}
-  src="/videos/melia-welcome.mp4"
-  poster="/images/melia-portrait.webp"
-  autoPlay
-  muted={isMuted}
-  playsInline
-  preload="none"
-  onEnded={handleVideoEnd}
-  className="w-64 h-44 object-cover"
->
-```
-
-**File: `src/components/sections/About.tsx`** - Add poster attribute to mobile video:
-```tsx
-<video
-  ref={videoRef}
-  src="/videos/melia-welcome.mp4"
-  poster="/images/melia-portrait.webp"
-  muted={isMuted}
-  playsInline
-  autoPlay
-  preload="none"
-  onEnded={handleVideoEnd}
-  className="w-full aspect-video object-cover bg-background"
-/>
-```
-
----
-
-## Summary of Changes
-
-| File | Changes |
-|------|---------|
-| `src/index.css` | Add `--accent-text` CSS variable for accessible text |
-| `src/components/sections/About.tsx` | Use accessible darker orange for section labels |
-| `src/components/layout/Footer.tsx` | Use underline + white text for active links instead of orange |
-| `src/components/MeliaVideoWidget.tsx` | Add poster image attribute |
-
----
-
-## Expected Results
-
-After implementation:
-- **Contrast issues**: All text will meet WCAG AA 4.5:1 contrast ratio
-- **Video optimization**: Poster images provide instant visual while video loads
-- **Mobile PageSpeed**: Expected improvement from 90 → 93+ (once cache clears)
-- **Accessibility score**: Will pass all contrast checks
+## Files Unchanged
+- Edge functions (`og-meta`, `og-article-image`) - already working correctly
+- `public/_redirects` - can be removed or kept for documentation
 
 ---
 
 ## Technical Notes
 
-### Color Contrast Calculations
-- Original orange `hsl(30, 95%, 55%)` on white: ~2.5:1 (FAIL)
-- Darker orange `hsl(30, 90%, 38%)` on white: ~4.8:1 (PASS)
-- White `hsl(0, 0%, 100%)` on purple `hsl(270, 60%, 55%)`: ~5.2:1 (PASS)
+- The edge function URL format: `https://tccujdytaskukotfjapn.supabase.co/functions/v1/og-meta?slug=ARTICLE_SLUG`
+- The edge function returns HTML with:
+  - Proper OG meta tags (title, description, image)
+  - Twitter card meta tags
+  - A meta refresh redirect to the real page
+  - JavaScript redirect as backup
+- The `og-article-image` function generates a 1200x630 SVG with blurred background effect
 
-### Video Poster Strategy
-Using the existing `/images/melia-portrait.webp` (30.2 KiB) as poster means:
-- Instant visual feedback (already cached from About section)
-- No additional network request needed
-- Graceful loading experience
+## Expected Outcome
+When users share the special share link:
+1. Facebook, Twitter, LinkedIn, iMessage will display the article's featured image
+2. The preview will show the correct title and description
+3. Clicking the shared link takes users to the actual blog post on meliasolar.com
+
