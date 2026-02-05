@@ -1,78 +1,111 @@
 
 
-# Fix Image Squashing for ALL Blog OG Images
+# Fix First Contentful Paint & Largest Contentful Paint Regression
 
-## Problem
-The `og-article-image` edge function generates social share previews using an SVG with a **1040x510 pixel foreground container** (approximately 2:1 aspect ratio - very wide). When portrait or square images are used, `preserveAspectRatio="xMidYMid meet"` scales them down to fit the height, resulting in:
-- Small, hard-to-see faces
-- Wasted horizontal space
-- Melia appearing "squashed" or tiny
+## Root Cause Analysis
 
-## Current Blog Posts Affected
-From the database query, 18 blog posts have featured images. The Chamath post uses `melia-chamath-solar-split.webp` which is portrait-oriented, causing the squashing issue. Other posts may have similar issues depending on their image aspect ratios.
+The PageSpeed score dropped from 96 to 91 due to several FCP/LCP blockers:
+
+### Issue 1: Hero Animation Delays Paint
+The hero elements use `animate-fade-up` with `opacity: 0` as the starting state. This means the LCP element (the main headline and hero content) starts **invisible** and only appears after the 0.6s animation completes - significantly delaying LCP.
+
+```css
+/* Current animation starts at opacity: 0 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;  ← LCP element invisible!
+    transform: translateY(30px);
+  }
+}
+```
+
+### Issue 2: Critical CSS Not Matching Actual Styles
+The inline critical CSS in `index.html` doesn't include the animation classes, causing a flash or layout shift when the full CSS loads.
+
+### Issue 3: Stats Section Animation Delay
+The stats section at the bottom of the hero has `md:[animation-delay:0.15s]` which adds additional delay to visible content.
 
 ## Solution
-Redesign the SVG container to use a **more square-friendly aspect ratio** that accommodates both portrait and landscape images without making anyone appear tiny.
 
-### New Container Dimensions
-Change from `1040x510` to `900x510` - this creates a ~16:9 container that:
-- Better accommodates portrait images (they display larger)
-- Still works well for landscape images
-- Centers nicely within the 1200x630 OG canvas
+### 1. Remove Animation from LCP Elements (Hero.tsx)
+Remove the `animate-fade-up` class from the main headline and subheadline - these are the LCP elements and must render **immediately**.
+
+**Changes to Hero.tsx:**
+- Line 43: Remove `animate-fade-up` from h1
+- Lines 51-75: The subheadline box should render immediately (it's the LCP element)
+- Line 99: Remove animation delay from stats section for faster FCP
+
+### 2. Add Critical Animation Fix to index.html
+Add a CSS rule that ensures LCP elements are visible immediately, not waiting for animation.
+
+### 3. Optimize Animation Approach
+For elements that should animate, use `animation-fill-mode: backwards` and ensure they start visible, then animate subtly.
 
 ## Technical Changes
 
-### File: `supabase/functions/og-article-image/index.ts`
+### File: `src/components/sections/Hero.tsx`
 
-**Lines 102-111 - Update foreground container dimensions:**
+| Line | Current | Change |
+|------|---------|--------|
+| 43 | `animate-fade-up` | Remove animation class |
+| 78 | `animate-fade-up md:[animation-delay:0.1s]` | Keep animation only on CTAs (below LCP threshold) |
+| 99 | `animate-fade-up md:[animation-delay:0.15s]` | Remove animation-delay |
 
-| Element | Current | New |
-|---------|---------|-----|
-| Shadow rect | `x="80" width="1040"` | `x="150" width="900"` |
-| Glow rect | `x="70" width="1060"` | `x="140" width="920"` |
-| Image | `x="80" width="1040"` | `x="150" width="900"` |
+### File: `index.html`
 
-**Line 133 - Fix error fallback:**
-Change `melia-og-image.png` to `melia-og-share.png` for consistency.
-
-### Code Change Preview
-
-```xml
-<!-- Current (too wide) -->
-<rect x="80" y="60" width="1040" height="510" ... />
-<image x="80" y="60" width="1040" height="510" ... />
-
-<!-- New (balanced) -->
-<rect x="150" y="60" width="900" height="510" ... />
-<image x="150" y="60" width="900" height="510" ... />
+Add to critical CSS (around line 96):
+```css
+/* Prevent LCP delay from animations */
+.hero-lcp { opacity: 1 !important; animation: none !important; }
 ```
 
-### Visual Comparison
+### File: `src/index.css`
+
+Optimize the fadeUp animation to not start from opacity 0:
+```css
+@keyframes fadeUp {
+  from {
+    transform: translateY(20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.4s ease-out forwards;
+}
+```
+
+## Visual Impact
 
 ```text
-Current container (2:1 ratio - very wide):
-┌─────────────────────────────────────────┐
-│  x=80                      width=1040   │
-│  Portrait images appear tiny here       │
-└─────────────────────────────────────────┘
+BEFORE (slow LCP):
+┌────────────────────────────┐
+│  Header loads              │ ← FCP: ~1.2s
+│  [empty hero - animating]  │
+│  ...waiting 0.6s...        │
+│  Hero content appears      │ ← LCP: ~1.8s (LATE!)
+└────────────────────────────┘
 
-New container (~16:9 ratio - balanced):
-    ┌───────────────────────────────┐
-    │  x=150          width=900     │
-    │  Portrait images display      │
-    │  at proper size               │
-    └───────────────────────────────┘
+AFTER (fast LCP):
+┌────────────────────────────┐
+│  Header + Hero together    │ ← FCP: ~0.8s
+│  "Your Personal Solar King"│ ← LCP: ~0.9s (FAST!)
+│  [CTAs animate in subtly]  │
+└────────────────────────────┘
 ```
 
 ## Files to Modify
 
 | File | Change |
 |------|--------|
-| `supabase/functions/og-article-image/index.ts` | Update container dimensions (lines 102-111) and fix line 133 fallback |
+| `src/components/sections/Hero.tsx` | Remove animations from h1, subheadline, stats |
+| `index.html` | Add critical CSS rule for LCP |
+| `src/index.css` | Optimize animation keyframes |
 
-## Expected Result
-- All blog post share previews will display featured images at proper proportions
-- Portrait images (like Melia/Chamath) will appear larger and clearer
-- Landscape images will still look great with balanced margins
-- Melia will never appear squashed or distorted
+## Expected Outcome
+- FCP: Improved by ~300-400ms (header + headline render immediately)
+- LCP: Improved by ~500-600ms (headline visible without waiting for animation)
+- PageSpeed score should return to 96+ on mobile
 
