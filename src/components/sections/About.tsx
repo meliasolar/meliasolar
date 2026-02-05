@@ -103,7 +103,7 @@ const About = forwardRef<HTMLElement>((_, ref) => {
                 src="/videos/melia-welcome.mp4"
                 muted={isMuted}
                 playsInline
-                autoPlay
+                poster="/images/melia-portrait.webp"
                 preload="none"
                 onEnded={handleVideoEnd}
                 className="w-full aspect-video object-cover bg-background"
