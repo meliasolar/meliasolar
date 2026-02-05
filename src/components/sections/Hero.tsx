@@ -39,8 +39,8 @@ const Hero = () => {
         <div className="relative container mx-auto px-6 pt-20 lg:pt-24 pb-8 lg:pb-6">
           <div className="max-w-2xl space-y-6">
 
-            {/* Headline - no animation delay for faster LCP */}
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight animate-fade-up">
+            {/* Headline - no animation for immediate LCP */}
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
               Your Personal
               <span className="block">
                 <span className="text-gradient-solar">Solar</span> King
@@ -95,8 +95,8 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Stats - separate from hero background, no delay on mobile */}
-      <div className="bg-background relative z-10 animate-fade-up md:[animation-delay:0.15s]">
+      {/* Stats - separate from hero background, renders immediately */}
+      <div className="bg-background relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-2xl">
             <div className="grid grid-cols-3 gap-8 py-6 border-t border-border/50">
