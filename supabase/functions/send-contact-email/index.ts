@@ -66,7 +66,7 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         access_key: WEB3FORMS_ACCESS_KEY,
         subject: `New Solar Quote Request from ${name}`,
-        from_name: "Voltaic Now Website",
+        from_name: "Melia Solar",
         name: name,
         email: email,
         phone: phone,
