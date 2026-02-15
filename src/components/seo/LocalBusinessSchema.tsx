@@ -11,7 +11,7 @@ const LocalBusinessSchema = () => {
       "Expert solar panel installation, HVAC, Title 24 roofing, and QuietCool whole house fans. Serving residential and commercial clients across 12 states.",
     url: "https://meliasolar.com",
     telephone: "+1-310-346-9466",
-    email: "meliaking@voltaicnow.com",
+    email: "projects@meliasolar.com",
     logo: "https://meliasolar.com/images/logo-old.webp",
     image: "https://meliasolar.com/melia-og-image.png",
     priceRange: "$$",

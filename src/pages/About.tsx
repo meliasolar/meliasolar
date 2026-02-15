@@ -389,7 +389,7 @@ const AboutPage = () => {
                 variant="outline"
                 asChild
               >
-                <a href="mailto:meliaking@voltaicnow.com">Email Us</a>
+                <a href="mailto:projects@meliasolar.com">Email Us</a>
               </Button>
             </div>
           </div>

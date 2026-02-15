@@ -154,7 +154,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-sm text-primary-foreground/70">Email us</div>
-                  <a href="mailto:meliaking@voltaicnow.com" className="font-semibold text-primary-foreground hover:underline">meliaking@voltaicnow.com</a>
+                  <a href="mailto:projects@meliasolar.com" className="font-semibold text-primary-foreground hover:underline">projects@meliasolar.com</a>
                 </div>
               </div>
 
