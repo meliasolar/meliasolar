@@ -1,22 +1,24 @@
 
 
-# Reorder Energy Unit Dropdown
+# Update Form Sender Name
 
-Move "USD/Month" to the first position in the energy unit dropdown on the contact form's energy consumption step.
+## Overview
+Change the sender name on contact form notification emails from "Voltaic Now Website" to "Melia Solar".
 
 ## Change
 
-**File:** `src/components/ContactFormModal.tsx`
+**File:** `supabase/functions/send-contact-email/index.ts`
 
-Reorder the three `SelectItem` entries in the energy unit `Select` from:
-1. kWh/Month
-2. kWh/Year
-3. USD/Month
+Update the `from_name` field in the Web3Forms API payload from `"Voltaic Now Website"` to `"Melia Solar"`.
 
-To:
-1. USD/Month
-2. kWh/Month
-3. kWh/Year
+This is a single-line change on the line that reads:
+```
+from_name: "Voltaic Now Website",
+```
+Changed to:
+```
+from_name: "Melia Solar",
+```
 
-Also update the default `energyUnit` value in the initial form state (and the reset function) from `"kWh/Month"` to `"USD/Month"` so it matches the first item by default.
+The backend function will be redeployed automatically after the change.
 
