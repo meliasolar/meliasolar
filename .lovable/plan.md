@@ -1,25 +1,22 @@
 
 
-# Update Email Address Sitewide
+# Reorder Energy Unit Dropdown
 
-## Overview
-Replace all instances of `meliaking@voltaicnow.com` with `projects@meliasolar.com` across the entire site.
+Move "USD/Month" to the first position in the energy unit dropdown on the contact form's energy consumption step.
 
-## Files to Update (5 files)
+## Change
 
-| File | Change |
-|------|--------|
-| `src/components/FloatingContactButtons.tsx` | Update `mailto:` link |
-| `src/components/layout/Footer.tsx` | Update `mailto:` link and visible email text |
-| `src/components/sections/Contact.tsx` | Update `mailto:` link and visible email text |
-| `src/components/seo/LocalBusinessSchema.tsx` | Update `email` field in structured data |
-| `src/pages/About.tsx` | Update `mailto:` link |
+**File:** `src/components/ContactFormModal.tsx`
 
-## Contact Form (Web3Forms)
-The contact form submissions are routed through Web3Forms using an access key. The recipient email is configured in your Web3Forms account, not in the site code. You will need to log into your Web3Forms dashboard and update the notification email to `projects@meliasolar.com` so form submissions go to the new address.
+Reorder the three `SelectItem` entries in the energy unit `Select` from:
+1. kWh/Month
+2. kWh/Year
+3. USD/Month
 
-## Summary
-- 5 files updated with the new email
-- No backend code changes needed
-- Web3Forms account update needed separately for form submissions
+To:
+1. USD/Month
+2. kWh/Month
+3. kWh/Year
+
+Also update the default `energyUnit` value in the initial form state (and the reset function) from `"kWh/Month"` to `"USD/Month"` so it matches the first item by default.
 
