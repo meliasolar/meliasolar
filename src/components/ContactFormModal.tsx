@@ -61,7 +61,7 @@ const ContactFormModal = ({ open, onOpenChange }: ContactFormModalProps) => {
     propertyAddress: "",
     purchasePreference: "",
     energyConsumption: "",
-    energyUnit: "kWh/Month",
+    energyUnit: "USD/Month",
     interestedInStorage: false,
     message: "",
   });
@@ -77,7 +77,7 @@ const ContactFormModal = ({ open, onOpenChange }: ContactFormModalProps) => {
       propertyAddress: "",
       purchasePreference: "",
       energyConsumption: "",
-      energyUnit: "kWh/Month",
+      energyUnit: "USD/Month",
       interestedInStorage: false,
       message: "",
     });
@@ -353,9 +353,9 @@ const ContactFormModal = ({ open, onOpenChange }: ContactFormModalProps) => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border">
+                  <SelectItem value="USD/Month">USD/Month</SelectItem>
                   <SelectItem value="kWh/Month">kWh/Month</SelectItem>
                   <SelectItem value="kWh/Year">kWh/Year</SelectItem>
-                  <SelectItem value="USD/Month">USD/Month</SelectItem>
                 </SelectContent>
               </Select>
             </div>
