@@ -1,24 +1,25 @@
 
+# Fix Sitemap for Google Search Console
 
-# Update Form Sender Name
+## Problem
+Google Search Console cannot fetch `https://meliasolar.com/sitemap.xml` because the `_redirects` proxy rewrite is not supported by the hosting platform. Instead of receiving XML, Google gets the SPA's 404 HTML page.
 
-## Overview
-Change the sender name on contact form notification emails from "Voltaic Now Website" to "Melia Solar".
+The backend function itself works perfectly and returns valid XML with all pages and blog posts.
 
-## Change
+## Solution
 
-**File:** `supabase/functions/send-contact-email/index.ts`
-
-Update the `from_name` field in the Web3Forms API payload from `"Voltaic Now Website"` to `"Melia Solar"`.
-
-This is a single-line change on the line that reads:
+### 1. Update `robots.txt` to point directly to the backend function
+Change the Sitemap URL in `public/robots.txt` from:
 ```
-from_name: "Voltaic Now Website",
+Sitemap: https://meliasolar.com/sitemap.xml
 ```
-Changed to:
-```
-from_name: "Melia Solar",
-```
+to the direct backend function URL so Google can fetch it successfully.
 
-The backend function will be redeployed automatically after the change.
+### 2. Add a `/sitemap.xml` route in the React app
+Add a small component that redirects visitors to the backend sitemap URL, so anyone navigating to `/sitemap.xml` in a browser is taken to the actual XML.
 
+### 3. Clean up `_redirects`
+Remove the non-functional sitemap redirect line from `public/_redirects`.
+
+## After publishing
+Re-submit the new sitemap URL in Google Search Console to replace the current broken entry.
