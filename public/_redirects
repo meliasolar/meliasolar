@@ -1,6 +1,3 @@
-# Redirect sitemap.xml to the dynamic edge function
-/sitemap.xml https://tccujdytaskukotfjapn.supabase.co/functions/v1/sitemap 200
-
 # Route blog article requests to og-meta for crawler support
 # Crawlers get server-rendered OG tags, users get redirected to the SPA
 /news/* https://tccujdytaskukotfjapn.supabase.co/functions/v1/og-meta?slug=:splat 200
