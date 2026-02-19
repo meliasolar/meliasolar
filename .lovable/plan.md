@@ -1,25 +1,14 @@
 
-# Fix Sitemap for Google Search Console
 
-## Problem
-Google Search Console cannot fetch `https://meliasolar.com/sitemap.xml` because the `_redirects` proxy rewrite is not supported by the hosting platform. Instead of receiving XML, Google gets the SPA's 404 HTML page.
+## Add Google Analytics
 
-The backend function itself works perfectly and returns valid XML with all pages and blog posts.
+Add the Google Analytics (gtag.js) tracking snippet to `index.html` by inserting the provided script tags into the `<head>` section.
 
-## Solution
+### Changes
 
-### 1. Update `robots.txt` to point directly to the backend function
-Change the Sitemap URL in `public/robots.txt` from:
-```
-Sitemap: https://meliasolar.com/sitemap.xml
-```
-to the direct backend function URL so Google can fetch it successfully.
+**File: `index.html`**
+- Add the two Google Analytics script tags (async loader + config) right before the closing `</head>` tag, after the existing critical CSS `<style>` block.
+- Tracking ID: `G-01Y3F9B3HW`
 
-### 2. Add a `/sitemap.xml` route in the React app
-Add a small component that redirects visitors to the backend sitemap URL, so anyone navigating to `/sitemap.xml` in a browser is taken to the actual XML.
+This is a single, straightforward edit -- no other files need to change.
 
-### 3. Clean up `_redirects`
-Remove the non-functional sitemap redirect line from `public/_redirects`.
-
-## After publishing
-Re-submit the new sitemap URL in Google Search Console to replace the current broken entry.
