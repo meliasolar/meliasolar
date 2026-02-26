@@ -5,7 +5,7 @@ import { Menu, X, ChevronDown, Instagram } from "lucide-react";
 import { useContactModal } from "@/contexts/ContactModalContext";
 
 const serviceLinks = [
-  { name: "Solar Panel Installation", href: "/solar" },
+  { name: "Solar & Backup Battery Install", href: "/solar" },
   { name: "Tesla Superchargers", href: "/supercharger" },
   { name: "HVAC Systems", href: "/hvac" },
   { name: "Title 24 Roofing", href: "/title24" },

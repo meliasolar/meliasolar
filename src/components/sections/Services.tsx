@@ -11,9 +11,9 @@ const Services = () => {
   const services = [
     {
       id: "services-solar",
-      title: "Solar Panel Installation",
+      title: "Solar Panel & Backup Battery Installation",
       description:
-        "Solar power is the cornerstone of our offerings — a renewable and green source of energy that allows homeowners to be less dependent on traditional electricity sources. Solar systems are becoming more efficient and cost-effective every day! Invest in a solar system to ensure your home is equipped to stay ahead of the changing energy landscape.",
+        "Solar power is the cornerstone of our offerings — a renewable and green source of energy that allows homeowners to be less dependent on traditional electricity sources. Solar systems are becoming more efficient and cost-effective every day! Invest in a solar system to ensure your home is equipped to stay ahead of the changing energy landscape. Adding batteries provides storage for your solar production & back up power when you need it most.",
       image: null,
       features: [
         "Custom system design",

@@ -12,14 +12,16 @@ const hvacImage = "/images/services/hvac-service.webp";
 const roofingImage = "/images/services/roofing-service.webp";
 const quietcoolImage = "/images/services/quietcool-service.webp";
 const teslaImage = "/images/services/tesla-supercharger-service.webp";
+const solarAerialImage = "/images/services/solar-aerial.webp";
+const teslaBatteryImage = "/images/services/tesla-battery-wall.webp";
 
 const ServicesPage = () => {
   const services = [
     {
       id: "solar",
-      title: "Solar Panel Installation",
+      title: "Solar Panel & Backup Battery Installation",
       description:
-        "Solar power is the cornerstone of our offerings — a renewable and green source of energy that allows homeowners to be less dependent on traditional electricity sources. Solar systems are becoming more efficient and cost-effective every day! Invest in a solar system to ensure your home is equipped to stay ahead of the changing energy landscape.",
+        "Solar power is the cornerstone of our offerings — a renewable and green source of energy that allows homeowners to be less dependent on traditional electricity sources. Solar systems are becoming more efficient and cost-effective every day! Invest in a solar system to ensure your home is equipped to stay ahead of the changing energy landscape. Adding batteries provides storage for your solar production & back up power when you need it most.",
       image: null,
       features: [
         "Custom system design",
@@ -129,6 +131,30 @@ const ServicesPage = () => {
         {/* Services List */}
         <section className="py-6 md:py-8 bg-background">
           <div className="container mx-auto px-6">
+            {/* Solar Hero Images */}
+            <div id="solar" className="scroll-mt-24 grid md:grid-cols-2 gap-6 mb-12">
+              <div className="relative rounded-2xl overflow-hidden shadow-medium">
+                <img
+                  src={solarAerialImage}
+                  alt="Aerial view of solar panel installation on residential home"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-72 md:h-96 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
+              </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-medium">
+                <img
+                  src={teslaBatteryImage}
+                  alt="Tesla backup battery wall installation"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-72 md:h-96 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
+              </div>
+            </div>
+
             <div className="space-y-24">
               {services.map((service, index) => (
                 <div
