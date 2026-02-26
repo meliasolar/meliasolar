@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const WEB3FORMS_ACCESS_KEY = Deno.env.get("WEB3FORMS_ACCESS_KEY");
 
@@ -8,44 +9,31 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-interface ContactEmailRequest {
-  name: string;
-  email: string;
-  phone: string;
-  propertyAddress: string;
-  purchasePreference: string;
-  energyConsumption: string;
-  energyUnit: string;
-  interestedInStorage: boolean;
-  message?: string;
-}
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100),
+  email: z.string().trim().email("Invalid email").max(255),
+  phone: z.string().trim().min(1, "Phone is required").max(20),
+  propertyAddress: z.string().trim().min(1, "Address is required").max(500),
+  purchasePreference: z.string().min(1).max(50),
+  energyConsumption: z.string().trim().min(1).max(20),
+  energyUnit: z.string().min(1).max(20),
+  interestedInStorage: z.boolean(),
+  message: z.string().trim().max(1000).optional(),
+});
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const {
-      name,
-      email,
-      phone,
-      propertyAddress,
-      purchasePreference,
-      energyConsumption,
-      energyUnit,
-      interestedInStorage,
-      message,
-    }: ContactEmailRequest = await req.json();
+    const rawBody = await req.json();
+    const result = contactSchema.safeParse(rawBody);
 
-    console.log("Received contact form submission:", { name, email, phone, propertyAddress });
-
-    // Validate required inputs
-    if (!name || !email || !phone || !propertyAddress || !purchasePreference || !energyConsumption || !energyUnit) {
-      console.error("Missing required fields");
+    if (!result.success) {
+      console.error("Validation failed:", result.error.flatten());
       return new Response(
-        JSON.stringify({ error: "All required fields must be filled" }),
+        JSON.stringify({ error: "Invalid input" }),
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -53,7 +41,10 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Format energy consumption with unit
+    const { name, email, phone, propertyAddress, purchasePreference, energyConsumption, energyUnit, interestedInStorage, message } = result.data;
+
+    console.log("Received contact form submission:", { name, email: email.substring(0, 3) + "***", phone: "***" });
+
     const energyDisplay = `${energyConsumption} ${energyUnit}`;
 
     // Send to Web3Forms
