@@ -1,25 +1,27 @@
 
 
-## Problem
+## Plan
 
-The reset password page immediately shows "Invalid or expired reset link" because:
+Two tasks:
 
-1. **The page defaults to `isValidSession = false`** and renders the error state before the auth system has time to process the recovery tokens from the URL.
-2. **PKCE flow handling is missing.** Supabase's newer auth uses a `code` query parameter (not just hash fragments). The page only checks for `type=recovery` in the URL hash, which may not be present.
-3. **Race condition:** The `PASSWORD_RECOVERY` auth event fires asynchronously, but the component already rendered the "invalid" view before it arrives.
+### 1. Change password immediately (edge function)
+Same approach as before — create a temporary edge function that uses the admin API to update the password for `david.shadrake@gmail.com`. Will use the `TEMP_NEW_PASSWORD` secret to collect the new password securely, execute the function, then clean up.
 
-## Fix
+### 2. Fix the reset password page
 
-Rework the `ResetPassword` component:
+**Root cause from auth logs:** The Supabase `/verify` endpoint successfully processes the recovery token and redirects to `/reset-password` with tokens in the URL hash. The Supabase JS client then automatically processes those hash tokens and establishes a session. However, the current page logic has a race condition — it checks the hash *before* the Supabase client has consumed it, and the `onAuthStateChange` listener may fire before or after the component mounts.
 
-1. **Add a `checking` loading state** (default `true`) so the page shows a spinner/loading indicator instead of the "invalid" error while tokens are being processed.
-2. **Handle the PKCE `code` query parameter.** If `?code=...` is present in the URL, call `supabase.auth.exchangeCodeForSession(code)` to complete the token exchange before showing the form.
-3. **Keep the existing hash check and `PASSWORD_RECOVERY` listener** as fallbacks.
-4. **Set a timeout** (~3 seconds) — if neither the hash check, code exchange, nor the auth event fires by then, show the "invalid" message.
+**Fix approach:** Simplify the detection logic. Instead of trying to parse hash fragments manually, rely on two things:
+1. The `PASSWORD_RECOVERY` event from `onAuthStateChange` (primary)
+2. A fallback check via `supabase.auth.getSession()` — if a session exists when the page loads, the recovery flow already completed
+3. PKCE `code` parameter handling (keep as-is)
+4. Increase timeout to 6 seconds to give the Supabase client more time to process the redirect
 
-### Summary of changes in `src/pages/ResetPassword.tsx`:
-- Add `isChecking` state, initially `true`, to show a loading state instead of the error
-- In the `useEffect`, parse `window.location.search` for a `code` param and call `exchangeCodeForSession` if found
-- After all checks complete (hash, code exchange, auth event, or timeout), set `isChecking` to `false`
-- Render a loading indicator while `isChecking` is true
+Additionally, also listen for `SIGNED_IN` event combined with checking that we're on the reset-password page (Supabase sometimes fires `SIGNED_IN` instead of `PASSWORD_RECOVERY` after the implicit recovery flow).
+
+**Changes in `src/pages/ResetPassword.tsx`:**
+- Add `getSession()` check — if a session already exists on mount, mark as valid
+- Listen for both `PASSWORD_RECOVERY` and `SIGNED_IN` events
+- Increase timeout to 6 seconds
+- Keep hash check and PKCE code handling as fallbacks
 
