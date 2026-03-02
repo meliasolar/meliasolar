@@ -1,28 +1,25 @@
 
 
-## Fix: Move Google Analytics Tag to Top of `<head>`
+## Problem
 
-Google Tag Assistant expects the gtag snippet to appear **immediately after the opening `<head>` tag**. Currently it's placed near the bottom of `<head>` (around line 106), after all the preloads, meta tags, and critical CSS. This can cause detection failures.
+The reset password page immediately shows "Invalid or expired reset link" because:
 
-### Change
+1. **The page defaults to `isValidSession = false`** and renders the error state before the auth system has time to process the recovery tokens from the URL.
+2. **PKCE flow handling is missing.** Supabase's newer auth uses a `code` query parameter (not just hash fragments). The page only checks for `type=recovery` in the URL hash, which may not be present.
+3. **Race condition:** The `PASSWORD_RECOVERY` auth event fires asynchronously, but the component already rendered the "invalid" view before it arrives.
 
-**File: `index.html`**
-- Remove the GA script block from its current location (lines 106-113)
-- Re-insert it immediately after `<meta name="viewport" ...>` on line 5, so it's near the top of `<head>` as Google requires
+## Fix
 
-The final order will be:
-```
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" ... />
+Rework the `ResetPassword` component:
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="...gtag/js?id=G-01Y3F9B3HW"></script>
-  <script>...</script>
+1. **Add a `checking` loading state** (default `true`) so the page shows a spinner/loading indicator instead of the "invalid" error while tokens are being processed.
+2. **Handle the PKCE `code` query parameter.** If `?code=...` is present in the URL, call `supabase.auth.exchangeCodeForSession(code)` to complete the token exchange before showing the form.
+3. **Keep the existing hash check and `PASSWORD_RECOVERY` listener** as fallbacks.
+4. **Set a timeout** (~3 seconds) — if neither the hash check, code exchange, nor the auth event fires by then, show the "invalid" message.
 
-  <!-- Preloads, meta, styles, etc. -->
-</head>
-```
-
-No other files need to change.
+### Summary of changes in `src/pages/ResetPassword.tsx`:
+- Add `isChecking` state, initially `true`, to show a loading state instead of the error
+- In the `useEffect`, parse `window.location.search` for a `code` param and call `exchangeCodeForSession` if found
+- After all checks complete (hash, code exchange, auth event, or timeout), set `isChecking` to `false`
+- Render a loading indicator while `isChecking` is true
 
