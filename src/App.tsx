@@ -25,6 +25,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Auth = lazy(() => import("./pages/Auth"));
 const AdminBlog = lazy(() => import("./pages/AdminBlog"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const SitemapRedirect = lazy(() => import("./pages/SitemapRedirect"));
 
 const queryClient = new QueryClient();
@@ -58,6 +59,7 @@ const App = () => (
                 <Route path="/news" element={<Blog />} />
                 <Route path="/news/:slug" element={<BlogPost />} />
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/admin/news" element={<AdminBlog />} />
                 <Route path="/sitemap.xml" element={<SitemapRedirect />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
