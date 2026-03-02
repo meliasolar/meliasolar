@@ -9,33 +9,70 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Sun, Lock, ArrowRight } from "lucide-react";
+import { Sun, Lock, ArrowRight, Loader2 } from "lucide-react";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const [isValidSession, setIsValidSession] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if this is a recovery flow
+    let resolved = false;
+
+    const markValid = () => {
+      if (!resolved) {
+        resolved = true;
+        setIsValidSession(true);
+        setIsChecking(false);
+      }
+    };
+
+    const markInvalid = () => {
+      if (!resolved) {
+        resolved = true;
+        setIsChecking(false);
+      }
+    };
+
+    // 1. Check hash fragment (implicit flow)
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const type = hashParams.get("type");
-    
-    if (type === "recovery") {
-      setIsValidSession(true);
+    if (hashParams.get("type") === "recovery") {
+      markValid();
+      return;
     }
 
-    // Also listen for auth state changes (Supabase handles token exchange)
+    // 2. Listen for PASSWORD_RECOVERY event
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY") {
-        setIsValidSession(true);
+        markValid();
       }
     });
 
-    return () => subscription.unsubscribe();
+    // 3. Handle PKCE code parameter
+    const code = new URLSearchParams(window.location.search).get("code");
+    if (code) {
+      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
+        if (error) {
+          markInvalid();
+        } else {
+          markValid();
+        }
+      });
+    }
+
+    // 4. Timeout fallback
+    const timeout = setTimeout(() => {
+      markInvalid();
+    }, 4000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -65,6 +102,22 @@ const ResetPassword = () => {
       setIsLoading(false);
     }
   };
+
+  // Loading state while checking tokens
+  if (isChecking) {
+    return (
+      <>
+        <Header />
+        <main className="min-h-screen pt-32 pb-20 bg-muted/30">
+          <div className="container mx-auto px-6 max-w-md text-center">
+            <Loader2 className="w-8 h-8 animate-spin mx-auto text-primary" />
+            <p className="text-muted-foreground mt-4">Verifying reset link…</p>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   if (!isValidSession) {
     return (
