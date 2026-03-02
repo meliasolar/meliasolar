@@ -38,19 +38,18 @@ const ResetPassword = () => {
       }
     };
 
-    // 1. Check hash fragment (implicit flow)
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    if (hashParams.get("type") === "recovery") {
-      markValid();
-      return;
-    }
-
-    // 2. Listen for PASSWORD_RECOVERY event
+    // 1. Listen for PASSWORD_RECOVERY or SIGNED_IN events
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") {
         markValid();
       }
     });
+
+    // 2. Check hash fragment (implicit flow)
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    if (hashParams.get("type") === "recovery") {
+      markValid();
+    }
 
     // 3. Handle PKCE code parameter
     const code = new URLSearchParams(window.location.search).get("code");
@@ -64,10 +63,17 @@ const ResetPassword = () => {
       });
     }
 
-    // 4. Timeout fallback
+    // 4. Fallback: check if session already exists (tokens already consumed)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        markValid();
+      }
+    });
+
+    // 5. Timeout fallback — give auth system time to process
     const timeout = setTimeout(() => {
       markInvalid();
-    }, 4000);
+    }, 6000);
 
     return () => {
       subscription.unsubscribe();
