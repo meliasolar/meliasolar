@@ -29,7 +29,10 @@ interface Project {
   alt: string;
 }
 
+const canyonOaks = "/images/hero-desktop.webp";
+
 const projects: Project[] = [
+  { image: canyonOaks, title: "Canyon Oaks Residential Solar", location: "San Dimas, CA", category: "Solar", savings: "$10K saved", alt: "Melia Solar residential installation at Canyon Oaks community in San Dimas CA - rooftop solar panel system" },
   { image: project1, title: "Veterans Rehabilitation Center", location: "Palm Springs, CA (IID)", category: "Solar + Battery", savings: "$800/mo", alt: "Melia Solar 35kW commercial installation with 3 Tesla Powerwall 3 batteries at Veterans Rehabilitation Center in Palm Springs CA" },
   { image: tesla1, title: "Tesla Powerwall Installation", location: "San Diego, CA", category: "Battery", savings: "$180/mo", alt: "Melia Solar Tesla Powerwall battery storage installation in San Diego CA home garage" },
   { image: project3, title: "Commercial Rooftop Array", location: "Los Angeles, CA", category: "Solar", savings: "$1,200/mo", alt: "Melia Solar commercial installation - large rooftop solar array on Los Angeles CA business building" },
