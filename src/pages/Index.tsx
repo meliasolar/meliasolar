@@ -33,9 +33,9 @@ const MeliaVideoWidget = lazy(() =>
 const AboutSkeleton = () => (
   <section className="py-24 bg-secondary">
     <div className="container mx-auto px-6">
-      {/* Mobile video widget placeholder - matches 180px min-height + mb-8 */}
-      <div className="md:hidden mb-8" style={{ minHeight: '220px' }}>
-        <div className="rounded-2xl bg-muted animate-pulse w-full" style={{ height: '200px' }} />
+      {/* Mobile video widget placeholder - matches actual About 180px min-height */}
+      <div className="md:hidden mb-8" style={{ minHeight: '180px' }}>
+        <div className="rounded-2xl bg-muted animate-pulse w-full" style={{ height: '180px' }} />
       </div>
       <div className="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
         <div className="rounded-2xl bg-muted animate-pulse" style={{ aspectRatio: '4/5', minHeight: '400px' }} />

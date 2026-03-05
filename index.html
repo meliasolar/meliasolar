@@ -6,22 +6,25 @@
 
     <!-- Google tag (gtag.js) - deferred to not block FCP/LCP -->
     <script>
-      // Load Google Analytics after first paint to avoid render-blocking
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          var s = document.createElement('script');
-          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-01Y3F9B3HW';
-          s.async = true;
-          document.head.appendChild(s);
-          s.onload = function() {
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            window.gtag = gtag;
-            gtag('js', new Date());
-            gtag('config', 'G-01Y3F9B3HW');
-          };
-        }, 100);
-      });
+      // Load Google Analytics only when browser is idle
+      var loadGA = function() {
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-01Y3F9B3HW';
+        s.async = true;
+        document.head.appendChild(s);
+        s.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', 'G-01Y3F9B3HW');
+        };
+      };
+      if (window.requestIdleCallback) {
+        window.requestIdleCallback(loadGA, { timeout: 2000 });
+      } else {
+        window.addEventListener('load', function() { setTimeout(loadGA, 2000); });
+      }
     </script>
     
     <!-- Preload LCP hero images for faster Largest Contentful Paint -->
@@ -126,7 +129,16 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static hero shell - painted before JS loads, replaced by React -->
+      <div style="position:relative;min-height:100vh;overflow:hidden;background:linear-gradient(135deg,#1a4a3d 0%,#0d2a24 100%)">
+        <picture>
+          <source media="(max-width:640px)" srcset="/images/hero-mobile.webp" type="image/webp"/>
+          <source media="(min-width:641px)" srcset="/images/hero-desktop.webp" type="image/webp"/>
+          <img src="/images/hero-desktop.webp" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" fetchpriority="high"/>
+        </picture>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
