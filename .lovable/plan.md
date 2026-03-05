@@ -1,52 +1,70 @@
 
 
-## Performance Fix: Score 72 to 100
+## Fix LCP: 4.0s → under 2.5s
 
-The PageSpeed screenshots reveal three critical bottlenecks:
+### Root cause
 
-| Metric | Current | Target | Root Cause |
-|--------|---------|--------|------------|
-| FCP | 3.1s | <1.8s | JS must download+parse before any paint |
-| LCP | 4.6s | <2.5s | 1,510ms element render delay — hero image exists only in React JSX, so browser waits for full JS boot before painting it |
-| CLS | 0.115 | <0.1 | AboutSkeleton height (220px) mismatches actual About mobile video (180px) |
+The static hero shell inside `<div id="root">` gets **destroyed and repainted** when React calls `createRoot().render()`. React replaces all children of `#root`, so the browser must re-render the hero image from scratch after JS boots. This second paint registers as the LCP at 4.0s — the static shell only helped FCP (1.4s), not LCP.
 
-### Plan (4 changes)
+### Solution: Move hero visual outside `#root`
 
-**1. Eliminate LCP render delay — static hero shell in index.html**
+Place the static hero (image + headline) **before** `<div id="root">` in `index.html`, so React never touches it. The React Hero component will then render **on top** using CSS positioning, and hide the static shell once mounted.
 
-The hero image is preloaded in `<head>` and loads in 690ms, but then sits idle for 1,510ms waiting for React to boot and render the `<img>` tag. Fix: place a pre-rendered hero image directly inside `<div id="root">` in `index.html`. React's `createRoot().render()` replaces this content automatically on mount. The browser can paint the hero image immediately without waiting for any JavaScript.
+### Changes
+
+**1. `index.html`** — Move static hero shell outside `#root`
 
 ```html
-<div id="root">
-  <!-- Static hero shell - painted before JS loads, replaced by React -->
-  <div style="position:relative;min-height:100vh;overflow:hidden">
+<body>
+  <!-- Static hero - survives React mount, hidden by React after boot -->
+  <div id="hero-shell" style="position:relative;min-height:100vh;overflow:hidden;background:linear-gradient(135deg,#1a4a3d 0%,#0d2a24 100%)">
     <picture>
       <source media="(max-width:640px)" srcset="/images/hero-mobile.webp" type="image/webp"/>
       <source media="(min-width:641px)" srcset="/images/hero-desktop.webp" type="image/webp"/>
       <img src="/images/hero-desktop.webp" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" fetchpriority="high"/>
     </picture>
+    <div style="position:relative;padding:5rem 1.5rem 2rem;max-width:80rem;margin:0 auto">
+      <div style="max-width:42rem">
+        <div style="background:rgba(0,0,0,0.4);padding:0.75rem 1rem;border-radius:0.5rem;width:fit-content">
+          <h1 style="font-family:'Playfair Display',Georgia,serif;font-size:3rem;font-weight:700;color:#fff;line-height:1.1;margin:0">
+            Your Personal<br/><span style="background:linear-gradient(135deg,hsl(270 60% 55%),hsl(270 50% 65%));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Solar</span> King
+          </h1>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
 ```
 
-This alone should cut ~1.5s from LCP.
+**2. `src/components/sections/Hero.tsx`** — Hide static shell on mount
 
-**2. Fix CLS — match skeleton height to actual About component**
+Add a `useEffect` that removes `#hero-shell` once React's Hero component is painted:
 
-The `AboutSkeleton` in `Index.tsx` reserves 220px for the mobile video placeholder, but `About.tsx` uses `minHeight: 180px`. When the lazy-loaded About replaces the skeleton, the 40px difference causes the 0.115 CLS. Fix: change AboutSkeleton's mobile video placeholder to exactly match About's `minHeight: 180px`.
+```tsx
+useEffect(() => {
+  const shell = document.getElementById('hero-shell');
+  if (shell) shell.remove();
+}, []);
+```
 
-**3. Remove backdrop-blur from hero overlays**
+**3. `src/pages/Index.tsx`** — Ensure Hero renders above the static shell
 
-`backdrop-blur-sm` and `backdrop-blur-md` on the hero headline and subheadline boxes force expensive GPU compositing layers that delay paint. Replace with solid semi-transparent backgrounds (`bg-black/40` and `bg-black/30`) — visually nearly identical but eliminates compositing cost.
+The React Hero component is already eagerly loaded. It will render on top of (or replacing) the static shell. Since `#hero-shell` is outside `#root` and comes before it in DOM order, React's content will appear below it. To fix this, the Hero component needs `margin-top: -100vh` or the shell needs to be positioned `absolute/fixed` so it doesn't push `#root` down.
 
-**4. Defer Google Analytics more aggressively**
+Best approach: make `#hero-shell` absolutely positioned so it doesn't affect document flow, and React renders normally starting from the top:
 
-Currently GA loads after `window.load` + 100ms timeout. Change to `requestIdleCallback` with a longer fallback (2000ms) so it never competes with LCP resources on slow 4G connections.
+```html
+<div id="hero-shell" style="position:fixed;top:0;left:0;right:0;min-height:100vh;z-index:0;...">
+```
+
+Then in Hero.tsx, add `position:relative;z-index:1` so React's version layers on top and the shell removal is seamless.
 
 ### Expected impact
 
-- LCP: 4.6s → ~2.5s (static hero shell eliminates 1.5s render delay)
-- FCP: 3.1s → ~1.8s (browser paints static HTML immediately)
-- CLS: 0.115 → 0 (skeleton matches actual layout)
-- Combined: should push score from 72 to 90+
+- The hero image + headline paint at FCP (1.4s) and **stay painted** through React boot
+- LCP = FCP ≈ 1.4s (hero image is the largest element and never gets destroyed)
+- Score should jump from 86 to 95+
 
