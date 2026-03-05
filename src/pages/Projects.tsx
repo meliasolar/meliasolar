@@ -11,9 +11,6 @@ import { Sun, Battery, Wind, Zap } from "lucide-react";
 const project1 = "/images/portfolio/project-1.webp";
 const project2 = "/images/portfolio/project-2.webp";
 const project3 = "/images/portfolio/project-3.webp";
-const project5 = "/images/portfolio/project-5.webp";
-const project7 = "/images/portfolio/project-7.webp";
-const project8 = "/images/portfolio/project-8.webp";
 const project9 = "/images/portfolio/project-9.webp";
 const project10 = "/images/portfolio/project-10.webp";
 const project13 = "/images/portfolio/project-13.webp";
@@ -37,12 +34,12 @@ const projects: Project[] = [
   { image: tesla1, title: "Tesla Powerwall Installation", location: "San Diego, CA", category: "Battery", savings: "$180/mo", alt: "Melia Solar Tesla Powerwall battery storage installation in San Diego CA home garage" },
   { image: project3, title: "Commercial Rooftop Array", location: "Los Angeles, CA", category: "Solar", savings: "$1,200/mo", alt: "Melia Solar commercial installation - large rooftop solar array on Los Angeles CA business building" },
   { image: project10, title: "Tile Roof Solar Integration", location: "Orange County, CA", category: "Solar", savings: "$340/mo", alt: "Melia Solar tile roof integration - solar panels installed on Orange County CA Spanish tile roof" },
-  { image: project7, title: "Luxury Estate Energy System", location: "Newport Beach, CA", category: "Solar + Battery", savings: "$620/mo", alt: "Melia Solar luxury estate - complete solar energy system on Newport Beach CA mansion" },
+  
   { image: tesla2, title: "Home Battery Backup System", location: "Austin, TX", category: "Battery", savings: "$210/mo", alt: "Melia Solar Tesla Powerwall home battery backup system - wall-mounted installation in Texas home" },
   { image: project2, title: "Modern Residential Solar", location: "Dallas, TX", category: "Solar", savings: "$390/mo", alt: "Melia Solar residential installation - aerial view of modern Dallas TX home with rooftop solar panels" },
   { image: project13, title: "Spanish Tile Roof Solar", location: "Santa Barbara, CA", category: "Solar", savings: "$410/mo", alt: "Melia Solar Spanish tile roof - seamless solar panel integration on Santa Barbara CA home" },
-  { image: project5, title: "Multi-Roof Solar System", location: "Houston, TX", category: "Solar", savings: "$480/mo", alt: "Melia Solar multi-roof system - large residential solar installation on Houston TX property" },
-  { image: project8, title: "Suburban Home Solar", location: "Sacramento, CA", category: "Solar", savings: "$320/mo", alt: "Melia Solar suburban home - residential solar panel installation in Sacramento California" },
+  
+  
   { image: tesla3, title: "Large Battery Storage Array", location: "Phoenix, AZ", category: "Battery", savings: "$290/mo", alt: "Melia Solar large battery array - multiple Tesla Powerwall units installed in Phoenix Arizona home" },
   { image: project9, title: "Neighborhood Solar Home", location: "Las Vegas, NV", category: "Solar + Battery", savings: "$550/mo", alt: "Melia Solar neighborhood installation - Las Vegas NV home with complete solar and battery system" },
 ];
