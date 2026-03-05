@@ -86,13 +86,13 @@ const ProjectsPage = () => {
         <link rel="canonical" href="https://meliasolar.com/projects" />
         <meta property="og:title" content="Our Projects | Melia Solar" />
         <meta property="og:description" content="Real installations across the United States. See how we're helping businesses & families save on energy costs & secure energy independence." />
-        <meta property="og:image" content="https://meliasolar.com/og-projects-1.png" />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-share.png" />
         <meta property="og:url" content="https://meliasolar.com/projects" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Our Projects | Melia Solar" />
         <meta name="twitter:description" content="Real installations across the United States. See how we're helping businesses & families save on energy costs & secure energy independence." />
-        <meta name="twitter:image" content="https://meliasolar.com/og-projects-1.png" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-share.png" />
         <meta name="keywords" content="solar installation projects, solar panel gallery, residential solar, commercial solar, battery storage, California solar" />
       </Helmet>
       
