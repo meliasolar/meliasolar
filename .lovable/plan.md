@@ -1,10 +1,10 @@
 
 
-## Changes to Hero.tsx
+## Changes to `src/components/sections/Hero.tsx`
 
-1. **Remove gradient overlay entirely** (line 35) — delete the gradient div.
+1. **Headline** (h1): Change `text-foreground` → `text-white` so "Your Personal" and "King" are white, while "Solar" keeps its `text-gradient-solar` (purple).
 
-2. **Change copy background** (line 51) — replace `bg-primary/10 border border-primary/30 backdrop-blur-sm` with a clear gaussian blur: `bg-white/10 backdrop-blur-md border border-white/20` (no purple tint, just frosted glass effect over the image).
+2. **Copy container background**: Change `bg-white/10` → `bg-black/20` for better contrast with white text.
 
-3. **Remove "Trusted Expert in 12 States" badge** (lines 87-92) — delete the badge div entirely, and simplify the CTA wrapper since it's now just the button.
+3. **Copy text**: Change inner div's `text-foreground` → `text-white` so all body text in the blur area is white. Accent/primary spans remain as-is.
 
