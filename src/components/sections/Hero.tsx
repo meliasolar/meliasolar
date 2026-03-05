@@ -40,12 +40,14 @@ const Hero = () => {
           <div className="max-w-2xl space-y-6">
 
             {/* Headline - no animation for immediate LCP */}
+            <div className="bg-black/30 backdrop-blur-sm px-4 py-3 rounded-lg w-fit">
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
               Your Personal
               <span className="block">
                 <span className="text-gradient-solar">Solar</span> King
               </span>
             </h1>
+            </div>
 
             {/* Subheadline - LCP element, no animation for immediate render */}
             <div className="bg-black/20 backdrop-blur-md border border-white/20 px-3 py-2 rounded-lg w-fit">
