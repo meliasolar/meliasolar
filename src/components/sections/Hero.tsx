@@ -39,7 +39,7 @@ const Hero = () => {
           <div className="max-w-2xl space-y-6">
 
             {/* Headline - no animation for immediate LCP */}
-            <div className="bg-black/30 backdrop-blur-sm px-4 py-3 rounded-lg w-fit">
+            <div className="bg-black/40 px-4 py-3 rounded-lg w-fit">
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
               Your Personal
               <span className="block">
@@ -49,7 +49,7 @@ const Hero = () => {
             </div>
 
             {/* Subheadline - LCP element, no animation for immediate render */}
-            <div className="bg-black/20 backdrop-blur-md border border-white/20 px-3 py-2 rounded-lg w-fit">
+            <div className="bg-black/30 border border-white/20 px-3 py-2 rounded-lg w-fit">
               <div
                 className="text-lg md:text-xl text-white font-semibold max-w-lg leading-relaxed space-y-3"
               >
