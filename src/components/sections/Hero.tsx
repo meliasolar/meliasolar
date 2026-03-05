@@ -32,7 +32,7 @@ const Hero = () => {
               style={{ contentVisibility: 'auto' }}
             />
           </picture>
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/40 to-transparent md:from-background/75 md:via-background/50 md:to-transparent" />
         </div>
 
         {/* Content */}
