@@ -32,7 +32,7 @@ const Hero = () => {
               style={{ contentVisibility: 'auto' }}
             />
           </picture>
-          <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/40 to-transparent md:from-background/75 md:via-background/50 md:to-transparent" />
+          
         </div>
 
         {/* Content */}
@@ -48,7 +48,7 @@ const Hero = () => {
             </h1>
 
             {/* Subheadline - LCP element, no animation for immediate render */}
-            <div className="bg-primary/10 border border-primary/30 px-3 py-2 rounded-lg backdrop-blur-sm w-fit">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-2 rounded-lg w-fit">
               <div
                 className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
               >
@@ -75,7 +75,7 @@ const Hero = () => {
             </div>
 
             {/* CTAs with Trusted Expert badge - no delay on mobile */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-up md:[animation-delay:0.1s]">
+            <div className="animate-fade-up md:[animation-delay:0.1s]">
               <Button
                 variant="solar"
                 size="xl"
@@ -84,12 +84,6 @@ const Hero = () => {
                 Get Free Quote
                 <ArrowRight className="w-5 h-5" />
               </Button>
-              <div className="inline-flex items-center gap-2 h-12 px-4 rounded-full bg-secondary border border-border">
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-sm font-medium text-foreground">
-                  Trusted Expert in 12 States
-                </span>
-              </div>
             </div>
           </div>
         </div>
