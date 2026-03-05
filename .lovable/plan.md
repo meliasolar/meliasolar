@@ -1,10 +1,14 @@
 
 
-## Changes to `src/components/sections/Hero.tsx`
+## Fix headline visibility with dark overlay
 
-1. **Headline** (h1): Change `text-foreground` → `text-white` so "Your Personal" and "King" are white, while "Solar" keeps its `text-gradient-solar` (purple).
+**Edit `src/components/sections/Hero.tsx`** — Wrap the `h1` headline in the same frosted glass treatment as the subheading, or add a standalone dark semi-transparent box behind it.
 
-2. **Copy container background**: Change `bg-white/10` → `bg-black/20` for better contrast with white text.
+Since the subheading already uses `bg-black/20 backdrop-blur-md border border-white/20`, applying a similar but slightly lighter treatment to the headline keeps things consistent:
 
-3. **Copy text**: Change inner div's `text-foreground` → `text-white` so all body text in the blur area is white. Accent/primary spans remain as-is.
+- Wrap the `h1` in a `div` with classes: `bg-black/30 backdrop-blur-sm px-4 py-3 rounded-lg w-fit`
+- This gives it a dark tinted glass background that makes white text legible over the solar flare
+- Slightly stronger opacity (`/30` vs `/20`) since the headline is larger and needs more separation
+
+One file changed, ~3 lines added.
 
