@@ -1,11 +1,19 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, PiggyBank, Zap } from "lucide-react";
 import { useContactModal } from "@/contexts/ContactModalContext";
 
 const Hero = () => {
   const { openContactModal } = useContactModal();
+
+  // Remove the static hero shell once React's version is painted
+  useEffect(() => {
+    const shell = document.getElementById('hero-shell');
+    if (shell) shell.remove();
+  }, []);
+
   return (
-    <section className="relative flex flex-col overflow-hidden">
+    <section className="relative z-10 flex flex-col overflow-hidden">
       {/* Hero content with background */}
       <div className="relative min-h-[auto] md:min-h-[75vh] lg:min-h-[70vh] flex items-center">
         {/* Background Image - only covers this area, not the stats */}
