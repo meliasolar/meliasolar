@@ -40,7 +40,7 @@ const Hero = () => {
           <div className="max-w-2xl space-y-6">
 
             {/* Headline - no animation for immediate LCP */}
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
               Your Personal
               <span className="block">
                 <span className="text-gradient-solar">Solar</span> King
@@ -48,9 +48,9 @@ const Hero = () => {
             </h1>
 
             {/* Subheadline - LCP element, no animation for immediate render */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-2 rounded-lg w-fit">
+            <div className="bg-black/20 backdrop-blur-md border border-white/20 px-3 py-2 rounded-lg w-fit">
               <div
-                className="text-lg md:text-xl text-foreground font-semibold max-w-lg leading-relaxed space-y-3"
+                className="text-lg md:text-xl text-white font-semibold max-w-lg leading-relaxed space-y-3"
               >
                 <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for <span className="text-primary">businesses</span> &amp; for <span className="text-primary">homeowners</span>.</p>
                 <p className="font-bold italic flex items-center gap-2">
