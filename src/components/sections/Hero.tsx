@@ -53,7 +53,6 @@ const Hero = () => {
               <div
                 className="text-lg md:text-xl text-white font-semibold max-w-lg leading-relaxed space-y-3"
               >
-                <p>Melia keeps the cost of solar less than or equal to the existing energy bill - for <span className="text-primary">businesses</span> &amp; for <span className="text-primary">homeowners</span>.</p>
                 <p className="font-bold italic flex items-center gap-2">
                   <PiggyBank className="w-5 h-5 text-accent flex-shrink-0" />
                   <span className="relative">
