@@ -69,14 +69,14 @@ const handler = async (req: Request): Promise<Response> => {
       }),
     });
 
-    const result = await web3formsRes.json();
+    const web3Result = await web3formsRes.json();
 
-    if (!web3formsRes.ok || !result.success) {
-      console.error("Web3Forms submission failed:", result);
-      throw new Error(result.message || "Failed to submit form");
+    if (!web3formsRes.ok || !web3Result.success) {
+      console.error("Web3Forms submission failed:", web3Result);
+      throw new Error(web3Result.message || "Failed to submit form");
     }
 
-    console.log("Form submitted successfully via Web3Forms:", result);
+    console.log("Form submitted successfully via Web3Forms:", web3Result);
 
     return new Response(
       JSON.stringify({ 
