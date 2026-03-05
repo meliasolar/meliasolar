@@ -110,13 +110,13 @@ const FAQ = () => {
         <link rel="canonical" href="https://meliasolar.com/faq" />
         <meta property="og:title" content="Frequently Asked Questions | Melia King Solar" />
         <meta property="og:description" content="Everything you need to know about going solar and our energy services." />
-        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-share.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://meliasolar.com/faq" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Frequently Asked Questions | Melia King Solar" />
         <meta name="twitter:description" content="Everything you need to know about going solar and our energy services." />
-        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-share.png" />
       </Helmet>
       <FAQSchema faqs={allFaqs} />
 
