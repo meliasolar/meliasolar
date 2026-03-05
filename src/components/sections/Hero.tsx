@@ -101,7 +101,7 @@ const Hero = () => {
           <div className="max-w-2xl">
             <div className="grid grid-cols-3 gap-8 py-6 border-t border-border/50">
               {[
-                { value: "12K+", label: "Installations", mobileLabel: "Installations" },
+                { value: "9K+", label: "Installations", mobileLabel: "Installations" },
                 { value: "99%", label: "Satisfaction", mobileLabel: "Satisfaction" },
                 { value: "10+", label: "Years Experience", mobileLabel: "Years" },
               ].map((stat) => (

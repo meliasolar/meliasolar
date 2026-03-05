@@ -10,10 +10,18 @@ const SavingsCalculator = () => {
   const { openContactModal } = useContactModal();
 
   const currentBill = monthlyBill[0];
-  const yearlyCost = currentBill * 12;
-  const yearlyWithSolar = currentBill * 12; // Same cost with solar
-  const savings25Years = yearlyCost * 25 * 0.4; // 40% savings over 25 years due to rate increases
-  const treesEquivalent = Math.round((currentBill * 12 * 0.4) / 50); // Rough CO2 offset calculation
+  const solarPayment = Math.round(currentBill * 0.6);
+
+  // 25-year savings: utility compounds at 6%/yr, solar payment stays locked
+  const annualIncrease = 1.06;
+  const savings25Years = Math.round(
+    Array.from({ length: 25 }).reduce<number>((acc, _, i) => {
+      const utilityCost = currentBill * 12 * Math.pow(annualIncrease, i);
+      return acc + (utilityCost - solarPayment * 12);
+    }, 0)
+  );
+
+  const treesEquivalent = Math.round((currentBill * 12 * 0.4) / 50);
 
   return (
     <section id="calculator" className="py-24 bg-secondary/30">
@@ -42,7 +50,7 @@ const SavingsCalculator = () => {
                 What's your current monthly electric bill?
               </label>
               <p className="text-muted-foreground text-sm mb-6">
-                Drag the slider to match your average monthly bill
+                Drag the slider to see your savings...
               </p>
               
               <div className="space-y-4">
@@ -54,7 +62,7 @@ const SavingsCalculator = () => {
                 </div>
                 
                 <div className="px-4">
-                <Slider
+                  <Slider
                     value={monthlyBill}
                     onValueChange={setMonthlyBill}
                     min={100}
@@ -74,31 +82,25 @@ const SavingsCalculator = () => {
             {/* Results Grid */}
             <div className="grid md:grid-cols-3 gap-6 mb-10">
               <div className="bg-primary/5 rounded-2xl p-6 text-center border border-primary/10">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <DollarSign className="w-6 h-6 text-primary" />
-                </div>
-                <p className="text-sm text-muted-foreground mb-2">Your Cost With Solar</p>
+                <DollarSign className="w-6 h-6 text-primary mx-auto mb-3" />
+                <p className="text-sm text-muted-foreground mb-2">Your Solar Freedom Plan*</p>
                 <p className="font-display text-3xl font-bold text-foreground">
-                  ${currentBill}<span className="text-lg font-normal">/mo</span>
+                  ${solarPayment}<span className="text-lg font-normal">/mo</span>
                 </p>
-                <p className="text-xs text-accent mt-2 font-medium">Same as your current bill!</p>
+                <p className="text-xs text-muted-foreground mt-2">*Average Payment vs Utility</p>
               </div>
 
               <div className="bg-accent/10 rounded-2xl p-6 text-center border border-accent/20">
-                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-4">
-                  <TrendingDown className="w-6 h-6 text-accent" />
-                </div>
+                <TrendingDown className="w-6 h-6 text-accent mx-auto mb-3" />
                 <p className="text-sm text-muted-foreground mb-2">25-Year Savings*</p>
                 <p className="font-display text-3xl font-bold text-accent">
                   ${savings25Years.toLocaleString()}
                 </p>
-                <p className="text-xs text-muted-foreground mt-2">*vs. rising utility rates</p>
+                <p className="text-xs text-muted-foreground mt-2">*Based on 6% annual utility increase</p>
               </div>
 
               <div className="bg-green-500/10 rounded-2xl p-6 text-center border border-green-500/20">
-                <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
-                  <Leaf className="w-6 h-6 text-green-600" />
-                </div>
+                <Leaf className="w-6 h-6 text-green-600 mx-auto mb-3" />
                 <p className="text-sm text-muted-foreground mb-2">Environmental Impact</p>
                 <p className="font-display text-3xl font-bold text-green-600">
                   {treesEquivalent}
@@ -117,7 +119,7 @@ const SavingsCalculator = () => {
                 size="xl"
                 onClick={openContactModal}
               >
-                Get Your Free Quote
+                Book Now
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </div>
