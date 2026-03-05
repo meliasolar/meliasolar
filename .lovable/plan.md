@@ -1,34 +1,21 @@
 
 
-## Plan: Add 5 New Images to Portfolio Carousel and Shuffle Order
+## Problem
 
-### 1. Copy 5 uploaded images to `public/images/portfolio/`
-- `slope_wide.webp` → `public/images/portfolio/slope-wide.webp`
-- `slope_sky.webp` → `public/images/portfolio/slope-sky.webp`
-- `boxes_2.webp` → `public/images/portfolio/boxes-2.webp`
-- `big_roof.webp` → `public/images/portfolio/big-roof.webp`
-- `helioscope.webp` → `public/images/portfolio/helioscope.webp`
+The hero background image is obscured by a heavy white gradient overlay: `from-background/95 via-background/80 to-transparent`. At 95% opacity on the left and 80% in the middle, the image is barely visible — especially on mobile where the gradient covers most of the viewport.
 
-### 2. Update `src/components/sections/PortfolioCarousel.tsx`
-- Add 5 new entries to `projectImages` with descriptive alt text
-- Shuffle the entire array into a new mixed order (all 14 images: 9 existing + 5 new)
+## Plan
 
-Proposed shuffled order:
-1. tesla-1 (Tesla Powerwall)
-2. **slope-wide** (ground-mount hillside array aerial)
-3. project-3 (commercial rooftop LA)
-4. **big-roof** (large commercial rooftop solar)
-5. project-1 (desert installation)
-6. **boxes-2** (SolarEdge inverter/electrical wall)
-7. tesla-2 (Powerwall backup)
-8. **slope-sky** (hillside ground-mount close-up)
-9. project-13 (Spanish tile roof)
-10. project-10 (tile roof OC)
-11. **helioscope** (HelioScope design layout)
-12. tesla-3 (large battery array)
-13. project-2 (modern residential)
-14. project-9 (neighborhood solar)
+**Edit `src/components/sections/Hero.tsx` (line 35):**
 
-### No other files affected
-The Projects page is separate and not changed here — only the homepage carousel.
+- Reduce the gradient opacity to let the image show through more
+- Desktop: `from-background/75 via-background/50 to-transparent` — still readable text but image is visible
+- Mobile: Use a lighter vertical gradient instead, since the text stacks vertically: `from-background/70 via-background/40 to-transparent`
+
+Replace the single gradient div with responsive classes:
+```html
+<div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/40 to-transparent md:from-background/75 md:via-background/50 md:to-transparent" />
+```
+
+This keeps text legible (white text area still has enough contrast) while letting significantly more of the hero image show through on both mobile and desktop.
 
