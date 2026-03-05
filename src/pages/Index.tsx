@@ -29,12 +29,16 @@ const MeliaVideoWidget = lazy(() =>
   })
 );
 
-// Skeleton for About section
+// Skeleton for About section - must match actual About height to prevent CLS
 const AboutSkeleton = () => (
   <section className="py-24 bg-secondary">
     <div className="container mx-auto px-6">
+      {/* Mobile video widget placeholder - matches 180px min-height + mb-8 */}
+      <div className="md:hidden mb-8" style={{ minHeight: '220px' }}>
+        <div className="rounded-2xl bg-muted animate-pulse w-full" style={{ height: '200px' }} />
+      </div>
       <div className="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
-        <div className="aspect-[4/5] rounded-2xl bg-muted animate-pulse" />
+        <div className="rounded-2xl bg-muted animate-pulse" style={{ aspectRatio: '4/5', minHeight: '400px' }} />
         <div className="space-y-8">
           <div className="h-8 w-32 bg-muted animate-pulse rounded" />
           <div className="h-12 w-64 bg-muted animate-pulse rounded" />

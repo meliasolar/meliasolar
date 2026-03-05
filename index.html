@@ -4,13 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-01Y3F9B3HW"></script>
+    <!-- Google tag (gtag.js) - deferred to not block FCP/LCP -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-01Y3F9B3HW');
+      // Load Google Analytics after first paint to avoid render-blocking
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var s = document.createElement('script');
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-01Y3F9B3HW';
+          s.async = true;
+          document.head.appendChild(s);
+          s.onload = function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-01Y3F9B3HW');
+          };
+        }, 100);
+      });
     </script>
     
     <!-- Preload LCP hero images for faster Largest Contentful Paint -->
@@ -44,8 +55,7 @@
     <meta name="author" content="Melia King Solar" />
     <meta name="theme-color" content="#1a4a3d" />
 
-    <!-- Preconnect to external origins for faster requests -->
-    <link rel="preconnect" href="https://tccujdytaskukotfjapn.supabase.co" />
+    <!-- Preconnect removed - Supabase not needed on initial page load -->
 
     <!-- Icons - Full set for all browsers/devices -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
