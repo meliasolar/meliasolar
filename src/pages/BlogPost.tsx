@@ -76,7 +76,7 @@ const BlogPost = () => {
   // Get the dynamic 50/50 split OG image URL
   const getOgImageUrl = () => {
     if (!post?.image_url) {
-      return `${window.location.origin}/melia-og-image.png`;
+      return `${window.location.origin}/melia-og-share.png`;
     }
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     return `${supabaseUrl}/functions/v1/og-article-image?image=${encodeURIComponent(post.image_url)}`;

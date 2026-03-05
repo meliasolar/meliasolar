@@ -96,13 +96,13 @@ const ServicesPage = () => {
         <link rel="canonical" href="https://meliasolar.com/services" />
         <meta property="og:title" content="Renewable Energy Solutions | Melia King Solar" />
         <meta property="og:description" content="Renewable Energy Solutions For Your Whole Home. Modern, whole home solutions for energy independence." />
-        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-share.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://meliasolar.com/services" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Renewable Energy Solutions | Melia King Solar" />
         <meta name="twitter:description" content="Modern, whole home solutions for energy independence." />
-        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-share.png" />
       </Helmet>
       <ServiceSchema
         serviceName="Solar Panel Installation & Energy Solutions"

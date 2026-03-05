@@ -72,11 +72,11 @@ const TeslaSupercharger = () => {
         <link rel="canonical" href="https://meliasolar.com/supercharger" />
         <meta property="og:title" content="Tesla Superchargers Pay You | Melia King Solar" />
         <meta property="og:description" content="Add Tesla Superchargers to your business parking lot and collect income from every single charge, for lifetime." />
-        <meta property="og:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta property="og:image" content="https://meliasolar.com/melia-og-share.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://meliasolar.com/supercharger" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://meliasolar.com/melia-og-image.png" />
+        <meta name="twitter:image" content="https://meliasolar.com/melia-og-share.png" />
       </Helmet>
 
       <Header />
