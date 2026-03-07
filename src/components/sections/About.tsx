@@ -100,7 +100,7 @@ const About = forwardRef<HTMLElement>((_, ref) => {
 
               <video
                 ref={videoRef}
-                src="/videos/melia-welcome.mp4"
+                src="/videos/melia-welcome.mp4#t=2"
                 muted={isMuted}
                 playsInline
                 preload="metadata"
